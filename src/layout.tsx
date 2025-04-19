@@ -1,0 +1,75 @@
+import { Link, Outlet, useLocation } from 'react-router-dom';
+import {
+    SidebarInset,
+    SidebarProvider,
+    SidebarTrigger
+} from '@/components/ui/sidebar';
+import { AppSidebar } from '@/components/layout/app-sidebar';
+import { Separator } from '@/components/ui/separator';
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator
+} from '@/components/ui/breadcrumb';
+import { cn, getTitleByPath } from '@/lib/utils';
+import ThemeSwitch from '@/components/custom/theme-switch';
+
+const Layout = () => {
+    const { pathname } = useLocation();
+
+    const title = getTitleByPath(pathname);
+
+    return (
+        <SidebarProvider>
+            <AppSidebar />
+            <SidebarInset>
+                <header
+                    className={cn(
+                        'flex h-16 shrink-0 items-center justify-between gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12'
+                    )}
+                >
+                    <div className={cn('flex items-center gap-2 px-4')}>
+                        <SidebarTrigger className={cn('-ml-1')} />
+                        <Separator
+                            orientation="vertical"
+                            className={cn('mr-2 h-4!')}
+                        />
+                        <Breadcrumb>
+                            <BreadcrumbList>
+                                <BreadcrumbItem
+                                    className={cn('hidden md:block')}
+                                >
+                                    <BreadcrumbLink asChild>
+                                        <Link to={'/'}>仪表盘</Link>
+                                    </BreadcrumbLink>
+                                </BreadcrumbItem>
+                                {title && pathname !== '/' && (
+                                    <>
+                                        <BreadcrumbSeparator
+                                            className={cn('hidden md:block')}
+                                        />
+                                        <BreadcrumbItem>
+                                            <BreadcrumbPage>
+                                                {title}
+                                            </BreadcrumbPage>
+                                        </BreadcrumbItem>
+                                    </>
+                                )}
+                            </BreadcrumbList>
+                        </Breadcrumb>
+                    </div>
+                    <div className={cn('flex items-center gap-2 px-4')}>
+                        <ThemeSwitch />
+                    </div>
+                </header>
+                <div className={cn('flex flex-1 flex-col gap-4 p-4 pt-0')}>
+                    <Outlet />
+                </div>
+            </SidebarInset>
+        </SidebarProvider>
+    );
+};
+export default Layout;
