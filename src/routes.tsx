@@ -29,10 +29,29 @@ const staticRoutes: RouteObject[] = [
         children: [
             {
                 index: true,
-                path: '',
                 lazy: async () => ({
                     Component: (await import('@/pages/dashboard/index')).default
                 })
+            },
+            {
+                path: 'auth',
+                children: [
+                    {
+                        path: 'role',
+                        lazy: async () => ({
+                            Component: (await import('@/pages/auth/role/index'))
+                                .default
+                        })
+                    },
+                    {
+                        path: 'permission',
+                        lazy: async () => ({
+                            Component: (
+                                await import('@/pages/auth/permission/index')
+                            ).default
+                        })
+                    }
+                ]
             },
             {
                 path: '*',

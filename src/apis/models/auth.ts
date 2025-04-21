@@ -4,6 +4,7 @@ export interface UserInfoRes {
     nickname: string;
     status: number;
     avatar?: string;
+    permissions: string[];
     createdAt: string;
     updatedAt: string;
 }

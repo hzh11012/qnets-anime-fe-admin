@@ -19,6 +19,7 @@ const userStore = create(
                 nickname: '',
                 status: 0,
                 avatar: '',
+                permissions: [],
                 createdAt: '',
                 updatedAt: ''
             },

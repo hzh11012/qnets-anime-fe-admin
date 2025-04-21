@@ -123,7 +123,7 @@
 }
 
 .bg-exception:before {
-    background-image: url('/public/exception.png');
+    background-image: url('/exception.png');
 }
 
 @layer base {

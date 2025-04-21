@@ -24,11 +24,11 @@ export default defineConfig({
                 ws: true,
                 rewrite: (path: string) => path.replace(/^\/v1/, '')
             },
-            '/auth': {
+            '/v2': {
                 target: 'http://localhost:4800',
                 changeOrigin: true,
                 ws: true,
-                rewrite: (path: string) => path.replace(/^\/auth/, '')
+                rewrite: (path: string) => path.replace(/^\/v2/, '')
             }
         }
     }
