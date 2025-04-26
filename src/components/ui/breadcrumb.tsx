@@ -5,7 +5,7 @@ import { ChevronRight, MoreHorizontal } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 function Breadcrumb({ ...props }: React.ComponentProps<'nav'>) {
-    return <nav aria-label="breadcrumb" data-slot="breadcrumb" {...props} />;
+    return <nav aria-label="面包屑" data-slot="breadcrumb" {...props} />;
 }
 
 function BreadcrumbList({ className, ...props }: React.ComponentProps<'ol'>) {
@@ -92,7 +92,7 @@ function BreadcrumbEllipsis({
             className={cn('flex size-9 items-center justify-center', className)}
             {...props}
         >
-            <MoreHorizontal className="size-4" />
+            <MoreHorizontal className={cn('size-4')} />
             <span className="sr-only">More</span>
         </span>
     );

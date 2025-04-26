@@ -1,5 +1,5 @@
 import { HttpClient, AuthClient } from '@/lib/request';
-import { UserInfoRes } from '@/apis/models/auth';
+import type { UserInfoRes } from '@/types';
 
 const getUserInfo = () => {
     return HttpClient.get<UserInfoRes>('/api/server/user/info');

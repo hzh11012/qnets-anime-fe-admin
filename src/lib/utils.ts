@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { links } from '@/links';
+import { DateTime } from 'luxon';
 
 const cn = (...inputs: ClassValue[]) => {
     return twMerge(clsx(inputs));
@@ -28,4 +29,8 @@ const getTitleByPath = (path: string) => {
     return search(links, '');
 };
 
-export { cn, getTitleByPath };
+const formatDate = (date: string) => {
+    return DateTime.fromISO(date).toFormat('DD tt');
+};
+
+export { cn, getTitleByPath, formatDate };

@@ -4,9 +4,10 @@ import { cn } from '@/lib/utils';
 
 interface loadingProps {
     className?: string;
+    size?: number;
 }
 
-const Loading: React.FC<loadingProps> = ({ className }) => {
+const Loading: React.FC<loadingProps> = ({ className, size = 50 }) => {
     return (
         <div
             className={cn(
@@ -16,8 +17,8 @@ const Loading: React.FC<loadingProps> = ({ className }) => {
         >
             <RingLoader
                 color="var(--theme)"
-                size={50}
-                aria-label="Loading Spinner"
+                size={size}
+                aria-label="加载中"
                 data-testid="loader"
             />
         </div>

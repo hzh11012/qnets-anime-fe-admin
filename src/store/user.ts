@@ -1,17 +1,9 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { UserInfoRes } from '@/apis/models/auth';
+import type { UserState, UserAction } from '@/types';
 
-interface State {
-    userInfo: UserInfoRes;
-}
-
-interface Action {
-    setUserInfo: (value: State['userInfo']) => void;
-}
-
-const userStore = create(
-    persist<State & Action>(
+const useUserStore = create(
+    persist<UserState & UserAction>(
         set => ({
             userInfo: {
                 id: '',
@@ -34,4 +26,4 @@ const userStore = create(
     )
 );
 
-export { userStore };
+export { useUserStore };

@@ -76,6 +76,8 @@
     --sidebar-border: oklch(0.92 0.004 286.32);
     --sidebar-ring: var(--color-indigo-500);
     --theme: var(--color-indigo-500);
+    --table-header: oklch(1 0 0);
+    --fixed-shadow: oklch(0.11 0 0 / 0.06);
 }
 
 .dark {
@@ -112,6 +114,8 @@
     --sidebar-border: oklch(0.274 0.006 286.033);
     --sidebar-ring: var(--color-indigo-400);
     --theme: var(--color-indigo-400);
+    --table-header: #111114;
+    --fixed-shadow: oklch(0.99 0 0 / 0.12);
 }
 
 .text-theme {
@@ -124,6 +128,47 @@
 
 .bg-exception:before {
     background-image: url('/exception.png');
+}
+
+.bg-table-header {
+    background-color: var(--table-header);
+}
+
+.shadow-l-fixed,
+.shadow-r-fixed {
+    &::after {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 30px;
+        content: '';
+        pointer-events: none;
+        transition: box-shadow 0.3s ease-in-out;
+        box-shadow: inset -10px 0 8px -8px var(--fixed-shadow);
+    }
+}
+
+.shadow-l-fixed {
+    &::after {
+        left: 0;
+        transform: translateX(-100%);
+    }
+}
+
+.shadow-r-fixed {
+    &::after {
+        right: 0;
+        transform: translateX(100%);
+    }
+}
+
+.scroll-hidden {
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    scrollbar-width: none;
+    scrollbar-color: transparent transparent;
 }
 
 @layer base {

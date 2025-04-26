@@ -1,4 +1,4 @@
-export interface UserInfoRes {
+interface UserInfoRes {
     id: string;
     phone: string;
     nickname: string;
@@ -8,3 +8,5 @@ export interface UserInfoRes {
     createdAt: string;
     updatedAt: string;
 }
+
+export { UserInfoRes };

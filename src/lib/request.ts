@@ -117,9 +117,10 @@ class AxiosRequest {
 
     async get<T>(
         url: string,
+        params?: object,
         config?: AxiosRequestConfig
     ): Promise<ApiRequest<T>> {
-        return await this.request<T>({ ...config, url, method: 'get' });
+        return await this.request<T>({ ...config, url, method: 'get', params });
     }
 
     async post<T>(
@@ -128,6 +129,32 @@ class AxiosRequest {
         config?: AxiosRequestConfig
     ): Promise<ApiRequest<T>> {
         return await this.request<T>({ ...config, url, method: 'post', data });
+    }
+
+    async delete<T>(
+        url: string,
+        data?: object,
+        config?: AxiosRequestConfig
+    ): Promise<ApiRequest<T>> {
+        return await this.request<T>({
+            ...config,
+            url,
+            method: 'delete',
+            data
+        });
+    }
+
+    async put<T>(
+        url: string,
+        data?: object,
+        config?: AxiosRequestConfig
+    ): Promise<ApiRequest<T>> {
+        return await this.request<T>({
+            ...config,
+            url,
+            method: 'put',
+            data
+        });
     }
 }
 

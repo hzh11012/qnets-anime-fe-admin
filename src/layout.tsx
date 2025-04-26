@@ -28,7 +28,7 @@ const Layout = () => {
             <SidebarInset>
                 <header
                     className={cn(
-                        'flex h-16 shrink-0 items-center justify-between gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12'
+                        'flex bg-background h-16 shrink-0 items-center justify-between gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12'
                     )}
                 >
                     <div className={cn('flex items-center gap-2 px-4')}>
@@ -65,7 +65,7 @@ const Layout = () => {
                         <ThemeSwitch />
                     </div>
                 </header>
-                <div className={cn('flex flex-1 flex-col gap-4 p-4 pt-0')}>
+                <div className={cn('flex flex-1 flex-col gap-4 p-4 pr-6')}>
                     <Outlet />
                 </div>
             </SidebarInset>

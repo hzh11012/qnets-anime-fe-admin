@@ -10,12 +10,12 @@ import {
     SidebarRail
 } from '@/components/ui/sidebar';
 import { links, platform } from '@/links';
-import { userStore } from '@/store/user';
+import { useUserStore } from '@/store';
 import { useRequest } from 'ahooks';
-import { logout } from '@/apis/auth';
+import { logout } from '@/apis';
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-    const user = userStore(state => state.userInfo);
+    const user = useUserStore(state => state.userInfo);
 
     const { run: runLogout } = useRequest(logout, {
         manual: true,

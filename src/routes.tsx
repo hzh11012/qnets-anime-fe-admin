@@ -1,8 +1,8 @@
 import { createBrowserRouter, redirect, RouteObject } from 'react-router-dom';
 import Loading from '@/components/custom/loading';
 import Error from '@/components/custom/error';
-import { getUserInfo } from '@/apis/auth';
-import { userStore } from '@/store/user';
+import { getUserInfo } from '@/apis';
+import { useUserStore } from '@/store';
 import Layout from '@/layout';
 import Exception from '@/components/custom/exception';
 
@@ -14,7 +14,7 @@ const authLoader = async () => {
         return redirect('/ban');
     }
 
-    userStore.setState({ userInfo: data });
+    useUserStore.setState({ userInfo: data });
 
     return data;
 };
