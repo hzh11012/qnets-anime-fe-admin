@@ -1,9 +1,10 @@
 import React from 'react';
 import { useRequest } from 'ahooks';
-import { getRoleList } from '@/apis';
+import { getPermissionList, getRoleList } from '@/apis';
 import { useRoleTableStore } from '@/store';
 import DataTable from '@/components/custom/data-table/data-table';
 import getColumns from '@/pages/auth/role/columns';
+import CustomTools from '@/pages/auth/role/custom-tools';
 
 const Index: React.FC = () => {
     // 将状态和函数分开订阅，避免触发不必要的渲染
@@ -26,6 +27,7 @@ const Index: React.FC = () => {
     const resetPagination = useRoleTableStore(state => state.resetPagination);
     const pagination = useRoleTableStore(state => state.pagination);
     const setPagination = useRoleTableStore(state => state.setPagination);
+    const setPermissions = useRoleTableStore(state => state.setPermissions);
 
     const { run, loading, refresh } = useRequest(getRoleList, {
         defaultParams: [{ page, pageSize }],
@@ -37,6 +39,27 @@ const Index: React.FC = () => {
         refreshDeps: [page, pageSize, sorting],
         refreshDepsAction: () => {
             run({ page, type, keyword, pageSize, orderBy, order });
+        }
+    });
+
+    useRequest(getPermissionList, {
+        defaultParams: [
+            {
+                page: 1,
+                pageSize: 10000
+            }
+        ],
+        onSuccess({ code, data }) {
+            if (code === 200) {
+                const { rows } = data;
+                const res = rows.map(item => {
+                    return {
+                        label: item.name,
+                        value: item.id
+                    };
+                });
+                setPermissions(res);
+            }
         }
     });
 
@@ -70,6 +93,7 @@ const Index: React.FC = () => {
             onTypeSelect={setType}
             typeOptions={types}
             onSortingChange={setSorting}
+            customTools={<CustomTools onRefresh={refresh} />}
         />
     );
 };

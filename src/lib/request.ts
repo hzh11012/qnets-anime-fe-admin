@@ -144,7 +144,7 @@ class AxiosRequest {
         });
     }
 
-    async put<T>(
+    async patch<T>(
         url: string,
         data?: object,
         config?: AxiosRequestConfig
@@ -152,7 +152,7 @@ class AxiosRequest {
         return await this.request<T>({
             ...config,
             url,
-            method: 'put',
+            method: 'patch',
             data
         });
     }

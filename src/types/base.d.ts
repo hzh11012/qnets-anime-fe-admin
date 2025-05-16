@@ -1,17 +1,29 @@
 import type { ColumnDef } from '@tanstack/react-table';
 import Zod, { ZodType } from 'zod';
 
-interface DataTableRowActionsProps<T> {
-    row: T;
+interface CustomToolsProps {
     onRefresh: () => void;
 }
 
-interface DeleteDialogProps {
-    id: string;
-    onRefresh: () => void;
+interface DataTableRowActionsProps<T> extends CustomToolsProps {
+    row: T;
 }
+
+interface DeleteDialogProps extends CustomToolsProps {
+    id: string;
+}
+
+interface AddDialogProps extends CustomToolsProps {}
 
 interface EditDialogProps<T> extends DataTableRowActionsProps<T> {}
+
+interface Option {
+    value: string;
+    label: string;
+    disable?: boolean;
+    fixed?: boolean;
+    [key: string]: string | boolean | undefined;
+}
 
 declare module '@tanstack/react-table' {
     interface ColumnMeta<TData extends RowData, TValue> {
@@ -22,8 +34,11 @@ declare module '@tanstack/react-table' {
 type ZodFormValues<T extends ZodType> = Zod.infer<T>;
 
 export {
+    CustomToolsProps,
+    AddDialogProps,
     DataTableRowActionsProps,
     DeleteDialogProps,
     EditDialogProps,
-    ZodFormValues
+    ZodFormValues,
+    Option
 };

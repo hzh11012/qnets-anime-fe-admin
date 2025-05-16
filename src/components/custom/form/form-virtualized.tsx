@@ -50,6 +50,7 @@ const FormVirtualized = <TFieldValues extends FieldValues>({
                             className={cn({
                                 required: required
                             })}
+                            htmlFor=""
                         >
                             {label}
                         </FormLabel>
@@ -91,10 +92,7 @@ const FormVirtualized = <TFieldValues extends FieldValues>({
                             align="start"
                         >
                             <VirtualizedCommand
-                                options={options.map(item => ({
-                                    label: item.label,
-                                    value: `${item.value}`
-                                }))}
+                                options={options}
                                 height="16rem"
                                 placeholder={placeholder}
                                 selectedOption={field.value}

@@ -24,7 +24,7 @@ export function NavUser({
 }: {
     user: {
         nickname: string;
-        phone: string;
+        email: string;
         avatar?: string;
     };
     onLogout: () => void;
@@ -60,7 +60,7 @@ export function NavUser({
                                     {user.nickname}
                                 </span>
                                 <span className={cn('truncate text-xs')}>
-                                    {user.phone}
+                                    {user.email}
                                 </span>
                             </div>
                             <ChevronsUpDown className={cn('ml-auto size-4')} />
@@ -102,7 +102,7 @@ export function NavUser({
                                         {user.nickname}
                                     </span>
                                     <span className={cn('truncate text-xs')}>
-                                        {user.phone}
+                                        {user.email}
                                     </span>
                                 </div>
                             </div>

@@ -1,6 +1,6 @@
 interface UserInfoRes {
     id: string;
-    phone: string;
+    email: string;
     nickname: string;
     status: number;
     avatar?: string;

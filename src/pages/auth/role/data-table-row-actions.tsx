@@ -15,7 +15,8 @@ import type {
     DataTableRowActionsProps,
     DeleteDialogProps,
     EditDialogProps,
-    ZodFormValues
+    ZodFormValues,
+    Option
 } from '@/types';
 import { useRequest } from 'ahooks';
 import { toast } from 'sonner';
@@ -28,14 +29,17 @@ import FormInput from '@/components/custom/form/form-input';
 import { useForm, UseFormReturn } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { roleEditSchema } from '@/pages/auth/role/form-schema';
+import { useRoleTableStore } from '@/store';
+import FormMultiSelect from '@/components/custom/form/form-multiple-select';
 
 type RoleFormValues = ZodFormValues<typeof roleEditSchema>;
 
 interface EditFormProps {
     form: UseFormReturn<RoleFormValues>;
+    permissions: Option[];
 }
 
-const EditForm: React.FC<EditFormProps> = ({ form }) => {
+const EditForm: React.FC<EditFormProps> = ({ form, permissions }) => {
     return (
         <Form {...form}>
             <form className={cn('space-y-6')}>
@@ -51,6 +55,13 @@ const EditForm: React.FC<EditFormProps> = ({ form }) => {
                     label="角色编码"
                     required
                 />
+                <FormMultiSelect
+                    control={form.control}
+                    name="permissions"
+                    label="权限"
+                    placeholder="请输入"
+                    options={permissions}
+                />
             </form>
         </Form>
     );
@@ -62,13 +73,19 @@ const EditDialog: React.FC<EditDialogProps<RoleListItem>> = ({
 }) => {
     const { id, name, role, permissions } = row;
     const [open, setOpen] = useState(false);
+    const permissionsList = useRoleTableStore(state => state.permissions);
 
     const form = useForm<RoleFormValues>({
         resolver: zodResolver(roleEditSchema),
         defaultValues: {
             name,
             role,
-            permissions: permissions.map(item => item.name)
+            permissions: permissions.map(item => {
+                return {
+                    label: item.name,
+                    value: item.id
+                };
+            })
         }
     });
 
@@ -85,13 +102,15 @@ const EditDialog: React.FC<EditDialogProps<RoleListItem>> = ({
     });
 
     const handleEdit = (values: RoleFormValues) => {
-        run({ ...values, id });
+        const { permissions, ...args } = values;
+        const _permissions = permissions?.map(item => item.value);
+        run({ ...args, id, permissions: _permissions });
     };
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant="link" className={cn('h-8 p-0')}>
+                <Button variant="link" className={cn('h-8 p-0 text-blue-500')}>
                     编辑
                 </Button>
             </DialogTrigger>
@@ -101,7 +120,7 @@ const EditDialog: React.FC<EditDialogProps<RoleListItem>> = ({
                         编辑
                     </DialogTitle>
                 </DialogHeader>
-                <EditForm form={form} />
+                <EditForm form={form} permissions={permissionsList} />
                 <DialogFooter className={cn('flex-row gap-5')}>
                     <DialogClose asChild>
                         <Button
@@ -149,7 +168,7 @@ const DeleteDialog: React.FC<DeleteDialogProps & { name: string }> = ({
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant="link" className={cn('h-8 p-0')}>
+                <Button variant="link" className={cn('h-8 p-0 text-red-500')}>
                     删除
                 </Button>
             </DialogTrigger>

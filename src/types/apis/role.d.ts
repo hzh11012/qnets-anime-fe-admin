@@ -2,7 +2,7 @@ interface RoleListItem {
     id: string;
     name: string;
     role: string;
-    permissions: { name: string }[];
+    permissions: { id: string; name: string }[];
     users: { nickname: string }[];
     createdAt: string;
 }

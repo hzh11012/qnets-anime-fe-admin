@@ -7,7 +7,7 @@ const useUserStore = create(
         set => ({
             userInfo: {
                 id: '',
-                phone: '',
+                email: '',
                 nickname: '',
                 status: 0,
                 avatar: '',
