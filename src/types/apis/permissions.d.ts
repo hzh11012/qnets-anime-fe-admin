@@ -13,4 +13,19 @@ interface PermissionListRes {
 
 interface PermissionListParams extends ListParams {}
 
-export { PermissionListRes, PermissionListItem, PermissionListParams };
+interface PermissionCreateParams {
+    name: string;
+    permission: string;
+}
+
+interface PermissionDeleteParams {
+    id: string;
+}
+
+export {
+    PermissionListRes,
+    PermissionListItem,
+    PermissionListParams,
+    PermissionCreateParams,
+    PermissionDeleteParams
+};
