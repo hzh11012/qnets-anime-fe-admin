@@ -2,7 +2,7 @@ import { CircleX } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
-const Error = ({ className }: { className: string }) => {
+const Error = ({ className }: { className?: string }) => {
     return (
         <div
             className={cn(

@@ -21,6 +21,7 @@ interface DataTableToolbarProps<TData> {
     }[];
     onSearch: (val: string) => void;
     onSelect?: (val: string) => void;
+    onRefresh: () => void;
 }
 
 export function DataTableToolbar<TData>({
@@ -29,7 +30,8 @@ export function DataTableToolbar<TData>({
     onSearch,
     defaultValue,
     options,
-    onSelect
+    onSelect,
+    onRefresh
 }: DataTableToolbarProps<TData>) {
     return (
         <div className={cn('flex items-center justify-between')}>
@@ -72,7 +74,7 @@ export function DataTableToolbar<TData>({
                     }}
                 />
             </div>
-            <DataTableViewColumn table={table} />
+            <DataTableViewColumn table={table} onRefresh={onRefresh} />
         </div>
     );
 }

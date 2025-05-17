@@ -170,6 +170,7 @@ const DataTable = <TData, TValue>({
                     defaultValue={defaultTypeValue}
                     onSelect={onTypeSelect}
                     options={typeOptions}
+                    onRefresh={handleScroll}
                 />
             </CardHeader>
             <CardContent className={cn('px-0 gap-0', className)}>

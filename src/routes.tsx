@@ -34,6 +34,18 @@ const staticRoutes: RouteObject[] = [
                 })
             },
             {
+                path: 'user',
+                children: [
+                    {
+                        path: 'list',
+                        lazy: async () => ({
+                            Component: (await import('@/pages/user/list/index'))
+                                .default
+                        })
+                    }
+                ]
+            },
+            {
                 path: 'auth',
                 children: [
                     {

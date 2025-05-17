@@ -13,10 +13,12 @@ import { Settings2 } from 'lucide-react';
 
 interface DataTableViewColumnProps<TData> {
     table: Table<TData>;
+    onRefresh: () => void;
 }
 
 export function DataTableViewColumn<TData>({
-    table
+    table,
+    onRefresh
 }: DataTableViewColumnProps<TData>) {
     return (
         <DropdownMenu>
@@ -44,9 +46,10 @@ export function DataTableViewColumn<TData>({
                             key={column.id}
                             className={cn('capitalize')}
                             checked={column.getIsVisible()}
-                            onCheckedChange={value =>
-                                column.toggleVisibility(!!value)
-                            }
+                            onCheckedChange={value => {
+                                column.toggleVisibility(!!value);
+                                onRefresh && onRefresh();
+                            }}
                         >
                             {column.columnDef.meta?.title}
                         </DropdownMenuCheckboxItem>
@@ -55,7 +58,10 @@ export function DataTableViewColumn<TData>({
                 <DropdownMenuCheckboxItem
                     key={'clear_all'}
                     className={cn('capitalize px-2 justify-center')}
-                    onCheckedChange={() => table.resetColumnVisibility()}
+                    onCheckedChange={() => {
+                        table.resetColumnVisibility();
+                        onRefresh && onRefresh();
+                    }}
                 >
                     重置
                 </DropdownMenuCheckboxItem>
