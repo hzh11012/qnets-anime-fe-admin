@@ -48,7 +48,7 @@ const FormSelect = <TFieldValues extends FieldValues>({
                         </FormLabel>
                     )}
                     <Select
-                        onValueChange={val => field.onChange(parseInt(val))}
+                        onValueChange={field.onChange}
                         defaultValue={`${field.value}`}
                     >
                         <FormControl>

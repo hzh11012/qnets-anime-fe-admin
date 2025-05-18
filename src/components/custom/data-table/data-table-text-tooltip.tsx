@@ -7,37 +7,35 @@ import {
 } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 
-interface DataTableTooltipProps {
-    items: string[];
+interface DataTableTextTooltipProps {
+    text: string;
     maxCount?: number;
 }
 
-const DataTableTooltip: React.FC<DataTableTooltipProps> = ({
-    items,
-    maxCount = 3
+const DataTableTextTooltip: React.FC<DataTableTextTooltipProps> = ({
+    text,
+    maxCount = 20
 }) => {
-    if (!items || !items.length) return '-';
+    if (!text) return '-';
 
-    const remaining = items.length - maxCount;
-
-    if (remaining <= 0) return items.join(' ');
+    if (text.length <= maxCount) return text;
 
     return (
         <TooltipProvider>
             <Tooltip>
                 <TooltipTrigger asChild>
-                    <span>{items.slice(0, maxCount).join(' ')} ...</span>
+                    <span>{text.slice(0, maxCount)}...</span>
                 </TooltipTrigger>
                 <TooltipContent
                     className={cn(
                         'max-w-64 max-h-64 overflow-auto scroll-hidden'
                     )}
                 >
-                    {items.join(' ')}
+                    {text}
                 </TooltipContent>
             </Tooltip>
         </TooltipProvider>
     );
 };
 
-export { DataTableTooltip };
+export { DataTableTextTooltip };

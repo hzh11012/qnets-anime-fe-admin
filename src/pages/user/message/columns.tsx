@@ -1,80 +1,113 @@
 import { DataTableColumnSort } from '@/components/custom/data-table/data-table-column-sort';
 import { cn, formatDate } from '@/lib/utils';
-import type { UserListItem } from '@/types';
+import type { MessageListItem } from '@/types';
 import { ColumnDef } from '@tanstack/react-table';
 import { Search } from 'lucide-react';
-import { DataTableArrayTooltip } from '@/components/custom/data-table/data-table-array-tooltip';
-import { DataTableRowActions } from '@/pages/user/list/data-table-row-actions';
+import { DataTableRowActions } from '@/pages/user/message/data-table-row-actions';
 import { DataTableColumnFilter } from '@/components/custom/data-table/data-table-column-filter';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { DataTableTextTooltip } from '@/components/custom/data-table/data-table-text-tooltip';
+
+export const types = [
+    { label: '咨询', value: '0' },
+    { label: '建议', value: '1' },
+    { label: '投诉', value: '2' },
+    { label: '其他', value: '3' }
+];
 
 export const status = [
-    { label: '禁用', value: '0' },
-    { label: '启用', value: '1' }
+    { label: '待处理', value: '0' },
+    { label: '处理中', value: '1' },
+    { label: '已完成', value: '2' },
+    { label: '已关闭', value: '3' }
 ];
 
 const getColumns = (onRefresh: () => void) => {
-    const columns: ColumnDef<UserListItem>[] = [
+    const columns: ColumnDef<MessageListItem>[] = [
         {
             accessorKey: 'id',
-            header: '用户ID',
+            header: '留言ID',
             enableSorting: false,
             enableHiding: false
         },
         {
-            accessorKey: 'avatar',
-            meta: {
-                title: '用户头像'
-            },
-            header: '用户头像',
-            cell: ({ row }: any) => {
-                return (
-                    <Avatar className={cn('w-8 h-8')}>
-                        <AvatarImage src={row.original.avatar} />
-                        <AvatarFallback>
-                            {row.original.nickname.slice(0, 1)}
-                        </AvatarFallback>
-                    </Avatar>
-                );
-            }
-        },
-        {
-            accessorKey: 'nickname',
+            accessorKey: 'user',
             meta: {
                 title: '用户昵称'
             },
-            header: () => {
-                return (
-                    <div className={cn('flex items-center space-x-1')}>
-                        <span>用户昵称</span>
-                        <Search className={cn('size-3.5')} />
-                    </div>
-                );
-            }
+            header: '用户昵称',
+            cell: ({ row }) => row.original.user.nickname
         },
         {
-            accessorKey: 'email',
+            accessorKey: 'content',
             meta: {
-                title: '用户邮箱'
+                title: '留言内容'
             },
             header: () => {
                 return (
                     <div className={cn('flex items-center space-x-1')}>
-                        <span>用户邮箱</span>
+                        <span>留言内容</span>
                         <Search className={cn('size-3.5')} />
                     </div>
                 );
+            },
+            cell: ({ row }) => {
+                const text = row.original.content;
+                return <DataTableTextTooltip text={text} />;
+            }
+        },
+        {
+            accessorKey: 'reply',
+            meta: {
+                title: '回复内容'
+            },
+            header: () => {
+                return (
+                    <div className={cn('flex items-center space-x-1')}>
+                        <span>回复内容</span>
+                        <Search className={cn('size-3.5')} />
+                    </div>
+                );
+            },
+            cell: ({ row }) => {
+                const text = row.original.reply;
+                return <DataTableTextTooltip text={text} />;
+            }
+        },
+        {
+            accessorKey: 'type',
+            meta: {
+                title: '留言类型'
+            },
+            header: ({ column }) => {
+                return (
+                    <div className={cn('flex items-center space-x-1')}>
+                        <span>留言类型</span>
+                        <DataTableColumnFilter
+                            column={column}
+                            options={types}
+                        />
+                    </div>
+                );
+            },
+            cell: ({ row }) => {
+                const TypesMap: { [key: number]: string } = {
+                    0: '咨询',
+                    1: '建议',
+                    2: '投诉',
+                    3: '其他'
+                };
+                return TypesMap[row.original.type];
             }
         },
         {
             accessorKey: 'status',
             meta: {
-                title: '用户状态'
+                title: '留言状态'
             },
             header: ({ column }) => {
                 return (
                     <div className={cn('flex items-center space-x-1')}>
-                        <span>用户状态</span>
+                        <span>留言状态</span>
                         <DataTableColumnFilter
                             column={column}
                             options={status}
@@ -84,21 +117,12 @@ const getColumns = (onRefresh: () => void) => {
             },
             cell: ({ row }) => {
                 const StatusMap: { [key: number]: string } = {
-                    0: '禁用',
-                    1: '启用'
+                    0: '待处理',
+                    1: '处理中',
+                    2: '已完成',
+                    3: '已关闭'
                 };
                 return StatusMap[row.original.status];
-            }
-        },
-        {
-            accessorKey: 'roles',
-            meta: {
-                title: '角色'
-            },
-            header: '角色',
-            cell: ({ row }) => {
-                const roles = row.original.roles.map(item => item.name);
-                return <DataTableArrayTooltip items={roles} />;
             }
         },
         {

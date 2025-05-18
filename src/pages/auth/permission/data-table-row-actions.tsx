@@ -22,11 +22,8 @@ import { Button } from '@/components/ui/button';
 import { CircleAlertIcon } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 
-const DeleteDialog: React.FC<DeleteDialogProps & { name: string }> = ({
-    id,
-    name,
-    onRefresh
-}) => {
+const DeleteDialog: React.FC<DeleteDialogProps> = ({ id, onRefresh }) => {
+    const tip = '确认删除';
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState('');
 
@@ -67,8 +64,8 @@ const DeleteDialog: React.FC<DeleteDialogProps & { name: string }> = ({
                             确认删除
                         </DialogTitle>
                         <DialogDescription className={cn('sm:text-center')}>
-                            此操作无法撤销。 若删除, 请输入角色名称：
-                            <span className={cn('text-theme')}>{name}</span>
+                            此操作无法撤销。 若删除, 请输入：
+                            <span className={cn('text-theme')}>{tip}</span>
                         </DialogDescription>
                     </DialogHeader>
                 </div>
@@ -77,7 +74,7 @@ const DeleteDialog: React.FC<DeleteDialogProps & { name: string }> = ({
                     <div className={cn('*:not-first:mt-2')}>
                         <Input
                             type="text"
-                            placeholder={`请输入 ${name} 确认`}
+                            placeholder={`请输入 ${tip} 确认`}
                             value={value}
                             onChange={e => setValue(e.target.value)}
                         />
@@ -96,7 +93,7 @@ const DeleteDialog: React.FC<DeleteDialogProps & { name: string }> = ({
                         <Button
                             type="button"
                             className={'h-9 flex-1 bg-theme'}
-                            disabled={value !== name}
+                            disabled={value !== tip}
                             onClick={() => run({ id })}
                         >
                             删除
@@ -111,11 +108,11 @@ const DeleteDialog: React.FC<DeleteDialogProps & { name: string }> = ({
 const DataTableRowActions: React.FC<
     DataTableRowActionsProps<PermissionListItem>
 > = ({ row, onRefresh }) => {
-    const { id, name } = row;
+    const { id } = row;
 
     return (
         <div className={cn('space-x-4')}>
-            <DeleteDialog id={id} name={name} onRefresh={onRefresh} />
+            <DeleteDialog id={id} onRefresh={onRefresh} />
         </div>
     );
 };

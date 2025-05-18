@@ -68,6 +68,7 @@ const FormInput = <TFieldValues extends FieldValues>({
                                 type="text"
                                 autoComplete="off"
                                 value={field.value}
+                                maxLength={maxLength}
                                 onChange={field.onChange}
                                 placeholder={placeholder}
                             />

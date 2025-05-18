@@ -3,7 +3,7 @@ import { cn, formatDate } from '@/lib/utils';
 import type { RoleListItem } from '@/types';
 import { ColumnDef } from '@tanstack/react-table';
 import { Search } from 'lucide-react';
-import { DataTableTooltip } from '@/components/custom/data-table/data-table-tooltip';
+import { DataTableArrayTooltip } from '@/components/custom/data-table/data-table-array-tooltip';
 import { DataTableRowActions } from '@/pages/auth/role/data-table-row-actions';
 
 const getColumns = (onRefresh: () => void) => {
@@ -50,7 +50,7 @@ const getColumns = (onRefresh: () => void) => {
             header: '用户',
             cell: ({ row }) => {
                 const users = row.original.users.map(item => item.nickname);
-                return <DataTableTooltip items={users} />;
+                return <DataTableArrayTooltip items={users} />;
             }
         },
         {
@@ -63,7 +63,7 @@ const getColumns = (onRefresh: () => void) => {
                 const permissions = row.original.permissions.map(
                     item => item.name
                 );
-                return <DataTableTooltip items={permissions} />;
+                return <DataTableArrayTooltip items={permissions} />;
             }
         },
         {

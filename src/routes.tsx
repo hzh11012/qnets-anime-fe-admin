@@ -42,6 +42,13 @@ const staticRoutes: RouteObject[] = [
                             Component: (await import('@/pages/user/list/index'))
                                 .default
                         })
+                    },
+                    {
+                        path: 'message',
+                        lazy: async () => ({
+                            Component: (await import('@/pages/user/message/index'))
+                                .default
+                        })
                     }
                 ]
             },

@@ -11,85 +11,84 @@ import {
 } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
 import type {
-    RoleListItem,
+    MessageListItem,
     DataTableRowActionsProps,
     DeleteDialogProps,
     EditDialogProps,
-    ZodFormValues,
-    Option
+    ZodFormValues
 } from '@/types';
 import { useRequest } from 'ahooks';
 import { toast } from 'sonner';
-import { roleEdit, roleDelete } from '@/apis';
+import { messageEdit, messageDelete } from '@/apis';
 import { Button } from '@/components/ui/button';
-import { CircleAlertIcon } from 'lucide-react';
-import { Input } from '@/components/ui/input';
 import { Form } from '@/components/ui/form';
-import FormInput from '@/components/custom/form/form-input';
+import FormTextarea from '@/components/custom/form/fomr-textarea';
 import { useForm, UseFormReturn } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { roleEditSchema } from '@/pages/auth/role/form-schema';
-import { useRoleTableStore } from '@/store';
-import FormMultiSelect from '@/components/custom/form/form-multiple-select';
+import { messageEditSchema } from '@/pages/user/message/form-schema';
+import FormSelect from '@/components/custom/form/form-select';
+import { status, types } from '@/pages/user/message/columns';
+import { CircleAlertIcon } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 
-type RoleFormValues = ZodFormValues<typeof roleEditSchema>;
+type MessageFormValues = ZodFormValues<typeof messageEditSchema>;
 
 interface EditFormProps {
-    form: UseFormReturn<RoleFormValues>;
-    permissions: Option[];
+    form: UseFormReturn<MessageFormValues>;
 }
 
-const EditForm: React.FC<EditFormProps> = ({ form, permissions }) => {
+const EditForm: React.FC<EditFormProps> = ({ form }) => {
     return (
         <Form {...form}>
             <form className={cn('space-y-6')}>
-                <FormInput
+                <FormTextarea
                     control={form.control}
-                    name="name"
-                    label="角色名称"
+                    name="reply"
+                    label="回复内容"
                     required
                 />
-                <FormInput
-                    control={form.control}
-                    name="role"
-                    label="角色编码"
-                    required
-                />
-                <FormMultiSelect
-                    control={form.control}
-                    name="permissions"
-                    label="权限"
-                    placeholder="请输入"
-                    options={permissions}
-                />
+                <div className={cn('flex gap-6')}>
+                    <div className={cn('flex-1')}>
+                        <FormSelect
+                            control={form.control}
+                            name="type"
+                            label="留言类型"
+                            required
+                            options={types}
+                        />
+                    </div>
+                    <div className={cn('flex-1')}>
+                        <FormSelect
+                            control={form.control}
+                            name="status"
+                            label="留言状态"
+                            required
+                            options={status}
+                        />
+                    </div>
+                </div>
             </form>
         </Form>
     );
 };
 
-const EditDialog: React.FC<EditDialogProps<RoleListItem>> = ({
+const EditDialog: React.FC<EditDialogProps<MessageListItem>> = ({
     row,
     onRefresh
 }) => {
-    const { id, name, role, permissions } = row;
+    const { id, reply, status, type } = row;
     const [open, setOpen] = useState(false);
-    const permissionsList = useRoleTableStore(state => state.permissions);
 
-    const form = useForm<RoleFormValues>({
-        resolver: zodResolver(roleEditSchema),
+    const form = useForm<MessageFormValues>({
+        resolver: zodResolver(messageEditSchema),
         defaultValues: {
-            name,
-            role,
-            permissions: permissions.map(item => {
-                return {
-                    label: item.name,
-                    value: item.id
-                };
-            })
+            reply,
+            status: String(status),
+            type: String(type)
         }
     });
 
-    const { run } = useRequest(roleEdit, {
+    const { run } = useRequest(messageEdit, {
         manual: true,
         debounceWait: 300,
         onSuccess({ code, msg }) {
@@ -101,10 +100,8 @@ const EditDialog: React.FC<EditDialogProps<RoleListItem>> = ({
         }
     });
 
-    const handleEdit = (values: RoleFormValues) => {
-        const { permissions, ...args } = values;
-        const _permissions = permissions?.map(item => item.value);
-        run({ ...args, id, permissions: _permissions });
+    const handleEdit = (values: MessageFormValues) => {
+        run({ id, ...values });
     };
 
     return (
@@ -120,7 +117,7 @@ const EditDialog: React.FC<EditDialogProps<RoleListItem>> = ({
                         编辑
                     </DialogTitle>
                 </DialogHeader>
-                <EditForm form={form} permissions={permissionsList} />
+                <EditForm form={form} />
                 <DialogFooter className={cn('flex-row gap-5')}>
                     <DialogClose asChild>
                         <Button
@@ -150,7 +147,7 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({ id, onRefresh }) => {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState('');
 
-    const { run } = useRequest(roleDelete, {
+    const { run } = useRequest(messageDelete, {
         manual: true,
         debounceWait: 300,
         onSuccess({ code, msg }) {
@@ -228,10 +225,9 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({ id, onRefresh }) => {
     );
 };
 
-const DataTableRowActions: React.FC<DataTableRowActionsProps<RoleListItem>> = ({
-    row,
-    onRefresh
-}) => {
+const DataTableRowActions: React.FC<
+    DataTableRowActionsProps<MessageListItem>
+> = ({ row, onRefresh }) => {
     const { id } = row;
 
     return (
