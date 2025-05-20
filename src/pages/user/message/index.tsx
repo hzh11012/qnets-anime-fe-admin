@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRequest } from 'ahooks';
 import { getMessageList } from '@/apis';
 import { useMessageTableStore } from '@/store';
@@ -35,7 +35,8 @@ const Index: React.FC = () => {
         state => state.setColumnFilters
     );
 
-    const { run, loading, refresh } = useRequest(getMessageList, {
+    const { run, loading, refresh, cancel } = useRequest(getMessageList, {
+        debounceWait: 300,
         defaultParams: [{ page, pageSize }],
         onSuccess: data => {
             const { rows, total } = data.data;
@@ -56,6 +57,12 @@ const Index: React.FC = () => {
             });
         }
     });
+
+    useEffect(() => {
+        return () => {
+            cancel();
+        };
+    }, [cancel]);
 
     const columns = getColumns(() => {
         if (data.length === 1 && page > 1) {

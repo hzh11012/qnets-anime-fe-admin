@@ -29,11 +29,13 @@ import {
     ReactNode,
     useCallback,
     useEffect,
+    useMemo,
     useRef,
     useState
 } from 'react';
 import { DataTableToolbar } from '@/components/custom/data-table/data-table-toolbar';
 import DataTablePagination from '@/components/custom/data-table/data-table-pagination';
+import { throttle } from 'throttle-debounce';
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -89,22 +91,28 @@ const DataTable = <TData, TValue>({
     className,
     headerClassName
 }: DataTableProps<TData, TValue>) => {
-    const getPinningStyles = (column: Column<TData, TValue>): CSSProperties => {
-        const isPinned = column.getIsPinned();
-        return {
-            left:
-                isPinned === 'left'
-                    ? `${column.getStart('left')}px`
-                    : undefined,
-            right:
-                isPinned === 'right'
-                    ? `${column.getAfter('right')}px`
-                    : undefined,
-            position: isPinned ? 'sticky' : 'relative',
-            width: column.getSize(),
-            zIndex: isPinned ? 1 : 0
-        };
-    };
+    const getPinningStyles = useCallback(
+        (column: Column<TData, TValue>): CSSProperties => {
+            const isPinned = column.getIsPinned();
+            const styles: CSSProperties = {
+                position: isPinned ? 'sticky' : 'relative',
+                width: column.getSize(),
+                zIndex: isPinned ? 1 : 0
+            };
+
+            if (isPinned === 'left') {
+                styles.left = `${column.getStart('left')}px`;
+            } else if (isPinned === 'right') {
+                styles.right = `${column.getAfter('right')}px`;
+            }
+
+            return styles;
+        },
+        []
+    );
+
+    const memoizedColumns = useMemo(() => columns, [columns]);
+    const memoizedData = useMemo(() => data, [data]);
 
     const table = useReactTable({
         initialState: {
@@ -112,8 +120,8 @@ const DataTable = <TData, TValue>({
                 right: ['actions']
             }
         },
-        data,
-        columns,
+        data: memoizedData,
+        columns: memoizedColumns,
         pageCount,
         state: { pagination, sorting, rowSelection, columnFilters },
         manualPagination: true,
@@ -145,20 +153,23 @@ const DataTable = <TData, TValue>({
         };
     }, []);
 
-    const handleScroll = useCallback(() => {
-        const table = tableRef.current;
-        if (!table) return;
+    const handleScroll = useCallback(
+        throttle(100, () => {
+            const table = tableRef.current;
+            if (!table) return;
 
-        // 计算关键滚动属性
-        const { scrollLeft, clientWidth, scrollWidth } = table;
+            // 计算关键滚动属性
+            const { scrollLeft, clientWidth, scrollWidth } = table;
 
-        // 判断是否滚动到最左/右侧
-        const isStart = scrollLeft <= 0;
-        const isEnd = scrollLeft + clientWidth >= scrollWidth;
+            // 判断是否滚动到最左/右侧
+            const isStart = scrollLeft <= 0;
+            const isEnd = Math.abs(scrollLeft + clientWidth - scrollWidth) < 1;
 
-        setIsLeftStart(isStart);
-        setIsRightEnd(isEnd);
-    }, []);
+            setIsLeftStart(isStart);
+            setIsRightEnd(isEnd);
+        }),
+        []
+    );
 
     return (
         <Card className={cn('p-0 border-none shadow-none h-full gap-4')}>

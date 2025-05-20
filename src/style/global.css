@@ -6,7 +6,7 @@ body,
 
 * {
     scrollbar-width: thin;
-    scrollbar-color: unset;
+    scrollbar-color: #888 transparent;
 }
 
 .required::after {

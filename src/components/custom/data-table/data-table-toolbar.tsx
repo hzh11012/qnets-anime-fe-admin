@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { Table } from '@tanstack/react-table';
-import { ReactNode } from 'react';
+import { ReactNode, useCallback } from 'react';
 
 interface DataTableToolbarProps<TData> {
     table: Table<TData>;
@@ -33,6 +33,15 @@ export function DataTableToolbar<TData>({
     onSelect,
     onRefresh
 }: DataTableToolbarProps<TData>) {
+    const hadnleKeyDown = useCallback(
+        (e: React.KeyboardEvent<HTMLInputElement>) => {
+            if (e.key === 'Enter') {
+                onSearch && onSearch(e.currentTarget.value);
+            }
+        },
+        [onSearch]
+    );
+
     return (
         <div className={cn('flex items-center justify-between')}>
             <div className={cn('flex flex-1 items-center space-x-6')}>
@@ -67,11 +76,7 @@ export function DataTableToolbar<TData>({
                     className={cn('-ms-px shadow-none max-w-72 focus:z-10', {
                         'rounded-s-none': options
                     })}
-                    onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-                        if (e.key === 'Enter') {
-                            onSearch && onSearch(e.currentTarget.value);
-                        }
-                    }}
+                    onKeyDown={hadnleKeyDown}
                 />
             </div>
             <DataTableViewColumn table={table} onRefresh={onRefresh} />

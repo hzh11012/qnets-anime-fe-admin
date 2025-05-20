@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRequest } from 'ahooks';
 import { getPermissionList } from '@/apis';
 import { usePermissionTableStore } from '@/store';
@@ -30,7 +30,8 @@ const Index: React.FC = () => {
     const pagination = usePermissionTableStore(state => state.pagination);
     const setPagination = usePermissionTableStore(state => state.setPagination);
 
-    const { run, loading, refresh } = useRequest(getPermissionList, {
+    const { run, loading, refresh, cancel } = useRequest(getPermissionList, {
+        debounceWait: 300,
         defaultParams: [{ page, pageSize }],
         onSuccess: data => {
             const { rows, total } = data.data;
@@ -42,6 +43,12 @@ const Index: React.FC = () => {
             run({ page, type, keyword, pageSize, orderBy, order });
         }
     });
+
+    useEffect(() => {
+        return () => {
+            cancel();
+        };
+    }, [cancel]);
 
     const columns = getColumns(() => {
         if (data.length === 1 && page > 1) {

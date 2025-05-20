@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRequest } from 'ahooks';
 import { getUserList, getRoleList } from '@/apis';
 import { useUserTableStore } from '@/store';
@@ -31,7 +31,8 @@ const Index: React.FC = () => {
     const columnFilters = useUserTableStore(state => state.columnFilters);
     const setColumnFilters = useUserTableStore(state => state.setColumnFilters);
 
-    const { run, loading, refresh } = useRequest(getUserList, {
+    const { run, loading, refresh, cancel } = useRequest(getUserList, {
+        debounceWait: 300,
         defaultParams: [{ page, pageSize }],
         onSuccess: data => {
             const { rows, total } = data.data;
@@ -43,6 +44,12 @@ const Index: React.FC = () => {
             run({ page, type, keyword, pageSize, orderBy, order, status });
         }
     });
+
+    useEffect(() => {
+        return () => {
+            cancel();
+        };
+    }, [cancel]);
 
     useRequest(getRoleList, {
         defaultParams: [

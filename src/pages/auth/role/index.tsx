@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRequest } from 'ahooks';
 import { getPermissionList, getRoleList } from '@/apis';
 import { useRoleTableStore } from '@/store';
@@ -29,7 +29,8 @@ const Index: React.FC = () => {
     const setPagination = useRoleTableStore(state => state.setPagination);
     const setPermissions = useRoleTableStore(state => state.setPermissions);
 
-    const { run, loading, refresh } = useRequest(getRoleList, {
+    const { run, loading, refresh, cancel } = useRequest(getRoleList, {
+        debounceWait: 300,
         defaultParams: [{ page, pageSize }],
         onSuccess: data => {
             const { rows, total } = data.data;
@@ -41,6 +42,12 @@ const Index: React.FC = () => {
             run({ page, type, keyword, pageSize, orderBy, order });
         }
     });
+
+    useEffect(() => {
+        return () => {
+            cancel();
+        };
+    }, [cancel]);
 
     useRequest(getPermissionList, {
         defaultParams: [
