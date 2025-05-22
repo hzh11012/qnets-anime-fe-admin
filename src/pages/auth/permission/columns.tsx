@@ -45,9 +45,9 @@ const getColumns = (onRefresh: () => void) => {
         {
             accessorKey: 'roles',
             meta: {
-                title: '角色'
+                title: '关联角色'
             },
-            header: '角色',
+            header: '关联角色',
             cell: ({ row }) => {
                 const roles = row.original.roles.map(item => item.name);
                 return <DataTableArrayTooltip items={roles} />;

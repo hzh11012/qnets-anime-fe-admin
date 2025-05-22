@@ -1,69 +1,42 @@
 import { DataTableColumnSort } from '@/components/custom/data-table/data-table-column-sort';
 import { cn, formatDate } from '@/lib/utils';
-import type { RoleListItem } from '@/types';
+import type { SeriesListItem } from '@/types';
 import { ColumnDef } from '@tanstack/react-table';
 import { Search } from 'lucide-react';
 import { DataTableArrayTooltip } from '@/components/custom/data-table/data-table-array-tooltip';
-import { DataTableRowActions } from '@/pages/auth/role/data-table-row-actions';
+import { DataTableRowActions } from '@/pages/anime/series/data-table-row-actions';
 
 const getColumns = (onRefresh: () => void) => {
-    const columns: ColumnDef<RoleListItem>[] = [
+    const columns: ColumnDef<SeriesListItem>[] = [
         {
             accessorKey: 'id',
-            header: '角色ID',
+            header: '系列ID',
             enableSorting: false,
             enableHiding: false
         },
         {
             accessorKey: 'name',
             meta: {
-                title: '角色名称'
+                title: '系列名称'
             },
             header: () => {
                 return (
                     <div className={cn('flex items-center space-x-1')}>
-                        <span>角色名称</span>
+                        <span>系列名称</span>
                         <Search className={cn('size-3.5')} />
                     </div>
                 );
             }
         },
         {
-            accessorKey: 'role',
+            accessorKey: 'animes',
             meta: {
-                title: '角色编码'
+                title: '关联动漫'
             },
-            header: () => {
-                return (
-                    <div className={cn('flex items-center space-x-1')}>
-                        <span>角色编码</span>
-                        <Search className={cn('size-3.5')} />
-                    </div>
-                );
-            }
-        },
-        {
-            accessorKey: 'users',
-            meta: {
-                title: '关联用户'
-            },
-            header: '关联用户',
+            header: '关联动漫',
             cell: ({ row }) => {
-                const users = row.original.users.map(item => item.nickname);
-                return <DataTableArrayTooltip items={users} />;
-            }
-        },
-        {
-            accessorKey: 'permissions',
-            meta: {
-                title: '关联权限'
-            },
-            header: '关联权限',
-            cell: ({ row }) => {
-                const permissions = row.original.permissions.map(
-                    item => item.name
-                );
-                return <DataTableArrayTooltip items={permissions} />;
+                const roles = row.original.animes.map(item => item.name);
+                return <DataTableArrayTooltip items={roles} />;
             }
         },
         {
@@ -95,7 +68,6 @@ const getColumns = (onRefresh: () => void) => {
             }
         }
     ];
-
     return columns;
 };
 

@@ -53,9 +53,9 @@ const links = [
                 url: '/list'
             },
             {
-                title: '标签分类',
+                title: '分类',
                 icon: Tags,
-                url: '/category'
+                url: '/tag'
             },
             {
                 title: '弹幕',
