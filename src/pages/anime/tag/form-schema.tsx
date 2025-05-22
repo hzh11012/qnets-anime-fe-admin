@@ -5,6 +5,7 @@ const formSchema = {
         required_error: '分类名称不能为空',
         invalid_type_error: '类型错误'
     })
+        .trim()
         .max(50, '长度不能超过50')
         .min(1, '分类名称不能为空')
 };
