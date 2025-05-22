@@ -36,7 +36,8 @@ const Index: React.FC = () => {
     );
 
     const { run, loading, refresh, cancel } = useRequest(getMessageList, {
-        debounceWait: 300,
+        loadingDelay: 250,
+        debounceWait: 250,
         defaultParams: [{ page, pageSize }],
         onSuccess: data => {
             const { rows, total } = data.data;

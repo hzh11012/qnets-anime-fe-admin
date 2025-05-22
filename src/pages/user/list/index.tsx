@@ -32,7 +32,8 @@ const Index: React.FC = () => {
     const setColumnFilters = useUserTableStore(state => state.setColumnFilters);
 
     const { run, loading, refresh, cancel } = useRequest(getUserList, {
-        debounceWait: 300,
+        loadingDelay: 250,
+        debounceWait: 250,
         defaultParams: [{ page, pageSize }],
         onSuccess: data => {
             const { rows, total } = data.data;
