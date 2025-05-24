@@ -37,10 +37,18 @@ const staticRoutes: RouteObject[] = [
                 path: 'anime',
                 children: [
                     {
+                        path: 'list',
+                        lazy: async () => ({
+                            Component: (await import('@/pages/anime/list/index'))
+                                .default
+                        })
+                    },
+                    {
                         path: 'series',
                         lazy: async () => ({
-                            Component: (await import('@/pages/anime/series/index'))
-                                .default
+                            Component: (
+                                await import('@/pages/anime/series/index')
+                            ).default
                         })
                     },
                     {
@@ -65,8 +73,9 @@ const staticRoutes: RouteObject[] = [
                     {
                         path: 'message',
                         lazy: async () => ({
-                            Component: (await import('@/pages/user/message/index'))
-                                .default
+                            Component: (
+                                await import('@/pages/user/message/index')
+                            ).default
                         })
                     }
                 ]

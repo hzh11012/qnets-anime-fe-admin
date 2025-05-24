@@ -2,8 +2,8 @@ interface UserListItem {
     id: string;
     nickname: string;
     email: string;
-    avatar: string | null;
-    status: number;
+    avatar?: string;
+    status: 0 | 1;
     roles: { id: string; name: string }[];
     createdAt: string;
 }

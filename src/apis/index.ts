@@ -5,3 +5,4 @@ export * from '@/apis/user';
 export * from '@/apis/message';
 export * from '@/apis/series';
 export * from '@/apis/tag';
+export * from '@/apis/anime';

@@ -2,8 +2,8 @@ interface MessageListItem {
     id: string;
     content: string;
     reply: string;
-    status: number;
-    type: number;
+    status: 0 | 1 | 2 | 3;
+    type: 0 | 1 | 2 | 3;
     user: { nickname: string };
     createdAt: string;
 }

@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/popover';
 import { VirtualizedCommand } from '@/components/ui/virtualized-combobox';
 import { cn } from '@/lib/utils';
-import { ChevronDown } from 'lucide-react';
+import { ChevronsUpDown } from 'lucide-react';
 import { useState } from 'react';
 import type { Control, FieldValues, Path } from 'react-hook-form';
 
@@ -63,9 +63,7 @@ const FormVirtualized = <TFieldValues extends FieldValues>({
                                     variant="outline"
                                     role="combobox"
                                     aria-expanded={open}
-                                    className={cn(
-                                        'w-full justify-between bg-background px-3 outline-offset-0 hover:bg-background h-9'
-                                    )}
+                                    className={cn('w-full justify-between h-9')}
                                 >
                                     <span>
                                         {!!field.value &&
@@ -74,12 +72,8 @@ const FormVirtualized = <TFieldValues extends FieldValues>({
                                                     item.value === field.value
                                             )?.label}
                                     </span>
-                                    <ChevronDown
-                                        size={16}
-                                        strokeWidth={2}
-                                        className={cn(
-                                            'shrink-0 text-muted-foreground/80'
-                                        )}
+                                    <ChevronsUpDown
+                                        className={cn('shrink-0 opacity-30')}
                                         aria-hidden="true"
                                     />
                                 </Button>
@@ -87,13 +81,12 @@ const FormVirtualized = <TFieldValues extends FieldValues>({
                         </FormControl>
                         <PopoverContent
                             className={cn(
-                                'w-full min-w-[var(--radix-popper-anchor-width)] border-input p-0'
+                                'w-[var(--radix-popper-anchor-width)] p-0'
                             )}
-                            align="start"
                         >
                             <VirtualizedCommand
                                 options={options}
-                                height="16rem"
+                                height="10rem"
                                 placeholder={placeholder}
                                 selectedOption={field.value}
                                 onSelectOption={currentValue => {

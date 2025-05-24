@@ -20,11 +20,8 @@ interface RoleCreateParams {
     permissions?: string[];
 }
 
-interface RoleEditParams {
+interface RoleEditParams extends RoleCreateParams {
     id: string;
-    name: string;
-    role: string;
-    permissions?: string[];
 }
 
 interface RoleDeleteParams {

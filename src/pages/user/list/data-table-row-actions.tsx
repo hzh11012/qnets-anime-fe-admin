@@ -78,7 +78,7 @@ const EditDialog: React.FC<EditDialogProps<UserListItem>> = ({
         resolver: zodResolver(userEditSchema),
         defaultValues: {
             nickname,
-            status: String(status),
+            status: `${status}`,
             roles: roles.map(item => {
                 return {
                     label: item.name,

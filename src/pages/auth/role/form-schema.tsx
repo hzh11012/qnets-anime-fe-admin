@@ -2,8 +2,7 @@ import Zod from 'zod';
 
 const optionSchema = Zod.object({
     label: Zod.string().trim(),
-    value: Zod.string().trim(),
-    disable: Zod.boolean().optional()
+    value: Zod.string().trim()
 });
 
 const formSchema = {
@@ -22,7 +21,7 @@ const formSchema = {
         .max(50, '长度不能超过50')
         .min(1, '角色编码不能为空'),
     permissions: Zod.array(optionSchema, {
-        invalid_type_error: '类型错误'
+        invalid_type_error: '权限参数错误'
     }).optional()
 };
 

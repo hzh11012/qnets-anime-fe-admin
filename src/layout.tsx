@@ -61,7 +61,7 @@ const Layout = () => {
                             </BreadcrumbList>
                         </Breadcrumb>
                     </div>
-                    <div className={cn('flex items-center gap-2 px-4')}>
+                    <div className={cn('flex items-center gap-2 px-4 pr-6')}>
                         <ThemeSwitch />
                     </div>
                 </header>

@@ -11,84 +11,200 @@ import {
 } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
 import type {
-    MessageListItem,
+    AnimeListItem,
     DataTableRowActionsProps,
     DeleteDialogProps,
     EditDialogProps,
-    ZodFormValues
+    ZodFormValues,
+    Option
 } from '@/types';
 import { useRequest } from 'ahooks';
 import { toast } from 'sonner';
-import { messageEdit, messageDelete } from '@/apis';
+import { animeEdit, animeDelete } from '@/apis';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import FormTextarea from '@/components/custom/form/fomr-textarea';
 import { useForm, UseFormReturn } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { messageEditSchema } from '@/pages/user/message/form-schema';
+import { animeEditSchema } from '@/pages/anime/list/form-schema';
 import FormSelect from '@/components/custom/form/form-select';
-import { status, types } from '@/pages/user/message/columns';
+import {
+    seasons,
+    types,
+    status,
+    months,
+    years
+} from '@/pages/anime/list/columns';
 import { CircleAlertIcon } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import FormVirtualized from '@/components/custom/form/form-virtualized';
+import FormInput from '@/components/custom/form/form-input';
+import { useAnimeTableStore } from '@/store';
+import FormMultiSelect from '@/components/custom/form/form-multiple-select';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
-type MessageFormValues = ZodFormValues<typeof messageEditSchema>;
+type AnimeFormValues = ZodFormValues<typeof animeEditSchema>;
 
 interface EditFormProps {
-    form: UseFormReturn<MessageFormValues>;
+    form: UseFormReturn<AnimeFormValues>;
+    tags: Option[];
+    series: Option[];
 }
 
-const EditForm: React.FC<EditFormProps> = ({ form }) => {
+const EditForm: React.FC<EditFormProps> = ({ form, tags, series }) => {
     return (
         <Form {...form}>
             <form className={cn('space-y-6')}>
+                <FormVirtualized
+                    control={form.control}
+                    name="series"
+                    label="动漫系列"
+                    required
+                    options={series}
+                />
+                <FormInput
+                    control={form.control}
+                    name="name"
+                    label="动漫名称"
+                    required
+                />
+                <div className={cn('flex gap-6')}>
+                    <div className={cn('flex-1')}>
+                        <FormVirtualized
+                            control={form.control}
+                            name="season"
+                            label="动漫所属季"
+                            required
+                            options={seasons}
+                        />
+                    </div>
+                    <div className={cn('flex-1')}>
+                        <FormInput
+                            control={form.control}
+                            name="seasonName"
+                            label="动漫所属季名称"
+                        />
+                    </div>
+                </div>
                 <FormTextarea
                     control={form.control}
-                    name="reply"
-                    label="回复内容"
+                    name="description"
+                    label="动漫简介"
+                    required
+                />
+                <FormInput
+                    control={form.control}
+                    name="coverUrl"
+                    label="动漫封面"
+                    required
+                />
+                <FormInput
+                    control={form.control}
+                    name="bannerUrl"
+                    label="动漫横幅"
                     required
                 />
                 <div className={cn('flex gap-6')}>
                     <div className={cn('flex-1')}>
                         <FormSelect
                             control={form.control}
-                            name="type"
-                            label="留言类型"
+                            name="status"
+                            label="动漫状态"
                             required
-                            options={types}
+                            options={status}
                         />
                     </div>
                     <div className={cn('flex-1')}>
                         <FormSelect
                             control={form.control}
-                            name="status"
-                            label="留言状态"
+                            name="type"
+                            label="动漫类型"
                             required
-                            options={status}
+                            options={types}
                         />
                     </div>
                 </div>
+                <div className={cn('flex gap-6')}>
+                    <div className={cn('flex-1')}>
+                        <FormVirtualized
+                            control={form.control}
+                            name="year"
+                            label="动漫发行年份"
+                            required
+                            options={years}
+                        />
+                    </div>
+                    <div className={cn('flex-1')}>
+                        <FormSelect
+                            control={form.control}
+                            name="month"
+                            label="动漫发行月份"
+                            required
+                            options={months}
+                        />
+                    </div>
+                </div>
+                <FormMultiSelect
+                    control={form.control}
+                    name="tags"
+                    label="动漫分类"
+                    required
+                    options={tags}
+                />
+                <FormInput
+                    control={form.control}
+                    name="director"
+                    label="动漫导演"
+                />
+                <FormTextarea
+                    control={form.control}
+                    name="cv"
+                    label="动漫声优"
+                />
             </form>
         </Form>
     );
 };
 
-const EditDialog: React.FC<EditDialogProps<MessageListItem>> = ({
+const EditDialog: React.FC<EditDialogProps<AnimeListItem>> = ({
     row,
     onRefresh
 }) => {
-    const { id, reply, status, type } = row;
+    const {
+        id,
+        animeSeriesId,
+        status,
+        type,
+        year,
+        month,
+        season,
+        animeTags,
+        ...rest
+    } = row;
     const [open, setOpen] = useState(false);
+    const tagsList = useAnimeTableStore(state => state.allTags);
+    const seriesList = useAnimeTableStore(state => state.allSeries);
 
-    const form = useForm<MessageFormValues>({
-        resolver: zodResolver(messageEditSchema),
+    const form = useForm<AnimeFormValues>({
+        resolver: zodResolver(animeEditSchema),
         defaultValues: {
-            reply,
+            series: animeSeriesId,
             status: `${status}`,
             type: `${type}`,
+            year: `${year}`,
+            season: `${season}`,
+            month: `${month}`,
+            tags: animeTags.map(item => {
+                return {
+                    label: item.name,
+                    value: item.id
+                };
+            }),
+            ...rest
         }
     });
 
-    const { run } = useRequest(messageEdit, {
+    const { run } = useRequest(animeEdit, {
         manual: true,
         debounceWait: 300,
         onSuccess({ code, msg }) {
@@ -100,8 +216,10 @@ const EditDialog: React.FC<EditDialogProps<MessageListItem>> = ({
         }
     });
 
-    const handleEdit = (values: MessageFormValues) => {
-        run({ id, ...values });
+    const handleEdit = (values: AnimeFormValues) => {
+        const { tags, ...args } = values;
+        const _tags = tags?.map(item => item.value);
+        run({ ...args, id, tags: _tags });
     };
 
     return (
@@ -111,14 +229,26 @@ const EditDialog: React.FC<EditDialogProps<MessageListItem>> = ({
                     编辑
                 </Button>
             </DialogTrigger>
-            <DialogContent aria-describedby={undefined}>
-                <DialogHeader>
+            <DialogContent aria-describedby={undefined} className={cn('px-0')}>
+                <DialogHeader className={cn('px-6')}>
                     <DialogTitle className={cn('sm:text-left')}>
                         编辑
                     </DialogTitle>
                 </DialogHeader>
-                <EditForm form={form} />
-                <DialogFooter className={cn('flex-row gap-5')}>
+                <ScrollArea
+                    className={cn(
+                        'max-h-[calc(100vh-10rem)] sm:max-h-[calc(26rem)]'
+                    )}
+                >
+                    <div className={cn('px-6 pb-1')}>
+                        <EditForm
+                            form={form}
+                            tags={tagsList}
+                            series={seriesList}
+                        />
+                    </div>
+                </ScrollArea>
+                <DialogFooter className={cn('flex-row gap-5 px-6')}>
                     <DialogClose asChild>
                         <Button
                             type="button"
@@ -147,7 +277,7 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({ id, onRefresh }) => {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState('');
 
-    const { run } = useRequest(messageDelete, {
+    const { run } = useRequest(animeDelete, {
         manual: true,
         debounceWait: 300,
         onSuccess({ code, msg }) {
@@ -226,7 +356,7 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({ id, onRefresh }) => {
 };
 
 const DataTableRowActions: React.FC<
-    DataTableRowActionsProps<MessageListItem>
+    DataTableRowActionsProps<AnimeListItem>
 > = ({ row, onRefresh }) => {
     const { id } = row;
 

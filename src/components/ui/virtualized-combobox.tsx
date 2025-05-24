@@ -27,7 +27,7 @@ interface VirtualizedCommandProps {
 export const VirtualizedCommand = ({
     height,
     options,
-    placeholder,
+    placeholder = '请输入',
     selectedOption,
     onSelectOption
 }: VirtualizedCommandProps) => {
@@ -92,7 +92,7 @@ export const VirtualizedCommand = ({
             case 'Enter': {
                 event.preventDefault();
                 if (filteredOptions[focusedIndex]) {
-                    onSelectOption?.(`${filteredOptions[focusedIndex].value}`);
+                    onSelectOption?.(filteredOptions[focusedIndex].value);
                 }
                 break;
             }
@@ -125,16 +125,14 @@ export const VirtualizedCommand = ({
             <CommandList
                 ref={parentRef}
                 style={{
-                    maxHeight: height,
+                    height: height,
                     width: '100%',
                     overflow: 'auto'
                 }}
                 onMouseDown={() => setIsKeyboardNavActive(false)}
                 onMouseMove={() => setIsKeyboardNavActive(false)}
             >
-                <CommandEmpty className={cn('pt-8 pb-6 text-center text-sm')}>
-                    暂无结果
-                </CommandEmpty>
+                <CommandEmpty>暂无结果</CommandEmpty>
                 <CommandGroup>
                     <div
                         style={{
@@ -159,7 +157,9 @@ export const VirtualizedCommand = ({
                                     height: `${virtualOption.size}px`,
                                     transform: `translateY(${virtualOption.start}px)`
                                 }}
-                                value={`${filteredOptions[virtualOption.index].value}`}
+                                value={
+                                    filteredOptions[virtualOption.index].value
+                                }
                                 onMouseEnter={() =>
                                     !isKeyboardNavActive &&
                                     setFocusedIndex(virtualOption.index)

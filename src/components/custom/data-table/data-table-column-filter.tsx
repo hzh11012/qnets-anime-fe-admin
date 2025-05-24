@@ -85,15 +85,15 @@ export function DataTableColumnFilter<TData, TValue>({
                             );
                         })}
                     </>
+                    {selectedValues.size > 0 && (
+                        <DropdownMenuItem
+                            className={cn('justify-center')}
+                            onClick={() => column?.setFilterValue(undefined)}
+                        >
+                            清空筛选
+                        </DropdownMenuItem>
+                    )}
                 </ScrollArea>
-                {selectedValues.size > 0 && (
-                    <DropdownMenuItem
-                        className={cn('justify-center')}
-                        onClick={() => column?.setFilterValue(undefined)}
-                    >
-                        清空筛选
-                    </DropdownMenuItem>
-                )}
             </DropdownMenuContent>
         </DropdownMenu>
     );

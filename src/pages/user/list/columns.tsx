@@ -1,5 +1,5 @@
 import { DataTableColumnSort } from '@/components/custom/data-table/data-table-column-sort';
-import { cn, formatDate } from '@/lib/utils';
+import { cn, createMap, formatDate } from '@/lib/utils';
 import type { UserListItem } from '@/types';
 import { ColumnDef } from '@tanstack/react-table';
 import { Search } from 'lucide-react';
@@ -83,10 +83,7 @@ const getColumns = (onRefresh: () => void) => {
                 );
             },
             cell: ({ row }) => {
-                const StatusMap: { [key: number]: string } = {
-                    0: '禁用',
-                    1: '启用'
-                };
+                const StatusMap = createMap(status);
                 return StatusMap[row.original.status];
             }
         },

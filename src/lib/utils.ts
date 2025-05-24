@@ -33,4 +33,15 @@ const formatDate = (date: string) => {
     return DateTime.fromISO(date).toFormat('DD tt');
 };
 
-export { cn, getTitleByPath, formatDate };
+const createMap = (arr: { label: string; value: string }[]) => {
+    return arr.reduce(
+        (map, item) => {
+            const { label, value } = item;
+            map[parseInt(value, 10)] = label;
+            return map;
+        },
+        {} as { [key: number]: string }
+    );
+};
+
+export { cn, getTitleByPath, formatDate, createMap };

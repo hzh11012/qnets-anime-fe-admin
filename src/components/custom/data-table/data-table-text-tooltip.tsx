@@ -28,7 +28,7 @@ const DataTableTextTooltip: React.FC<DataTableTextTooltipProps> = ({
                 </TooltipTrigger>
                 <TooltipContent
                     className={cn(
-                        'max-w-64 max-h-64 overflow-auto scroll-hidden'
+                        'max-w-64 max-h-64 overflow-auto scroll-hidden break-all'
                     )}
                 >
                     {text}

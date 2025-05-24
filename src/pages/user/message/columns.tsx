@@ -1,5 +1,5 @@
 import { DataTableColumnSort } from '@/components/custom/data-table/data-table-column-sort';
-import { cn, formatDate } from '@/lib/utils';
+import { cn, createMap, formatDate } from '@/lib/utils';
 import type { MessageListItem } from '@/types';
 import { ColumnDef } from '@tanstack/react-table';
 import { Search } from 'lucide-react';
@@ -90,12 +90,7 @@ const getColumns = (onRefresh: () => void) => {
                 );
             },
             cell: ({ row }) => {
-                const TypesMap: { [key: number]: string } = {
-                    0: '咨询',
-                    1: '建议',
-                    2: '投诉',
-                    3: '其他'
-                };
+                const TypesMap = createMap(types);
                 return TypesMap[row.original.type];
             }
         },
@@ -116,12 +111,7 @@ const getColumns = (onRefresh: () => void) => {
                 );
             },
             cell: ({ row }) => {
-                const StatusMap: { [key: number]: string } = {
-                    0: '待处理',
-                    1: '处理中',
-                    2: '已完成',
-                    3: '已关闭'
-                };
+                const StatusMap = createMap(status);
                 return StatusMap[row.original.status];
             }
         },

@@ -106,7 +106,7 @@ const AddDialog: React.FC<AddDialogProps> = ({ onRefresh }) => {
 
 const CustomTools: React.FC<CustomToolsProps> = ({ onRefresh }) => {
     return (
-        <div>
+        <div className={cn('space-x-4')}>
             <AddDialog onRefresh={onRefresh} />
         </div>
     );
