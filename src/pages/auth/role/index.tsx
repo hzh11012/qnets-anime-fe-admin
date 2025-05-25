@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useRequest } from 'ahooks';
-import { getPermissionList, getRoleList } from '@/apis';
+import { getPermissionOptions, getRoleList } from '@/apis';
 import { useRoleTableStore } from '@/store';
 import DataTable from '@/components/custom/data-table/data-table';
 import getColumns from '@/pages/auth/role/columns';
@@ -50,23 +50,10 @@ const Index: React.FC = () => {
         };
     }, [cancel]);
 
-    useRequest(getPermissionList, {
-        defaultParams: [
-            {
-                page: 1,
-                pageSize: 10000
-            }
-        ],
+    useRequest(getPermissionOptions, {
         onSuccess({ code, data }) {
             if (code === 200) {
-                const { rows } = data;
-                const res = rows.map(item => {
-                    return {
-                        label: item.name,
-                        value: item.id
-                    };
-                });
-                setPermissions(res);
+                setPermissions(data);
             }
         }
     });

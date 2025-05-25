@@ -3,7 +3,8 @@ import type {
     TagListParams,
     TagListRes,
     TagCreateParams,
-    TagDeleteParams
+    TagDeleteParams,
+    Option
 } from '@/types';
 
 const path = '/api/server/anime-tags';
@@ -21,4 +22,7 @@ const tagDelete = (params: TagDeleteParams) => {
     return HttpClient.delete(`${path}/${id}`);
 };
 
-export { getTagList, tagCreate, tagDelete };
+const getTagOptions = () => {
+    return HttpClient.get<Option[]>(`${path}/options`);
+};
+export { getTagList, tagCreate, tagDelete, getTagOptions };

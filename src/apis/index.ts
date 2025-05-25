@@ -6,3 +6,4 @@ export * from '@/apis/message';
 export * from '@/apis/series';
 export * from '@/apis/tag';
 export * from '@/apis/anime';
+export * from '@/apis/banner';

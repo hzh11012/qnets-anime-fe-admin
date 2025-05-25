@@ -4,7 +4,8 @@ import type {
     RoleListRes,
     RoleCreateParams,
     RoleEditParams,
-    RoleDeleteParams
+    RoleDeleteParams,
+    Option
 } from '@/types';
 
 const path = '/api/server/roles';
@@ -27,4 +28,8 @@ const roleDelete = (params: RoleDeleteParams) => {
     return HttpClient.delete(`${path}/${id}`);
 };
 
-export { getRoleList, roleCreate, roleEdit, roleDelete };
+const getRoleOptions = () => {
+    return HttpClient.get<Option[]>(`${path}/options`);
+};
+
+export { getRoleList, roleCreate, roleEdit, roleDelete, getRoleOptions };

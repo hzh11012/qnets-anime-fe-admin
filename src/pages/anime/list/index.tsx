@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useRequest } from 'ahooks';
-import { getAnimeList, getSeriesList, getTagList } from '@/apis';
+import { getAnimeList, getSeriesOptions, getTagOptions } from '@/apis';
 import { useAnimeTableStore } from '@/store';
 import DataTable from '@/components/custom/data-table/data-table';
 import getColumns from '@/pages/anime/list/columns';
@@ -67,44 +67,18 @@ const Index: React.FC = () => {
         }
     });
 
-    useRequest(getTagList, {
-        defaultParams: [
-            {
-                page: 1,
-                pageSize: 10000
-            }
-        ],
+    useRequest(getTagOptions, {
         onSuccess({ code, data }) {
             if (code === 200) {
-                const { rows } = data;
-                const res = rows.map(item => {
-                    return {
-                        label: item.name,
-                        value: item.id
-                    };
-                });
-                setAllTags(res);
+                setAllTags(data);
             }
         }
     });
 
-    useRequest(getSeriesList, {
-        defaultParams: [
-            {
-                page: 1,
-                pageSize: 10000
-            }
-        ],
+    useRequest(getSeriesOptions, {
         onSuccess({ code, data }) {
             if (code === 200) {
-                const { rows } = data;
-                const res = rows.map(item => {
-                    return {
-                        label: item.name,
-                        value: item.id
-                    };
-                });
-                setAllSeries(res);
+                setAllSeries(data);
             }
         }
     });

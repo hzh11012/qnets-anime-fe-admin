@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useRequest } from 'ahooks';
-import { getUserList, getRoleList } from '@/apis';
+import { getUserList, getRoleOptions } from '@/apis';
 import { useUserTableStore } from '@/store';
 import DataTable from '@/components/custom/data-table/data-table';
 import getColumns from '@/pages/user/list/columns';
@@ -52,23 +52,10 @@ const Index: React.FC = () => {
         };
     }, [cancel]);
 
-    useRequest(getRoleList, {
-        defaultParams: [
-            {
-                page: 1,
-                pageSize: 10000
-            }
-        ],
+    useRequest(getRoleOptions, {
         onSuccess({ code, data }) {
             if (code === 200) {
-                const { rows } = data;
-                const res = rows.map(item => {
-                    return {
-                        label: item.name,
-                        value: item.id
-                    };
-                });
-                setRoles(res);
+                setRoles(data);
             }
         }
     });

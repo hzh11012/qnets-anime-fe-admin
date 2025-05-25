@@ -179,6 +179,9 @@ const EditDialog: React.FC<EditDialogProps<AnimeListItem>> = ({
         month,
         season,
         animeTags,
+        seasonName,
+        director,
+        cv,
         ...rest
     } = row;
     const [open, setOpen] = useState(false);
@@ -200,6 +203,9 @@ const EditDialog: React.FC<EditDialogProps<AnimeListItem>> = ({
                     value: item.id
                 };
             }),
+            seasonName: seasonName || '',
+            director: director || '',
+            cv: cv || '',
             ...rest
         }
     });

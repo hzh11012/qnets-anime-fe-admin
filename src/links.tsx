@@ -5,6 +5,7 @@ import {
     ContactRound,
     Fingerprint,
     IdCard,
+    Images,
     KeyRound,
     LayoutDashboard,
     LayoutList,
@@ -32,6 +33,11 @@ const links = [
         isActive: true,
         url: '/anime',
         items: [
+            {
+                title: '站点轮播',
+                icon: Images,
+                url: '/banner'
+            },
             {
                 title: '新番导视',
                 icon: LayoutList,

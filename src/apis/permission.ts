@@ -3,7 +3,8 @@ import type {
     PermissionListParams,
     PermissionListRes,
     PermissionCreateParams,
-    PermissionDeleteParams
+    PermissionDeleteParams,
+    Option
 } from '@/types';
 
 const path = '/api/server/permissions';
@@ -21,4 +22,13 @@ const permissionDelete = (params: PermissionDeleteParams) => {
     return HttpClient.delete(`${path}/${id}`);
 };
 
-export { getPermissionList, permissionCreate, permissionDelete };
+const getPermissionOptions = () => {
+    return HttpClient.get<Option[]>(`${path}/options`);
+};
+
+export {
+    getPermissionList,
+    permissionCreate,
+    permissionDelete,
+    getPermissionOptions
+};

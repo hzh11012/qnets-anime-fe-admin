@@ -6,4 +6,5 @@ export * from '@/types/apis/message';
 export * from '@/types/apis/series';
 export * from '@/types/apis/tag';
 export * from '@/types/apis/anime';
+export * from '@/types/apis/banner';
 

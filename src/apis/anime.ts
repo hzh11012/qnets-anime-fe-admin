@@ -4,7 +4,8 @@ import type {
     AnimeListRes,
     AnimeCreateParams,
     AnimeEditParams,
-    AnimeDeleteParams
+    AnimeDeleteParams,
+    Option
 } from '@/types';
 
 const path = '/api/server/animes';
@@ -27,4 +28,8 @@ const animeDelete = (params: AnimeDeleteParams) => {
     return HttpClient.delete(`${path}/${id}`);
 };
 
-export { getAnimeList, animeCreate, animeEdit, animeDelete };
+const getAnimeOptions = () => {
+    return HttpClient.get<Option[]>(`${path}/options`);
+};
+
+export { getAnimeList, animeCreate, animeEdit, animeDelete, getAnimeOptions };

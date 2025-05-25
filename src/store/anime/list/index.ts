@@ -17,9 +17,9 @@ interface TableSlice extends BaseTableSlice<AnimeListItem> {
     years: string[];
     tags: string[];
     allTags: Option[];
-    setAllTags: (sorting: Option[]) => void;
+    setAllTags: (tags: Option[]) => void;
     allSeries: Option[];
-    setAllSeries: (sorting: Option[]) => void;
+    setAllSeries: (series: Option[]) => void;
     columnFilters: ColumnFiltersState;
     setColumnFilters: OnChangeFn<ColumnFiltersState>;
 }

@@ -3,7 +3,8 @@ import type {
     SeriesListParams,
     SeriesListRes,
     SeriesCreateParams,
-    SeriesDeleteParams
+    SeriesDeleteParams,
+    Option
 } from '@/types';
 
 const path = '/api/server/anime-series';
@@ -21,4 +22,8 @@ const seriesDelete = (params: SeriesDeleteParams) => {
     return HttpClient.delete(`${path}/${id}`);
 };
 
-export { getSeriesList, seriesCreate, seriesDelete };
+const getSeriesOptions = () => {
+    return HttpClient.get<Option[]>(`${path}/options`);
+};
+
+export { getSeriesList, seriesCreate, seriesDelete, getSeriesOptions };

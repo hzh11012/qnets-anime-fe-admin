@@ -69,7 +69,9 @@ const getColumns = (onRefresh: () => void, tags: Option[] = []) => {
                 return (
                     <PhotoProvider
                         loadingElement={<Loading />}
-                        brokenElement={<Error className={cn('relative')} />}
+                        brokenElement={
+                            <Error className={cn('relative text-white')} />
+                        }
                     >
                         <PhotoView src={row.original.coverUrl}>
                             <span className={cn('cursor-pointer')}>

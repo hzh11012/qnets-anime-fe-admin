@@ -37,10 +37,19 @@ const staticRoutes: RouteObject[] = [
                 path: 'anime',
                 children: [
                     {
+                        path: 'banner',
+                        lazy: async () => ({
+                            Component: (
+                                await import('@/pages/anime/banner/index')
+                            ).default
+                        })
+                    },
+                    {
                         path: 'list',
                         lazy: async () => ({
-                            Component: (await import('@/pages/anime/list/index'))
-                                .default
+                            Component: (
+                                await import('@/pages/anime/list/index')
+                            ).default
                         })
                     },
                     {
