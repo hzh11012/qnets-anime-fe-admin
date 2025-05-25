@@ -23,7 +23,7 @@ const FormTextarea = <TFieldValues extends FieldValues>({
     name,
     label,
     required,
-    placeholder,
+    placeholder = '请输入',
     maxLength
 }: FormTextareaProps<TFieldValues>) => {
     return (

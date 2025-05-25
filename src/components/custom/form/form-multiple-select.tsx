@@ -23,6 +23,7 @@ const FormMultiSelect = <TFieldValues extends FieldValues>({
     name,
     label,
     required,
+    placeholder = '请选择',
     options
 }: FormMultiSelectProps<TFieldValues>) => {
     return (
@@ -42,10 +43,10 @@ const FormMultiSelect = <TFieldValues extends FieldValues>({
                         <MultipleSelector
                             {...field}
                             commandProps={{
-                                label: '请选择'
+                                label: placeholder
                             }}
                             defaultOptions={options}
-                            placeholder="请选择"
+                            placeholder={placeholder}
                             hidePlaceholderWhenSelected
                             emptyIndicator={
                                 <p className="text-center text-sm">暂无结果</p>

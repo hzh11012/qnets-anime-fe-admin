@@ -22,6 +22,7 @@ interface FormSelectProps<TFieldValues extends FieldValues = FieldValues> {
     name: Path<TFieldValues>;
     label?: string;
     required?: boolean;
+    placeholder?: string;
     options: Option[];
 }
 
@@ -30,6 +31,7 @@ const FormSelect = <TFieldValues extends FieldValues>({
     name,
     label,
     required,
+    placeholder = '请选择',
     options
 }: FormSelectProps<TFieldValues>) => {
     return (
@@ -53,7 +55,7 @@ const FormSelect = <TFieldValues extends FieldValues>({
                     >
                         <FormControl>
                             <SelectTrigger className={cn('w-full')}>
-                                <SelectValue />
+                                <SelectValue placeholder={placeholder} />
                             </SelectTrigger>
                         </FormControl>
                         <SelectContent>

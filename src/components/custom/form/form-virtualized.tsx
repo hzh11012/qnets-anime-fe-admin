@@ -34,7 +34,7 @@ const FormVirtualized = <TFieldValues extends FieldValues>({
     name,
     label,
     required,
-    placeholder,
+    placeholder = '请选择',
     options
 }: FormVirtualizedProps<TFieldValues>) => {
     const [open, setOpen] = useState(false);
@@ -66,11 +66,12 @@ const FormVirtualized = <TFieldValues extends FieldValues>({
                                     className={cn('w-full justify-between h-9')}
                                 >
                                     <span>
-                                        {!!field.value &&
-                                            options.find(
-                                                item =>
-                                                    item.value === field.value
-                                            )?.label}
+                                        {!!field.value
+                                            ? options.find(
+                                                  item =>
+                                                      item.value === field.value
+                                              )?.label
+                                            : placeholder}
                                     </span>
                                     <ChevronsUpDown
                                         className={cn('shrink-0 opacity-30')}
@@ -87,7 +88,7 @@ const FormVirtualized = <TFieldValues extends FieldValues>({
                             <VirtualizedCommand
                                 options={options}
                                 height="10rem"
-                                placeholder={placeholder}
+                                placeholder='请输入'
                                 selectedOption={field.value}
                                 onSelectOption={currentValue => {
                                     field.onChange(currentValue);

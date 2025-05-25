@@ -24,7 +24,7 @@ const FormInput = <TFieldValues extends FieldValues>({
     name,
     label,
     required,
-    placeholder,
+    placeholder = '请输入',
     startIcon,
     maxLength
 }: FormInputProps<TFieldValues>) => {

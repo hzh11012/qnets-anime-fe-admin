@@ -438,7 +438,7 @@ const MultipleSelector = ({
         >
             <div
                 className={cn(
-                    'focus-within:border-ring focus-within:ring-ring/50 has-aria-invalid:ring-destructive/20 dark:has-aria-invalid:ring-destructive/40 has-aria-invalid:border-destructive relative min-h-[36px] rounded-md border text-sm transition-[color,box-shadow] outline-none focus-within:ring-[3px] has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:opacity-50',
+                    'focus-within:border-ring focus-within:ring-ring/50 has-aria-invalid:ring-destructive/20 dark:has-aria-invalid:ring-destructive/40 has-aria-invalid:border-destructive relative min-h-[36px] rounded-lg border text-sm transition-[color,box-shadow] outline-none focus-within:ring-[3px] has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:opacity-50',
                     {
                         'p-1': selected.length !== 0,
                         'cursor-text': !disabled && selected.length !== 0
@@ -457,7 +457,7 @@ const MultipleSelector = ({
                             <div
                                 key={option.value}
                                 className={cn(
-                                    'animate-fadeIn bg-background dark:bg-input/30 text-secondary-foreground hover:bg-background relative inline-flex h-6.5 cursor-default items-center rounded-md border ps-2 pe-7 pl-2 text-xs font-medium transition-all disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 data-fixed:pe-2',
+                                    'animate-fadeIn bg-background dark:bg-input/30 text-secondary-foreground hover:bg-background relative inline-flex h-6.5 cursor-default items-center rounded-lg border ps-2 pe-7 pl-2 text-xs font-medium transition-all disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 data-fixed:pe-2',
                                     badgeClassName
                                 )}
                                 data-fixed={option.fixed}
@@ -512,7 +512,7 @@ const MultipleSelector = ({
                                 : placeholder
                         }
                         className={cn(
-                            'placeholder:text-muted-foreground/70 flex-1 bg-transparent outline-hidden disabled:cursor-not-allowed',
+                            'placeholder:text-muted-foreground flex-1 bg-transparent outline-hidden disabled:cursor-not-allowed',
                             {
                                 'w-full': hidePlaceholderWhenSelected,
                                 'px-3 py-2': selected.length === 0,
@@ -528,7 +528,7 @@ const MultipleSelector = ({
                             onChange?.(selected.filter(s => s.fixed));
                         }}
                         className={cn(
-                            'text-muted-foreground/80 hover:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 absolute end-0 top-0 flex size-9 items-center justify-center rounded-md border border-transparent transition-[color,box-shadow] outline-none focus-visible:ring-[3px]',
+                            'text-muted-foreground/80 hover:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 absolute end-0 top-0 flex size-9 items-center justify-center rounded-lg border border-transparent transition-[color,box-shadow] outline-none focus-visible:ring-[3px]',
                             (hideClearAllButton ||
                                 disabled ||
                                 selected.length < 1 ||
@@ -545,7 +545,7 @@ const MultipleSelector = ({
             <div className="relative">
                 <div
                     className={cn(
-                        'border-input absolute top-2 z-10 w-full overflow-hidden rounded-md border',
+                        'border-input absolute top-2 z-10 w-full overflow-hidden rounded-lg border',
                         'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
                         !open && 'hidden'
                     )}
