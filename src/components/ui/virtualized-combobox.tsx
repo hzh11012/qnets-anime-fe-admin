@@ -132,7 +132,7 @@ export const VirtualizedCommand = ({
                 onMouseDown={() => setIsKeyboardNavActive(false)}
                 onMouseMove={() => setIsKeyboardNavActive(false)}
             >
-                <CommandEmpty>暂无结果</CommandEmpty>
+                <CommandEmpty>暂无数据</CommandEmpty>
                 <CommandGroup>
                     <div
                         style={{
