@@ -45,6 +45,14 @@ const staticRoutes: RouteObject[] = [
                         })
                     },
                     {
+                        path: 'guide',
+                        lazy: async () => ({
+                            Component: (
+                                await import('@/pages/anime/guide/index')
+                            ).default
+                        })
+                    },
+                    {
                         path: 'list',
                         lazy: async () => ({
                             Component: (

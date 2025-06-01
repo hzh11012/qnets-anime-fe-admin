@@ -29,7 +29,9 @@ const createTableSlice: StateCreator<
                     ? state.order
                     : next?.[0]?.desc
                       ? 'DESC'
-                      : 'ASC',
+                      : next?.[0]?.asc
+                        ? 'ASC'
+                        : undefined,
                 orderBy: next?.[0]?.id
             };
         });

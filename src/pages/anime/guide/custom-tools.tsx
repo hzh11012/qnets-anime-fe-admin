@@ -17,47 +17,56 @@ import {
 } from '@/types';
 import { useRequest } from 'ahooks';
 import { toast } from 'sonner';
-import { useRoleTableStore } from '@/store';
+import { useGuideTableStore } from '@/store';
 import { useForm, UseFormReturn } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { roleCreateSchema } from '@/pages/auth/role/form-schema';
-import { roleCreate } from '@/apis';
+import { guideCreateSchema } from '@/pages/anime/guide/form-schema';
+import { guideCreate } from '@/apis';
 import { Form } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
-import FormInput from '@/components/custom/form/form-input';
-import FormMultiSelect from '@/components/custom/form/form-multiple-select';
+import FormVirtualized from '@/components/custom/form/form-virtualized';
+import FormTime from '@/components/custom/form/form-time';
+import FormSelect from '@/components/custom/form/form-select';
+import { updateDays } from '@/pages/anime/guide/columns';
 
-type RoleFormValues = ZodFormValues<typeof roleCreateSchema>;
+type GuideFormValues = ZodFormValues<typeof guideCreateSchema>;
 
 interface AddFormProps {
-    form: UseFormReturn<RoleFormValues>;
+    form: UseFormReturn<GuideFormValues>;
     onSubmit: () => void;
-    permissions: Option[];
+    animes: Option[];
 }
 
-const AddForm: React.FC<AddFormProps> = ({ form, permissions, onSubmit }) => {
+const AddForm: React.FC<AddFormProps> = ({ form, animes, onSubmit }) => {
     return (
         <Form {...form}>
             <form className={cn('space-y-6')} onSubmit={onSubmit}>
-                <FormInput
+                <FormVirtualized
                     control={form.control}
-                    name="name"
-                    label="角色名称"
+                    name="animeId"
+                    label="动漫"
                     required
+                    options={animes}
                 />
-                <FormInput
-                    control={form.control}
-                    name="role"
-                    label="角色编码"
-                    required
-                />
-                <FormMultiSelect
-                    control={form.control}
-                    name="permissions"
-                    label="权限"
-                    placeholder="请输入"
-                    options={permissions}
-                />
+                <div className={cn('flex gap-6')}>
+                    <div className={cn('flex-1')}>
+                        <FormSelect
+                            control={form.control}
+                            name="updateDay"
+                            label="更新日期"
+                            required
+                            options={updateDays}
+                        />
+                    </div>
+                    <div className={cn('flex-1')}>
+                        <FormTime
+                            control={form.control}
+                            name="updateTime"
+                            label="更新时间"
+                            required
+                        />
+                    </div>
+                </div>
             </form>
         </Form>
     );
@@ -65,18 +74,25 @@ const AddForm: React.FC<AddFormProps> = ({ form, permissions, onSubmit }) => {
 
 const AddDialog: React.FC<AddDialogProps> = ({ onRefresh }) => {
     const [open, setOpen] = useState(false);
-    const permissionsList = useRoleTableStore(state => state.permissions);
+    const animesList = useGuideTableStore(state => state.allAnimes);
 
-    const form = useForm<RoleFormValues>({
-        resolver: zodResolver(roleCreateSchema),
+    const form = useForm<GuideFormValues>({
+        resolver: zodResolver(guideCreateSchema),
         defaultValues: {
-            name: '',
-            role: '',
-            permissions: []
+            animeId: '',
+            updateDay: new Date().getDay().toString() as
+                | '0'
+                | '1'
+                | '2'
+                | '3'
+                | '4'
+                | '5'
+                | '6',
+            updateTime: ''
         }
     });
 
-    const { run } = useRequest(roleCreate, {
+    const { run } = useRequest(guideCreate, {
         manual: true,
         debounceWait: 300,
         onSuccess({ code, msg }) {
@@ -89,10 +105,8 @@ const AddDialog: React.FC<AddDialogProps> = ({ onRefresh }) => {
         }
     });
 
-    const handleCreate = (values: RoleFormValues) => {
-        const { permissions, ...args } = values;
-        const _permissions = permissions?.map(item => item.value);
-        run({ ...args, permissions: _permissions });
+    const handleCreate = (values: GuideFormValues) => {
+        run({ ...values });
     };
 
     return (
@@ -108,7 +122,7 @@ const AddDialog: React.FC<AddDialogProps> = ({ onRefresh }) => {
                 </DialogHeader>
                 <AddForm
                     form={form}
-                    permissions={permissionsList}
+                    animes={animesList}
                     onSubmit={form.handleSubmit(handleCreate)}
                 />
                 <DialogFooter className={cn('flex-row gap-5')}>

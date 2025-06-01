@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
 import type {
-    RoleListItem,
+    GuideListItem,
     DataTableRowActionsProps,
     DeleteDialogProps,
     EditDialogProps,
@@ -20,77 +20,82 @@ import type {
 } from '@/types';
 import { useRequest } from 'ahooks';
 import { toast } from 'sonner';
-import { roleEdit, roleDelete } from '@/apis';
+import { guideEdit, guideDelete } from '@/apis';
 import { Button } from '@/components/ui/button';
-import { CircleAlertIcon } from 'lucide-react';
-import { Input } from '@/components/ui/input';
 import { Form } from '@/components/ui/form';
-import FormInput from '@/components/custom/form/form-input';
 import { useForm, UseFormReturn } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { roleEditSchema } from '@/pages/auth/role/form-schema';
-import { useRoleTableStore } from '@/store';
-import FormMultiSelect from '@/components/custom/form/form-multiple-select';
+import { guideEditSchema } from '@/pages/anime/guide/form-schema';
+import FormSelect from '@/components/custom/form/form-select';
+import { CircleAlertIcon } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import FormVirtualized from '@/components/custom/form/form-virtualized';
+import { useGuideTableStore } from '@/store';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { updateDays } from '@/pages/anime/guide/columns';
+import FormTime from '@/components/custom/form/form-time';
 
-type RoleFormValues = ZodFormValues<typeof roleEditSchema>;
+type GuideFormValues = ZodFormValues<typeof guideEditSchema>;
 
 interface EditFormProps {
-    form: UseFormReturn<RoleFormValues>;
+    form: UseFormReturn<GuideFormValues>;
     onSubmit: () => void;
-    permissions: Option[];
+    animes: Option[];
 }
 
-const EditForm: React.FC<EditFormProps> = ({ form, permissions, onSubmit }) => {
+const EditForm: React.FC<EditFormProps> = ({ form, animes, onSubmit }) => {
     return (
         <Form {...form}>
             <form className={cn('space-y-6')} onSubmit={onSubmit}>
-                <FormInput
+                <FormVirtualized
                     control={form.control}
-                    name="name"
-                    label="角色名称"
+                    name="animeId"
+                    label="动漫"
                     required
+                    options={animes}
                 />
-                <FormInput
-                    control={form.control}
-                    name="role"
-                    label="角色编码"
-                    required
-                />
-                <FormMultiSelect
-                    control={form.control}
-                    name="permissions"
-                    label="权限"
-                    placeholder="请输入"
-                    options={permissions}
-                />
+                <div className={cn('flex gap-6')}>
+                    <div className={cn('flex-1')}>
+                        <FormSelect
+                            control={form.control}
+                            name="updateDay"
+                            label="更新日期"
+                            required
+                            options={updateDays}
+                        />
+                    </div>
+                    <div className={cn('flex-1')}>
+                        <FormTime
+                            control={form.control}
+                            name="updateTime"
+                            label="更新时间"
+                            required
+                        />
+                    </div>
+                </div>
             </form>
         </Form>
     );
 };
 
-const EditDialog: React.FC<EditDialogProps<RoleListItem>> = ({
+const EditDialog: React.FC<EditDialogProps<GuideListItem>> = ({
     row,
     onRefresh
 }) => {
-    const { id, name, role, permissions } = row;
+    const { id, animeId, updateDay, updateTime } = row;
     const [open, setOpen] = useState(false);
-    const permissionsList = useRoleTableStore(state => state.permissions);
+    const animesList = useGuideTableStore(state => state.allAnimes);
 
-    const form = useForm<RoleFormValues>({
-        resolver: zodResolver(roleEditSchema),
+    const form = useForm<GuideFormValues>({
+        resolver: zodResolver(guideEditSchema),
         defaultValues: {
-            name,
-            role,
-            permissions: permissions.map(item => {
-                return {
-                    label: item.name,
-                    value: item.id
-                };
-            })
+            animeId,
+            updateDay: `${updateDay}`,
+            updateTime
         }
     });
 
-    const { run } = useRequest(roleEdit, {
+    const { run } = useRequest(guideEdit, {
         manual: true,
         debounceWait: 300,
         onSuccess({ code, msg }) {
@@ -102,10 +107,8 @@ const EditDialog: React.FC<EditDialogProps<RoleListItem>> = ({
         }
     });
 
-    const handleEdit = (values: RoleFormValues) => {
-        const { permissions, ...args } = values;
-        const _permissions = permissions?.map(item => item.value);
-        run({ ...args, id, permissions: _permissions });
+    const handleEdit = (values: GuideFormValues) => {
+        run({ id, ...values });
     };
 
     return (
@@ -115,18 +118,26 @@ const EditDialog: React.FC<EditDialogProps<RoleListItem>> = ({
                     编辑
                 </Button>
             </DialogTrigger>
-            <DialogContent aria-describedby={undefined}>
-                <DialogHeader>
+            <DialogContent aria-describedby={undefined} className={cn('px-0')}>
+                <DialogHeader className={cn('px-6')}>
                     <DialogTitle className={cn('sm:text-left')}>
                         编辑
                     </DialogTitle>
                 </DialogHeader>
-                <EditForm
-                    form={form}
-                    permissions={permissionsList}
-                    onSubmit={form.handleSubmit(handleEdit)}
-                />
-                <DialogFooter className={cn('flex-row gap-5')}>
+                <ScrollArea
+                    className={cn(
+                        'max-h-[calc(100vh-10rem)] sm:max-h-[calc(26rem)]'
+                    )}
+                >
+                    <div className={cn('px-6 pb-1')}>
+                        <EditForm
+                            form={form}
+                            animes={animesList}
+                            onSubmit={form.handleSubmit(handleEdit)}
+                        />
+                    </div>
+                </ScrollArea>
+                <DialogFooter className={cn('flex-row gap-5 px-6')}>
                     <DialogClose asChild>
                         <Button
                             type="button"
@@ -155,7 +166,7 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({ id, onRefresh }) => {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState('');
 
-    const { run } = useRequest(roleDelete, {
+    const { run } = useRequest(guideDelete, {
         manual: true,
         debounceWait: 300,
         onSuccess({ code, msg }) {
@@ -236,10 +247,9 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({ id, onRefresh }) => {
     );
 };
 
-const DataTableRowActions: React.FC<DataTableRowActionsProps<RoleListItem>> = ({
-    row,
-    onRefresh
-}) => {
+const DataTableRowActions: React.FC<
+    DataTableRowActionsProps<GuideListItem>
+> = ({ row, onRefresh }) => {
     const { id } = row;
 
     return (

@@ -35,12 +35,13 @@ type MessageFormValues = ZodFormValues<typeof messageEditSchema>;
 
 interface EditFormProps {
     form: UseFormReturn<MessageFormValues>;
+    onSubmit: () => void;
 }
 
-const EditForm: React.FC<EditFormProps> = ({ form }) => {
+const EditForm: React.FC<EditFormProps> = ({ form, onSubmit }) => {
     return (
         <Form {...form}>
-            <form className={cn('space-y-6')}>
+            <form className={cn('space-y-6')} onSubmit={onSubmit}>
                 <FormTextarea
                     control={form.control}
                     name="reply"
@@ -84,7 +85,7 @@ const EditDialog: React.FC<EditDialogProps<MessageListItem>> = ({
         defaultValues: {
             reply,
             status: `${status}`,
-            type: `${type}`,
+            type: `${type}`
         }
     });
 
@@ -117,7 +118,10 @@ const EditDialog: React.FC<EditDialogProps<MessageListItem>> = ({
                         编辑
                     </DialogTitle>
                 </DialogHeader>
-                <EditForm form={form} />
+                <EditForm
+                    form={form}
+                    onSubmit={form.handleSubmit(handleEdit)}
+                />
                 <DialogFooter className={cn('flex-row gap-5')}>
                     <DialogClose asChild>
                         <Button
@@ -190,7 +194,10 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({ id, onRefresh }) => {
                     </DialogHeader>
                 </div>
 
-                <form className={cn('space-y-5')}>
+                <form
+                    className={cn('space-y-6')}
+                    onSubmit={e => e.preventDefault()}
+                >
                     <div className={cn('*:not-first:mt-2')}>
                         <Input
                             type="text"

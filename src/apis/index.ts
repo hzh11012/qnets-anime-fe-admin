@@ -7,3 +7,4 @@ export * from '@/apis/series';
 export * from '@/apis/tag';
 export * from '@/apis/anime';
 export * from '@/apis/banner';
+export * from '@/apis/gudie';

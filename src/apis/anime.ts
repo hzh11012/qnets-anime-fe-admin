@@ -8,7 +8,7 @@ import type {
     Option
 } from '@/types';
 
-const path = '/api/server/animes';
+const path = '/api/server/anime';
 
 const getAnimeList = (params: AnimeListParams) => {
     return HttpClient.get<AnimeListRes>(path, params);

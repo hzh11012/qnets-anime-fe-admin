@@ -47,14 +47,20 @@ type AnimeFormValues = ZodFormValues<typeof animeEditSchema>;
 
 interface EditFormProps {
     form: UseFormReturn<AnimeFormValues>;
+    onSubmit: () => void;
     tags: Option[];
     series: Option[];
 }
 
-const EditForm: React.FC<EditFormProps> = ({ form, tags, series }) => {
+const EditForm: React.FC<EditFormProps> = ({
+    form,
+    tags,
+    series,
+    onSubmit
+}) => {
     return (
         <Form {...form}>
-            <form className={cn('space-y-6')}>
+            <form className={cn('space-y-6')} onSubmit={onSubmit}>
                 <FormVirtualized
                     control={form.control}
                     name="series"
@@ -251,6 +257,7 @@ const EditDialog: React.FC<EditDialogProps<AnimeListItem>> = ({
                             form={form}
                             tags={tagsList}
                             series={seriesList}
+                            onSubmit={form.handleSubmit(handleEdit)}
                         />
                     </div>
                 </ScrollArea>
@@ -326,7 +333,10 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({ id, onRefresh }) => {
                     </DialogHeader>
                 </div>
 
-                <form className={cn('space-y-5')}>
+                <form
+                    className={cn('space-y-6')}
+                    onSubmit={e => e.preventDefault()}
+                >
                     <div className={cn('*:not-first:mt-2')}>
                         <Input
                             type="text"

@@ -70,7 +70,10 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({ id, onRefresh }) => {
                     </DialogHeader>
                 </div>
 
-                <form className={cn('space-y-5')}>
+                <form
+                    className={cn('space-y-6')}
+                    onSubmit={e => e.preventDefault()}
+                >
                     <div className={cn('*:not-first:mt-2')}>
                         <Input
                             type="text"

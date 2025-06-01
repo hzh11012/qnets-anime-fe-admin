@@ -34,13 +34,14 @@ type UserFormValues = ZodFormValues<typeof userEditSchema>;
 
 interface EditFormProps {
     form: UseFormReturn<UserFormValues>;
+    onSubmit: () => void;
     roles: Option[];
 }
 
-const EditForm: React.FC<EditFormProps> = ({ form, roles }) => {
+const EditForm: React.FC<EditFormProps> = ({ form, roles, onSubmit }) => {
     return (
         <Form {...form}>
-            <form className={cn('space-y-6')}>
+            <form className={cn('space-y-6')} onSubmit={onSubmit}>
                 <FormInput
                     control={form.control}
                     name="nickname"
@@ -119,7 +120,11 @@ const EditDialog: React.FC<EditDialogProps<UserListItem>> = ({
                         编辑
                     </DialogTitle>
                 </DialogHeader>
-                <EditForm form={form} roles={rolesList} />
+                <EditForm
+                    form={form}
+                    roles={rolesList}
+                    onSubmit={form.handleSubmit(handleEdit)}
+                />
                 <DialogFooter className={cn('flex-row gap-5')}>
                     <DialogClose asChild>
                         <Button

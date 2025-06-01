@@ -63,16 +63,30 @@ const FormVirtualized = <TFieldValues extends FieldValues>({
                                     variant="outline"
                                     role="combobox"
                                     aria-expanded={open}
-                                    className={cn('w-full justify-between h-9')}
+                                    className={cn(
+                                        'w-full justify-between h-9 hover:bg-transparent'
+                                    )}
                                 >
-                                    <span>
-                                        {!!field.value
-                                            ? options.find(
-                                                  item =>
-                                                      item.value === field.value
-                                              )?.label
-                                            : placeholder}
-                                    </span>
+                                    {!!field.value ? (
+                                        <span>
+                                            {
+                                                options.find(
+                                                    item =>
+                                                        item.value ===
+                                                        field.value
+                                                )?.label
+                                            }
+                                        </span>
+                                    ) : (
+                                        <span
+                                            className={cn(
+                                                'text-muted-foreground'
+                                            )}
+                                        >
+                                            {placeholder}
+                                        </span>
+                                    )}
+
                                     <ChevronsUpDown
                                         className={cn('shrink-0 opacity-30')}
                                         aria-hidden="true"
@@ -88,7 +102,7 @@ const FormVirtualized = <TFieldValues extends FieldValues>({
                             <VirtualizedCommand
                                 options={options}
                                 height="10rem"
-                                placeholder='请输入'
+                                placeholder="请输入"
                                 selectedOption={field.value}
                                 onSelectOption={currentValue => {
                                     field.onChange(currentValue);

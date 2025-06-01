@@ -42,14 +42,15 @@ type RoleFormValues = ZodFormValues<typeof animeCreateSchema>;
 
 interface AddFormProps {
     form: UseFormReturn<RoleFormValues>;
+    onSubmit: () => void;
     tags: Option[];
     series: Option[];
 }
 
-const AddForm: React.FC<AddFormProps> = ({ form, tags, series }) => {
+const AddForm: React.FC<AddFormProps> = ({ form, tags, series, onSubmit }) => {
     return (
         <Form {...form}>
-            <form className={cn('space-y-6')}>
+            <form className={cn('space-y-6')} onSubmit={onSubmit}>
                 <FormVirtualized
                     control={form.control}
                     name="series"
@@ -226,6 +227,7 @@ const AddDialog: React.FC<AddDialogProps> = ({ onRefresh }) => {
                             form={form}
                             tags={tagsList}
                             series={seriesList}
+                            onSubmit={form.handleSubmit(handleCreate)}
                         />
                     </div>
                 </ScrollArea>

@@ -6,4 +6,5 @@ export * from '@/store/anime/series';
 export * from '@/store/anime/tag';
 export * from '@/store/anime/list';
 export * from '@/store/anime/banner';
+export * from '@/store/anime/guide';
 export * from '@/store/user-info';

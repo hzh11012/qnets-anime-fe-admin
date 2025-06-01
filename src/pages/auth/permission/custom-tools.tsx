@@ -24,12 +24,13 @@ type PermissionFormValues = ZodFormValues<typeof permissionCreateSchema>;
 
 interface AddFormProps {
     form: UseFormReturn<PermissionFormValues>;
+    onSubmit: () => void;
 }
 
-const AddForm: React.FC<AddFormProps> = ({ form }) => {
+const AddForm: React.FC<AddFormProps> = ({ form, onSubmit }) => {
     return (
         <Form {...form}>
-            <form className={cn('space-y-6')}>
+            <form className={cn('space-y-6')} onSubmit={onSubmit}>
                 <FormInput
                     control={form.control}
                     name="name"
@@ -86,7 +87,10 @@ const AddDialog: React.FC<AddDialogProps> = ({ onRefresh }) => {
                         新增
                     </DialogTitle>
                 </DialogHeader>
-                <AddForm form={form} />
+                <AddForm
+                    form={form}
+                    onSubmit={form.handleSubmit(handleCreate)}
+                />
                 <DialogFooter className={cn('flex-row gap-5')}>
                     <DialogClose asChild>
                         <Button
