@@ -117,8 +117,8 @@ const getColumns = (onRefresh: () => void, tags: Option[] = []) => {
                 );
             },
             cell: ({ row }) => {
-                const roles = row.original.animeTags.map(item => item.name);
-                return <DataTableArrayTooltip items={roles} />;
+                const tags = row.original.animeTags.map(item => item.name);
+                return <DataTableArrayTooltip items={tags} />;
             }
         },
         {

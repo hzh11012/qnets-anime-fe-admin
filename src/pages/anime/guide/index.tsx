@@ -96,7 +96,17 @@ const Index: React.FC = () => {
     const handleSearch = (keyword: string) => {
         resetPagination();
         setKeyword(keyword);
-        run({ page, type, keyword, pageSize, orderBy, order });
+        run({
+            page,
+            type,
+            keyword,
+            pageSize,
+            orderBy,
+            order,
+            status,
+            tags,
+            updateDays
+        });
     };
 
     return (

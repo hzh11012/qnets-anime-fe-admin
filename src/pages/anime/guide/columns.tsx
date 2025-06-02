@@ -74,10 +74,10 @@ const getColumns = (onRefresh: () => void, tags: Option[] = []) => {
                 );
             },
             cell: ({ row }) => {
-                const roles = row.original.anime.animeTags.map(
+                const tags = row.original.anime.animeTags.map(
                     item => item.name
                 );
-                return <DataTableArrayTooltip items={roles} />;
+                return <DataTableArrayTooltip items={tags} />;
             }
         },
         {

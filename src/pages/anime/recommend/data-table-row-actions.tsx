@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
 import type {
-    GuideListItem,
+    RecommendListItem,
     DataTableRowActionsProps,
     DeleteDialogProps,
     EditDialogProps,
@@ -20,24 +20,24 @@ import type {
 } from '@/types';
 import { useRequest } from 'ahooks';
 import { toast } from 'sonner';
-import { guideEdit, guideDelete } from '@/apis';
+import { recommendEdit, recommendDelete } from '@/apis';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { useForm, UseFormReturn } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { guideEditSchema } from '@/pages/anime/guide/form-schema';
+import { recommendEditSchema } from '@/pages/anime/recommend/form-schema';
 import FormSelect from '@/components/custom/form/form-select';
 import { CircleAlertIcon } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import FormVirtualized from '@/components/custom/form/form-virtualized';
 import { useGuideTableStore } from '@/store';
-import { updateDays } from '@/pages/anime/guide/columns';
-import FormTime from '@/components/custom/form/form-time';
+import FormInput from '@/components/custom/form/form-input';
+import FormMultiSelect from '@/components/custom/form/form-multiple-select';
+import { status } from '@/pages/anime/recommend/columns';
 
-type GuideFormValues = ZodFormValues<typeof guideEditSchema>;
+type RecommendFormValues = ZodFormValues<typeof recommendEditSchema>;
 
 interface EditFormProps {
-    form: UseFormReturn<GuideFormValues>;
+    form: UseFormReturn<RecommendFormValues>;
     onSubmit: () => void;
     animes: Option[];
 }
@@ -46,55 +46,60 @@ const EditForm: React.FC<EditFormProps> = ({ form, animes, onSubmit }) => {
     return (
         <Form {...form}>
             <form className={cn('space-y-6')} onSubmit={onSubmit}>
-                <FormVirtualized
+                <div className={cn('flex gap-6')}>
+                    <div className={cn('flex-1')}>
+                        <FormInput
+                            control={form.control}
+                            name="name"
+                            label="推荐名称"
+                            required
+                        />
+                    </div>
+                    <div className={cn('flex-1')}>
+                        <FormSelect
+                            control={form.control}
+                            name="status"
+                            label="推荐状态"
+                            required
+                            options={status}
+                        />
+                    </div>
+                </div>
+                <FormMultiSelect
                     control={form.control}
-                    name="animeId"
+                    name="animes"
                     label="动漫"
                     required
                     options={animes}
                 />
-                <div className={cn('flex gap-6')}>
-                    <div className={cn('flex-1')}>
-                        <FormSelect
-                            control={form.control}
-                            name="updateDay"
-                            label="更新日期"
-                            required
-                            options={updateDays}
-                        />
-                    </div>
-                    <div className={cn('flex-1')}>
-                        <FormTime
-                            control={form.control}
-                            name="updateTime"
-                            label="更新时间"
-                            required
-                        />
-                    </div>
-                </div>
             </form>
         </Form>
     );
 };
 
-const EditDialog: React.FC<EditDialogProps<GuideListItem>> = ({
+const EditDialog: React.FC<EditDialogProps<RecommendListItem>> = ({
     row,
     onRefresh
 }) => {
-    const { id, animeId, updateDay, updateTime } = row;
+    const { id, name, status, animes } = row;
     const [open, setOpen] = useState(false);
     const animesList = useGuideTableStore(state => state.allAnimes);
 
-    const form = useForm<GuideFormValues>({
-        resolver: zodResolver(guideEditSchema),
+    const form = useForm<RecommendFormValues>({
+        resolver: zodResolver(recommendEditSchema),
         defaultValues: {
-            animeId,
-            updateDay: `${updateDay}`,
-            updateTime
+            name,
+            status: `${status}`,
+            animes: animes.map(item => {
+                return {
+                    label: item.name,
+                    value: item.id
+                };
+            })
         }
     });
 
-    const { run } = useRequest(guideEdit, {
+    const { run } = useRequest(recommendEdit, {
         manual: true,
         debounceWait: 300,
         onSuccess({ code, msg }) {
@@ -106,8 +111,10 @@ const EditDialog: React.FC<EditDialogProps<GuideListItem>> = ({
         }
     });
 
-    const handleEdit = (values: GuideFormValues) => {
-        run({ id, ...values });
+    const handleEdit = (values: RecommendFormValues) => {
+        const { animes, ...args } = values;
+        const _animes = animes?.map(item => item.value);
+        run({ ...args, id, animes: _animes });
     };
 
     return (
@@ -157,7 +164,7 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({ id, onRefresh }) => {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState('');
 
-    const { run } = useRequest(guideDelete, {
+    const { run } = useRequest(recommendDelete, {
         manual: true,
         debounceWait: 300,
         onSuccess({ code, msg }) {
@@ -239,7 +246,7 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({ id, onRefresh }) => {
 };
 
 const DataTableRowActions: React.FC<
-    DataTableRowActionsProps<GuideListItem>
+    DataTableRowActionsProps<RecommendListItem>
 > = ({ row, onRefresh }) => {
     const { id } = row;
 

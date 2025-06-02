@@ -17,7 +17,8 @@ import {
     Tags,
     Tv,
     Tv2,
-    Users2
+    Users2,
+    MonitorPlay
 } from 'lucide-react';
 import Logo from '@/components/custom/logo';
 
@@ -57,6 +58,11 @@ const links = [
                 title: '动漫',
                 icon: ListVideo,
                 url: '/list'
+            },
+            {
+                title: '视频',
+                icon: MonitorPlay,
+                url: '/video'
             },
             {
                 title: '分类',

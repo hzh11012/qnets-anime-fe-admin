@@ -53,6 +53,14 @@ const staticRoutes: RouteObject[] = [
                         })
                     },
                     {
+                        path: 'recommend',
+                        lazy: async () => ({
+                            Component: (
+                                await import('@/pages/anime/recommend/index')
+                            ).default
+                        })
+                    },
+                    {
                         path: 'list',
                         lazy: async () => ({
                             Component: (

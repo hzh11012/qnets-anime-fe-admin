@@ -35,8 +35,8 @@ const getColumns = (onRefresh: () => void) => {
             },
             header: '关联动漫',
             cell: ({ row }) => {
-                const roles = row.original.animes.map(item => item.name);
-                return <DataTableArrayTooltip items={roles} />;
+                const animes = row.original.animes.map(item => item.name);
+                return <DataTableArrayTooltip items={animes} />;
             }
         },
         {

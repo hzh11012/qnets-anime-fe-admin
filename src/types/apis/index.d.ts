@@ -8,4 +8,4 @@ export * from '@/types/apis/tag';
 export * from '@/types/apis/anime';
 export * from '@/types/apis/banner';
 export * from '@/types/apis/guide';
-
+export * from '@/types/apis/recommend';
