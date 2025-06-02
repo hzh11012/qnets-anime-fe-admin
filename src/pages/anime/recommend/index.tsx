@@ -47,15 +47,7 @@ const Index: React.FC = () => {
         },
         refreshDeps: [page, pageSize, sorting, columnFilters],
         refreshDepsAction: () => {
-            run({
-                page,
-                type,
-                keyword,
-                pageSize,
-                orderBy,
-                order,
-                status
-            });
+            run({ page, type, keyword, pageSize, orderBy, order, status });
         }
     });
 

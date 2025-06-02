@@ -9,3 +9,4 @@ export * from '@/types/apis/anime';
 export * from '@/types/apis/banner';
 export * from '@/types/apis/guide';
 export * from '@/types/apis/recommend';
+export * from '@/types/apis/video';

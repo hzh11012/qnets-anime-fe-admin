@@ -8,7 +8,7 @@ const optionSchema = Zod.object({
 const formSchema = {
     nickname: Zod.string({
         required_error: '用户名称不能为空',
-        invalid_type_error: '类型错误'
+        invalid_type_error: '用户名称类型错误'
     })
         .trim()
         .max(25, '长度不能超过25')

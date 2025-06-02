@@ -17,14 +17,14 @@ const formSchema = {
         .min(1, '动漫系列不能为空'),
     name: Zod.string({
         required_error: '动漫名称不能为空',
-        invalid_type_error: '类型错误'
+        invalid_type_error: '动漫名称类型错误'
     })
         .trim()
         .max(25, '长度不能超过25')
         .min(1, '角色名称不能为空'),
     description: Zod.string({
         required_error: '动漫简介不能为空',
-        invalid_type_error: '类型错误'
+        invalid_type_error: '动漫简介类型错误'
     })
         .trim()
         .max(1000, {
@@ -33,7 +33,7 @@ const formSchema = {
         .min(1, '动漫简介不能为空'),
     coverUrl: Zod.string({
         required_error: '动漫封面不能为空',
-        invalid_type_error: '类型错误'
+        invalid_type_error: '动漫封面类型错误'
     })
         .max(255, {
             message: '长度不能超过255'
@@ -44,7 +44,7 @@ const formSchema = {
         }),
     bannerUrl: Zod.string({
         required_error: '动漫横幅不能为空',
-        invalid_type_error: '类型错误'
+        invalid_type_error: '动漫横幅类型错误'
     })
         .max(255, {
             message: '长度不能超过255'

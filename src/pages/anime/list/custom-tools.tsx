@@ -88,13 +88,13 @@ const AddForm: React.FC<AddFormProps> = ({ form, tags, series, onSubmit }) => {
                     label="动漫简介"
                     required
                 />
-                <FormInput
+                <FormTextarea
                     control={form.control}
                     name="coverUrl"
                     label="动漫封面"
                     required
                 />
-                <FormInput
+                <FormTextarea
                     control={form.control}
                     name="bannerUrl"
                     label="动漫横幅"

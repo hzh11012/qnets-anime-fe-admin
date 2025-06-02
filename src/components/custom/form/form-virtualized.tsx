@@ -64,7 +64,7 @@ const FormVirtualized = <TFieldValues extends FieldValues>({
                                     role="combobox"
                                     aria-expanded={open}
                                     className={cn(
-                                        'w-full justify-between h-9 hover:bg-transparent'
+                                        'w-full justify-between h-9 hover:bg-transparent cursor-default'
                                     )}
                                 >
                                     {!!field.value ? (

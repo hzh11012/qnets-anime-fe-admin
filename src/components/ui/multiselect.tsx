@@ -347,7 +347,7 @@ const MultipleSelector = ({
         const Item = (
             <CommandItem
                 value={inputValue}
-                className="cursor-pointer"
+                className="cursor-default"
                 onMouseDown={e => {
                     e.preventDefault();
                     e.stopPropagation();
@@ -478,7 +478,11 @@ const MultipleSelector = ({
                                     onClick={() => handleUnselect(option)}
                                     aria-label="Remove"
                                 >
-                                    <XIcon className='text-muted-foreground/50 hover:text-muted-foreground' size={14} aria-hidden="true" />
+                                    <XIcon
+                                        className="text-muted-foreground/50 hover:text-muted-foreground"
+                                        size={14}
+                                        aria-hidden="true"
+                                    />
                                 </button>
                             </div>
                         );
@@ -538,7 +542,11 @@ const MultipleSelector = ({
                         )}
                         aria-label="Clear all"
                     >
-                        <XIcon className='text-muted-foreground/50 hover:text-muted-foreground' size={14} aria-hidden="true" />
+                        <XIcon
+                            className="text-muted-foreground/50 hover:text-muted-foreground"
+                            size={14}
+                            aria-hidden="true"
+                        />
                     </button>
                 </div>
             </div>
@@ -626,7 +634,7 @@ const MultipleSelector = ({
                                                                     );
                                                                 }}
                                                                 className={cn(
-                                                                    'cursor-pointer',
+                                                                    'cursor-default',
                                                                     option.disable &&
                                                                         'pointer-events-none cursor-not-allowed opacity-50'
                                                                 )}

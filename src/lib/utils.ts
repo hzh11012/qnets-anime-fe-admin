@@ -44,4 +44,10 @@ const createMap = (arr: { label: string; value: string }[]) => {
     );
 };
 
-export { cn, getTitleByPath, formatDate, createMap };
+const formateNumber = (x: number) => {
+    var parts = x.toString().split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return parts.join('.');
+};
+
+export { cn, getTitleByPath, formatDate, createMap, formateNumber };

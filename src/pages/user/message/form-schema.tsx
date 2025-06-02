@@ -3,7 +3,7 @@ import Zod from 'zod';
 const formSchema = {
     reply: Zod.string({
         required_error: '回复内容不能为空',
-        invalid_type_error: '类型错误'
+        invalid_type_error: '回复内容类型错误'
     })
         .trim()
         .max(1000, '长度不能超过1000')

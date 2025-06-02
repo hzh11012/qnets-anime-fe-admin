@@ -8,4 +8,5 @@ export * from '@/store/anime/list';
 export * from '@/store/anime/banner';
 export * from '@/store/anime/guide';
 export * from '@/store/anime/recommend';
+export * from '@/store/anime/video';
 export * from '@/store/user-info';
