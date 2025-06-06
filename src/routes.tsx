@@ -110,6 +110,14 @@ const staticRoutes: RouteObject[] = [
                                 await import('@/pages/user/message/index')
                             ).default
                         })
+                    },
+                    {
+                        path: 'rating',
+                        lazy: async () => ({
+                            Component: (
+                                await import('@/pages/user/rating/index')
+                            ).default
+                        })
                     }
                 ]
             },

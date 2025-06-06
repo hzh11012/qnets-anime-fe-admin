@@ -214,6 +214,27 @@ const getColumns = (onRefresh: () => void, tags: Option[] = []) => {
             }
         },
         {
+            accessorKey: 'averageScore',
+            meta: {
+                title: '动漫评分'
+            },
+            header: '动漫评分'
+        },
+        {
+            accessorKey: 'ratingCount',
+            meta: {
+                title: '动漫评分数'
+            },
+            header: '动漫评分数'
+        },
+        {
+            accessorKey: 'collectionCount',
+            meta: {
+                title: '动漫收藏数'
+            },
+            header: '动漫收藏数'
+        },
+        {
             accessorKey: 'director',
             meta: {
                 title: '动漫导演'

@@ -30,7 +30,7 @@ const getColumns = (onRefresh: () => void) => {
             enableHiding: false
         },
         {
-            accessorKey: 'user',
+            accessorKey: 'user.nickname',
             meta: {
                 title: '用户昵称'
             },
@@ -144,7 +144,6 @@ const getColumns = (onRefresh: () => void) => {
             }
         }
     ];
-
     return columns;
 };
 

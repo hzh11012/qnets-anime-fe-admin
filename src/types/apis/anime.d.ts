@@ -1,6 +1,6 @@
 interface AnimeListItem {
     id: string;
-    animeSeriesId: string,
+    animeSeriesId: string;
     name: string;
     description: string;
     coverUrl: string;
@@ -14,6 +14,9 @@ interface AnimeListItem {
     director?: string;
     cv?: string;
     animeTags: { id: string; name: string }[];
+    averageScore: number;
+    collectionCount: number;
+    ratingCount: number;
     createdAt: string;
 }
 
