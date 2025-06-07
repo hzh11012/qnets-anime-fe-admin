@@ -9,70 +9,51 @@ import Exception from '@/components/custom/exception';
 const ADMIN = import.meta.env.VITE_ADMIN;
 const SERVER_PREFIX = import.meta.env.VITE_SERVER_PREFIX;
 
-interface CustomRouteProps {
-    perm?: string;
-}
-
-type CustomRouteObject = Omit<RouteObject, 'children'> &
-    CustomRouteProps & {
-        children?: CustomRouteObject[];
-    };
-
 // 认证 loader
 const authLoader = async () => {
     const { data } = await getUserInfo();
-
-    if (data.status === 0) {
-        return redirect('/ban');
-    }
-
     useUserStore.setState({ userInfo: data });
-
     return data;
 };
 
-// 路由权限检查 loader
-const permissionLoader = async ({ request }: { request: Request }) => {
-    const { userInfo } = useUserStore.getState();
-    const url = new URL(request.url);
-    const path = url.pathname;
-
-    if (userInfo?.permissions?.includes(ADMIN)) {
-        return null;
+const WithLayout = ({ children }: { children: React.ReactNode }) => {
+    const userInfo = useUserStore(state => state.userInfo);
+    if (userInfo?.status === 0) {
+        return <Exception code="43" msg="账号已封禁" />;
     }
-
-    // 获取当前路由配置
-    const currentRoute = staticRoutes[0].children?.find(route => {
-        if (route.path === path) return true;
-        if (route.children) {
-            return route.children.some(
-                child => `${route.path}/${child.path}` === path
-            );
-        }
-        return false;
-    });
-
-    // 如果路由需要权限检查
-    if (currentRoute?.perm) {
-        // 检查用户是否有权限
-        if (!userInfo?.permissions?.includes(currentRoute.perm)) {
-            return redirect('/');
-        }
-    }
-
-    return null;
+    return <>{children}</>;
 };
 
-const staticRoutes: CustomRouteObject[] = [
+// 权限检查的包装组件
+const WithPermission = ({
+    children,
+    perm
+}: {
+    children: React.ReactNode;
+    perm?: string;
+}) => {
+    const userInfo = useUserStore(state => state.userInfo);
+
+    if (!perm || userInfo?.permissions?.includes(ADMIN)) {
+        return <>{children}</>;
+    }
+
+    if (!userInfo?.permissions?.includes(perm)) {
+        return <Exception code="43" />;
+    }
+
+    return <>{children}</>;
+};
+
+const staticRoutes: RouteObject[] = [
     {
         path: '/',
-        loader: async args => {
-            // 认证检查
-            await authLoader();
-            // 权限检查
-            return permissionLoader(args);
-        },
-        element: <Layout />,
+        loader: authLoader,
+        Component: () => (
+            <WithLayout>
+                <Layout />
+            </WithLayout>
+        ),
         hydrateFallbackElement: <Loading />,
         errorElement: <Error />,
         children: [
@@ -94,65 +75,122 @@ const staticRoutes: CustomRouteObject[] = [
                 children: [
                     {
                         path: 'banner',
-                        lazy: async () => ({
-                            Component: (
+                        lazy: async () => {
+                            const Component = (
                                 await import('@/pages/anime/banner/index')
-                            ).default
-                        }),
-                        perm: `${SERVER_PREFIX}:banner`
+                            ).default;
+                            return {
+                                Component: () => (
+                                    <WithPermission
+                                        perm={`${SERVER_PREFIX}:banner`}
+                                    >
+                                        <Component />
+                                    </WithPermission>
+                                )
+                            };
+                        }
                     },
                     {
                         path: 'guide',
-                        lazy: async () => ({
-                            Component: (
+                        lazy: async () => {
+                            const Component = (
                                 await import('@/pages/anime/guide/index')
-                            ).default
-                        }),
-                        perm: `${SERVER_PREFIX}:guide`
+                            ).default;
+                            return {
+                                Component: () => (
+                                    <WithPermission
+                                        perm={`${SERVER_PREFIX}:guide`}
+                                    >
+                                        <Component />
+                                    </WithPermission>
+                                )
+                            };
+                        }
                     },
                     {
                         path: 'recommend',
-                        lazy: async () => ({
-                            Component: (
+                        lazy: async () => {
+                            const Component = (
                                 await import('@/pages/anime/recommend/index')
-                            ).default
-                        }),
-                        perm: `${SERVER_PREFIX}:recommend`
+                            ).default;
+                            return {
+                                Component: () => (
+                                    <WithPermission
+                                        perm={`${SERVER_PREFIX}:recommend`}
+                                    >
+                                        <Component />
+                                    </WithPermission>
+                                )
+                            };
+                        }
                     },
                     {
                         path: 'series',
-                        lazy: async () => ({
-                            Component: (
+                        lazy: async () => {
+                            const Component = (
                                 await import('@/pages/anime/series/index')
-                            ).default
-                        }),
-                        perm: `${SERVER_PREFIX}:series`
+                            ).default;
+                            return {
+                                Component: () => (
+                                    <WithPermission
+                                        perm={`${SERVER_PREFIX}:series`}
+                                    >
+                                        <Component />
+                                    </WithPermission>
+                                )
+                            };
+                        }
                     },
                     {
                         path: 'list',
-                        lazy: async () => ({
-                            Component: (
+                        lazy: async () => {
+                            const Component = (
                                 await import('@/pages/anime/list/index')
-                            ).default
-                        }),
-                        perm: `${SERVER_PREFIX}:anime`
+                            ).default;
+                            return {
+                                Component: () => (
+                                    <WithPermission
+                                        perm={`${SERVER_PREFIX}:anime`}
+                                    >
+                                        <Component />
+                                    </WithPermission>
+                                )
+                            };
+                        }
                     },
                     {
                         path: 'video',
-                        lazy: async () => ({
-                            Component: (
+                        lazy: async () => {
+                            const Component = (
                                 await import('@/pages/anime/video/index')
-                            ).default
-                        }),
-                        perm: `${SERVER_PREFIX}:video`
+                            ).default;
+                            return {
+                                Component: () => (
+                                    <WithPermission
+                                        perm={`${SERVER_PREFIX}:video`}
+                                    >
+                                        <Component />
+                                    </WithPermission>
+                                )
+                            };
+                        }
                     },
                     {
                         path: 'tag',
-                        lazy: async () => ({
-                            Component: (await import('@/pages/anime/tag/index'))
-                                .default
-                        }),
-                        perm: `${SERVER_PREFIX}:tag`
+                        lazy: async () => {
+                            const Component = (
+                                await import('@/pages/anime/tag/index')
+                            ).default;
+                            return {
+                                Component: () => (
+                                    <WithPermission
+                                        perm={`${SERVER_PREFIX}:tag`}
+                                    >
+                                        <Component />
+                                    </WithPermission>
+                                )
+                            };
+                        }
                     }
                 ]
             },
@@ -168,38 +206,71 @@ const staticRoutes: CustomRouteObject[] = [
                 children: [
                     {
                         path: 'list',
-                        lazy: async () => ({
-                            Component: (await import('@/pages/user/list/index'))
-                                .default
-                        }),
-                        perm: `${SERVER_PREFIX}:user`
+                        lazy: async () => {
+                            const Component = (
+                                await import('@/pages/user/list/index')
+                            ).default;
+                            return {
+                                Component: () => (
+                                    <WithPermission
+                                        perm={`${SERVER_PREFIX}:user`}
+                                    >
+                                        <Component />
+                                    </WithPermission>
+                                )
+                            };
+                        }
                     },
                     {
                         path: 'collection',
-                        lazy: async () => ({
-                            Component: (
+                        lazy: async () => {
+                            const Component = (
                                 await import('@/pages/user/collection/index')
-                            ).default
-                        }),
-                        perm: `${SERVER_PREFIX}:collection`
+                            ).default;
+                            return {
+                                Component: () => (
+                                    <WithPermission
+                                        perm={`${SERVER_PREFIX}:collection`}
+                                    >
+                                        <Component />
+                                    </WithPermission>
+                                )
+                            };
+                        }
                     },
                     {
                         path: 'rating',
-                        lazy: async () => ({
-                            Component: (
+                        lazy: async () => {
+                            const Component = (
                                 await import('@/pages/user/rating/index')
-                            ).default
-                        }),
-                        perm: `${SERVER_PREFIX}:rating`
+                            ).default;
+                            return {
+                                Component: () => (
+                                    <WithPermission
+                                        perm={`${SERVER_PREFIX}:rating`}
+                                    >
+                                        <Component />
+                                    </WithPermission>
+                                )
+                            };
+                        }
                     },
                     {
                         path: 'message',
-                        lazy: async () => ({
-                            Component: (
+                        lazy: async () => {
+                            const Component = (
                                 await import('@/pages/user/message/index')
-                            ).default
-                        }),
-                        perm: `${SERVER_PREFIX}:message`
+                            ).default;
+                            return {
+                                Component: () => (
+                                    <WithPermission
+                                        perm={`${SERVER_PREFIX}:message`}
+                                    >
+                                        <Component />
+                                    </WithPermission>
+                                )
+                            };
+                        }
                     }
                 ]
             },
@@ -215,39 +286,59 @@ const staticRoutes: CustomRouteObject[] = [
                 children: [
                     {
                         path: 'role',
-                        lazy: async () => ({
-                            Component: (await import('@/pages/auth/role/index'))
-                                .default
-                        }),
-                        perm: `${SERVER_PREFIX}:role`
+                        lazy: async () => {
+                            const Component = (
+                                await import('@/pages/auth/role/index')
+                            ).default;
+                            return {
+                                Component: () => (
+                                    <WithPermission
+                                        perm={`${SERVER_PREFIX}:role`}
+                                    >
+                                        <Component />
+                                    </WithPermission>
+                                )
+                            };
+                        }
                     },
                     {
                         path: 'permission',
-                        lazy: async () => ({
-                            Component: (
+                        lazy: async () => {
+                            const Component = (
                                 await import('@/pages/auth/permission/index')
-                            ).default
-                        }),
-                        perm: `${SERVER_PREFIX}:permission`
+                            ).default;
+                            return {
+                                Component: () => (
+                                    <WithPermission
+                                        perm={`${SERVER_PREFIX}:permission`}
+                                    >
+                                        <Component />
+                                    </WithPermission>
+                                )
+                            };
+                        }
                     }
                 ]
             },
             {
                 path: 'notice',
-                lazy: async () => ({
-                    Component: (await import('@/pages/notice/index')).default
-                }),
-                perm: `${SERVER_PREFIX}:notice`
+                lazy: async () => {
+                    const Component = (await import('@/pages/notice/index'))
+                        .default;
+                    return {
+                        Component: () => (
+                            <WithPermission perm={`${SERVER_PREFIX}:notice`}>
+                                <Component />
+                            </WithPermission>
+                        )
+                    };
+                }
             },
             {
                 path: '*',
                 element: <Exception code="44" />
             }
         ]
-    },
-    {
-        path: '/ban',
-        element: <Exception code="43" msg="您的账户已被封禁" />
     }
 ];
 
