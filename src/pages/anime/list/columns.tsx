@@ -8,7 +8,6 @@ import { DataTableRowActions } from '@/pages/anime/list/data-table-row-actions';
 import { DataTableColumnFilter } from '@/components/custom/data-table/data-table-column-filter';
 import { DataTableTextTooltip } from '@/components/custom/data-table/data-table-text-tooltip';
 import { PhotoProvider, PhotoView } from 'react-photo-view';
-import 'react-photo-view/dist/react-photo-view.css';
 import Loading from '@/components/custom/loading';
 import Error from '@/components/custom/error';
 

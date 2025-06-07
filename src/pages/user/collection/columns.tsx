@@ -1,20 +1,28 @@
 import { DataTableColumnSort } from '@/components/custom/data-table/data-table-column-sort';
-import { cn, formatDate, formateNumber } from '@/lib/utils';
-import type { VideoListItem } from '@/types';
+import { cn, formatDate } from '@/lib/utils';
+import type { CollectionListItem } from '@/types';
 import { ColumnDef } from '@tanstack/react-table';
 import { Search } from 'lucide-react';
-import { DataTableRowActions } from '@/pages/anime/video/data-table-row-actions';
+import { DataTableRowActions } from '@/pages/user/collection/data-table-row-actions';
 import { PhotoProvider, PhotoView } from 'react-photo-view';
 import Loading from '@/components/custom/loading';
 import Error from '@/components/custom/error';
 
 const getColumns = (onRefresh: () => void) => {
-    const columns: ColumnDef<VideoListItem>[] = [
+    const columns: ColumnDef<CollectionListItem>[] = [
         {
             accessorKey: 'id',
-            header: '视频ID',
+            header: '动漫收藏ID',
             enableSorting: false,
             enableHiding: false
+        },
+        {
+            accessorKey: 'user.nickname',
+            meta: {
+                title: '用户昵称'
+            },
+            header: '用户昵称',
+            cell: ({ row }) => row.original.user.nickname
         },
         {
             accessorKey: 'anime.name',
@@ -44,62 +52,6 @@ const getColumns = (onRefresh: () => void) => {
                         </PhotoView>
                     </PhotoProvider>
                 );
-            }
-        },
-        {
-            accessorKey: 'title',
-            meta: {
-                title: '视频标题'
-            },
-            header: () => {
-                return (
-                    <div className={cn('flex items-center space-x-1')}>
-                        <span>视频标题</span>
-                        <Search className={cn('size-3.5')} />
-                    </div>
-                );
-            }
-        },
-        {
-            accessorKey: 'url',
-            meta: {
-                title: '视频链接'
-            },
-            header: () => {
-                return (
-                    <div className={cn('flex items-center space-x-1')}>
-                        <span>视频链接</span>
-                        <Search className={cn('size-3.5')} />
-                    </div>
-                );
-            }
-        },
-        {
-            accessorKey: 'episode',
-            meta: {
-                title: '集数编号'
-            },
-            header: ({ column }) => (
-                <div className={cn('flex items-center space-x-1')}>
-                    <span>集数编号</span>
-                    <DataTableColumnSort column={column} />
-                </div>
-            )
-        },
-        {
-            accessorKey: 'playCount',
-            meta: {
-                title: '播放量'
-            },
-            header: ({ column }) => (
-                <div className={cn('flex items-center space-x-1')}>
-                    <span>播放量</span>
-                    <DataTableColumnSort column={column} />
-                </div>
-            ),
-            cell: ({ row }) => {
-                const playCount = row.original.playCount;
-                return formateNumber(playCount);
             }
         },
         {

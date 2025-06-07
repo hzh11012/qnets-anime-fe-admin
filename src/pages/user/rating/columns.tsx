@@ -6,7 +6,6 @@ import { Search } from 'lucide-react';
 import { DataTableRowActions } from '@/pages/user/rating/data-table-row-actions';
 import { DataTableTextTooltip } from '@/components/custom/data-table/data-table-text-tooltip';
 import { PhotoProvider, PhotoView } from 'react-photo-view';
-import 'react-photo-view/dist/react-photo-view.css';
 import Loading from '@/components/custom/loading';
 import Error from '@/components/custom/error';
 

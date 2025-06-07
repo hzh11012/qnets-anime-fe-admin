@@ -5,7 +5,6 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Search } from 'lucide-react';
 import { DataTableRowActions } from '@/pages/anime/guide/data-table-row-actions';
 import { PhotoProvider, PhotoView } from 'react-photo-view';
-import 'react-photo-view/dist/react-photo-view.css';
 import Loading from '@/components/custom/loading';
 import Error from '@/components/custom/error';
 import { DataTableColumnFilter } from '@/components/custom/data-table/data-table-column-filter';

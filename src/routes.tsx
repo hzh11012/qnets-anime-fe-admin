@@ -112,6 +112,14 @@ const staticRoutes: RouteObject[] = [
                         })
                     },
                     {
+                        path: 'collection',
+                        lazy: async () => ({
+                            Component: (
+                                await import('@/pages/user/collection/index')
+                            ).default
+                        })
+                    },
+                    {
                         path: 'rating',
                         lazy: async () => ({
                             Component: (

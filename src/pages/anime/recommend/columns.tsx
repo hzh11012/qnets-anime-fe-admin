@@ -58,8 +58,9 @@ const getColumns = (onRefresh: () => void) => {
         {
             accessorKey: 'animes',
             meta: {
-                title: '动漫'
+                title: '关联动漫'
             },
+            header: '关联动漫',
             cell: ({ row }) => {
                 const animes = row.original.animes.map(item => item.name);
                 return <DataTableArrayTooltip items={animes} />;
