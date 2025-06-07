@@ -13,6 +13,9 @@ import { links, platform } from '@/links';
 import { useUserStore } from '@/store';
 import { useRequest } from 'ahooks';
 import { logout } from '@/apis';
+import { filterLinksByPermissions } from '@/lib/utils';
+
+const ADMIN = import.meta.env.VITE_ADMIN;
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const user = useUserStore(state => state.userInfo);
@@ -25,13 +28,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         }
     });
 
+    // 根据用户权限过滤对应的菜单
+    const permLinks = !user.permissions.includes(ADMIN)
+        ? filterLinksByPermissions(links, user.permissions)
+        : links;
+
     return (
         <Sidebar collapsible="icon" {...props}>
             <SidebarHeader>
                 <NavHeader item={platform} />
             </SidebarHeader>
             <SidebarContent>
-                <NavMain items={links} />
+                <NavMain items={permLinks} />
             </SidebarContent>
             <SidebarFooter>
                 <NavUser user={user} onLogout={runLogout} />

@@ -22,6 +22,8 @@ import {
 } from 'lucide-react';
 import Logo from '@/components/custom/logo';
 
+const SERVER_PREFIX = import.meta.env.VITE_SERVER_PREFIX;
+
 const links = [
     {
         title: '仪表盘',
@@ -37,42 +39,50 @@ const links = [
             {
                 title: '站点轮播',
                 icon: Images,
-                url: '/banner'
+                url: '/banner',
+                perm: `${SERVER_PREFIX}:banner`
             },
             {
                 title: '新番导视',
                 icon: LayoutList,
-                url: '/guide'
+                url: '/guide',
+                perm: `${SERVER_PREFIX}:guide`
             },
             {
                 title: '每周推荐',
                 icon: Command,
-                url: '/recommend'
+                url: '/recommend',
+                perm: `${SERVER_PREFIX}:recommend`
             },
             {
                 title: '系列',
                 icon: BookOpenText,
-                url: '/series'
+                url: '/series',
+                perm: `${SERVER_PREFIX}:series`
             },
             {
                 title: '动漫',
                 icon: ListVideo,
-                url: '/list'
+                url: '/list',
+                perm: `${SERVER_PREFIX}:anime`
             },
             {
                 title: '视频',
                 icon: MonitorPlay,
-                url: '/video'
+                url: '/video',
+                perm: `${SERVER_PREFIX}:video`
             },
             {
                 title: '分类',
                 icon: Tags,
-                url: '/tag'
+                url: '/tag',
+                perm: `${SERVER_PREFIX}:tag`
             },
             {
                 title: '弹幕',
                 icon: Tv,
-                url: '/danmaku'
+                url: '/danmaku',
+                perm: `${SERVER_PREFIX}:danmaku`
             }
         ]
     },
@@ -85,27 +95,32 @@ const links = [
             {
                 title: '用户',
                 icon: ContactRound,
-                url: '/list'
+                url: '/list',
+                perm: `${SERVER_PREFIX}:user`
             },
             {
                 title: '收藏',
                 icon: ChartColumnStacked,
-                url: '/collection'
+                url: '/collection',
+                perm: `${SERVER_PREFIX}:collection`
             },
             {
                 title: '评分',
                 icon: Star,
-                url: '/rating'
+                url: '/rating',
+                perm: `${SERVER_PREFIX}:rating`
             },
             {
                 title: '评论',
                 icon: MessagesSquare,
-                url: '/comment'
+                url: '/comment',
+                perm: `${SERVER_PREFIX}:comment`
             },
             {
                 title: '平台留言',
                 icon: MessageCircleQuestion,
-                url: '/message'
+                url: '/message',
+                perm: `${SERVER_PREFIX}:message`
             }
         ]
     },
@@ -118,19 +133,22 @@ const links = [
             {
                 title: '角色',
                 icon: IdCard,
-                url: '/role'
+                url: '/role',
+                perm: `${SERVER_PREFIX}:role`
             },
             {
                 title: '权限',
                 icon: KeyRound,
-                url: '/permission'
+                url: '/permission',
+                perm: `${SERVER_PREFIX}:permission`
             }
         ]
     },
     {
         title: '系统公告',
         icon: Mails,
-        url: '/notice'
+        url: '/notice',
+        perm: `${SERVER_PREFIX}:notice`
     }
 ];
 

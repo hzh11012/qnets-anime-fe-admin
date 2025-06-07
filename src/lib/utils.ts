@@ -7,7 +7,7 @@ const cn = (...inputs: ClassValue[]) => {
     return twMerge(clsx(inputs));
 };
 
-const getTitleByPath = (path: string) => {
+const getTitleByPath = (items: typeof links, path: string) => {
     const search = (items: typeof links, basePath: string): string => {
         for (const item of items) {
             // 拼接当前项的完整路径，并处理多余的斜杠
@@ -26,7 +26,32 @@ const getTitleByPath = (path: string) => {
         }
         return '';
     };
-    return search(links, '');
+    return search(items, '');
+};
+
+const filterLinksByPermissions = (
+    items: typeof links,
+    permissions: string[]
+) => {
+    const filterItems = (items: any[]) => {
+        if (!items) return [];
+        return items.filter(item => {
+            // 如果项目有子项目，递归过滤
+            if (item.items) {
+                const filteredItems = filterItems(item.items);
+                // 如果过滤后还有子项目，保留该项目
+                if (filteredItems.length > 0) {
+                    item.items = filteredItems;
+                    return true;
+                }
+                return false;
+            }
+            // 检查权限
+            return !item.perm || permissions.some(perm => item.perm === perm);
+        });
+    };
+
+    return filterItems(items);
 };
 
 const formatDate = (date: string) => {
@@ -50,4 +75,11 @@ const formateNumber = (x: number) => {
     return parts.join('.');
 };
 
-export { cn, getTitleByPath, formatDate, createMap, formateNumber };
+export {
+    cn,
+    getTitleByPath,
+    filterLinksByPermissions,
+    formatDate,
+    createMap,
+    formateNumber
+};

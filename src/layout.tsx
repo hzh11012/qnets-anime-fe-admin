@@ -16,11 +16,12 @@ import {
 } from '@/components/ui/breadcrumb';
 import { cn, getTitleByPath } from '@/lib/utils';
 import ThemeSwitch from '@/components/custom/theme-switch';
+import { links } from '@/links';
 
 const Layout = () => {
     const { pathname } = useLocation();
 
-    const title = getTitleByPath(pathname);
+    const title = getTitleByPath(links, pathname);
 
     return (
         <SidebarProvider>
