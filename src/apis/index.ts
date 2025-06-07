@@ -12,3 +12,4 @@ export * from '@/apis/recommend';
 export * from '@/apis/video';
 export * from '@/apis/rating';
 export * from '@/apis/collection';
+export * from '@/apis/notice';

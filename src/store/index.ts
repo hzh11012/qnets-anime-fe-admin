@@ -11,4 +11,5 @@ export * from '@/store/anime/banner';
 export * from '@/store/anime/guide';
 export * from '@/store/anime/recommend';
 export * from '@/store/anime/video';
+export * from '@/store/notice';
 export * from '@/store/user-info';

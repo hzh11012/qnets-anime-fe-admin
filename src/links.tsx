@@ -128,9 +128,9 @@ const links = [
         ]
     },
     {
-        title: '系统通知',
+        title: '系统公告',
         icon: Mails,
-        url: '/notify'
+        url: '/notice'
     }
 ];
 

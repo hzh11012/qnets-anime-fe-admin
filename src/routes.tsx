@@ -150,6 +150,12 @@ const staticRoutes: RouteObject[] = [
                 ]
             },
             {
+                path: 'notice',
+                lazy: async () => ({
+                    Component: (await import('@/pages/notice/index')).default
+                })
+            },
+            {
                 path: '*',
                 element: <Exception code="44" />
             }
