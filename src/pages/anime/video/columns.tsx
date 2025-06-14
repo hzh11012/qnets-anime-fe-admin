@@ -1,7 +1,7 @@
 import { DataTableColumnSort } from '@/components/custom/data-table/data-table-column-sort';
 import { cn, formatDate, formateNumber } from '@/lib/utils';
 import type { VideoListItem } from '@/types';
-import { ColumnDef } from '@tanstack/react-table';
+import type { ColumnDef } from '@tanstack/react-table';
 import { Search } from 'lucide-react';
 import { DataTableRowActions } from '@/pages/anime/video/data-table-row-actions';
 import { PhotoProvider, PhotoView } from 'react-photo-view';

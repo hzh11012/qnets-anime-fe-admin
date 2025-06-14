@@ -1,7 +1,7 @@
 import { DataTableColumnSort } from '@/components/custom/data-table/data-table-column-sort';
 import { cn, createMap, formatDate } from '@/lib/utils';
 import type { GuideListItem, Option } from '@/types';
-import { ColumnDef } from '@tanstack/react-table';
+import type { ColumnDef } from '@tanstack/react-table';
 import { Search } from 'lucide-react';
 import { DataTableRowActions } from '@/pages/anime/guide/data-table-row-actions';
 import { PhotoProvider, PhotoView } from 'react-photo-view';

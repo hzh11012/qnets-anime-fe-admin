@@ -1,7 +1,7 @@
 import { DataTableColumnSort } from '@/components/custom/data-table/data-table-column-sort';
 import { cn, createMap, formatDate } from '@/lib/utils';
 import type { RatingListItem } from '@/types';
-import { ColumnDef } from '@tanstack/react-table';
+import type { ColumnDef } from '@tanstack/react-table';
 import { Search } from 'lucide-react';
 import { DataTableRowActions } from '@/pages/user/rating/data-table-row-actions';
 import { DataTableTextTooltip } from '@/components/custom/data-table/data-table-text-tooltip';

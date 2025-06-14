@@ -8,7 +8,7 @@ import {
     DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
-import { Table } from '@tanstack/react-table';
+import type { Table } from '@tanstack/react-table';
 import { Settings2 } from 'lucide-react';
 
 interface DataTableViewColumnProps<TData> {

@@ -6,8 +6,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
-import { Option } from '@/types';
-import { Column } from '@tanstack/react-table';
+import type { Option } from '@/types';
+import type { Column } from '@tanstack/react-table';
 import { Check, Filter, FilterX } from 'lucide-react';
 
 interface DataTableColumnFilterProps<TData, TValue>

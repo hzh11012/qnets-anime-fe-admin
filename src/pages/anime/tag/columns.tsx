@@ -1,7 +1,7 @@
 import { DataTableColumnSort } from '@/components/custom/data-table/data-table-column-sort';
 import { cn, formatDate } from '@/lib/utils';
 import type { TagListItem } from '@/types';
-import { ColumnDef } from '@tanstack/react-table';
+import type { ColumnDef } from '@tanstack/react-table';
 import { Search } from 'lucide-react';
 import { DataTableArrayTooltip } from '@/components/custom/data-table/data-table-array-tooltip';
 import { DataTableRowActions } from '@/pages/anime/tag/data-table-row-actions';

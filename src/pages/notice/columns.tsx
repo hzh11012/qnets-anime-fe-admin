@@ -1,7 +1,7 @@
 import { DataTableColumnSort } from '@/components/custom/data-table/data-table-column-sort';
 import { cn, createMap, formatDate } from '@/lib/utils';
 import type { NoticeListItem } from '@/types';
-import { ColumnDef } from '@tanstack/react-table';
+import type { ColumnDef } from '@tanstack/react-table';
 import { Search } from 'lucide-react';
 import { DataTableRowActions } from '@/pages/notice/data-table-row-actions';
 import { DataTableColumnFilter } from '@/components/custom/data-table/data-table-column-filter';

@@ -6,7 +6,7 @@ import type {
     GuideListItem,
     Option
 } from '@/types';
-import { ColumnFiltersState, OnChangeFn } from '@tanstack/react-table';
+import type { ColumnFiltersState, OnChangeFn } from '@tanstack/react-table';
 
 interface TableSlice extends BaseTableSlice<GuideListItem> {
     types: Option[];
@@ -44,8 +44,8 @@ const useGuideTableStore = create<TableSlice & PaginationSlice>()(
                     columnFilters: next,
                     updateDays: (next.find(item => item.id === 'updateDay')
                         ?.value || []) as string[],
-                    status: (next.find(item => item.id === 'anime_status')?.value ||
-                        []) as string[],
+                    status: (next.find(item => item.id === 'anime_status')
+                        ?.value || []) as string[],
                     tags: (next.find(item => item.id === 'anime_animeTags')
                         ?.value || []) as string[]
                 };

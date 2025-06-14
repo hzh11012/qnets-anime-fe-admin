@@ -1,10 +1,16 @@
 import { DataTableColumnSort } from '@/components/custom/data-table/data-table-column-sort';
-import { cn, formatDate } from '@/lib/utils';
+import { cn, createMap, formatDate } from '@/lib/utils';
 import type { PermissionListItem } from '@/types';
-import { ColumnDef } from '@tanstack/react-table';
+import type { ColumnDef } from '@tanstack/react-table';
 import { Search } from 'lucide-react';
 import { DataTableArrayTooltip } from '@/components/custom/data-table/data-table-array-tooltip';
 import { DataTableRowActions } from '@/pages/auth/permission/data-table-row-actions';
+import { DataTableColumnFilter } from '@/components/custom/data-table/data-table-column-filter';
+
+export const systems = [
+    { label: '否', value: '0' },
+    { label: '是', value: '1' }
+];
 
 const getColumns = (onRefresh: () => void) => {
     const columns: ColumnDef<PermissionListItem>[] = [
@@ -40,6 +46,27 @@ const getColumns = (onRefresh: () => void) => {
                         <Search className={cn('size-3.5')} />
                     </div>
                 );
+            }
+        },
+        {
+            accessorKey: 'system',
+            meta: {
+                title: '是否系统权限'
+            },
+            header: ({ column }) => {
+                return (
+                    <div className={cn('flex items-center space-x-1')}>
+                        <span>是否系统权限</span>
+                        <DataTableColumnFilter
+                            column={column}
+                            options={systems}
+                        />
+                    </div>
+                );
+            },
+            cell: ({ row }) => {
+                const SystemsMap = createMap(systems);
+                return SystemsMap[row.original.system];
             }
         },
         {

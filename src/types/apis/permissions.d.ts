@@ -2,6 +2,7 @@ interface PermissionListItem {
     id: string;
     name: string;
     permission: string;
+    system: 0 | 1;
     roles: { name: string }[];
     createdAt: string;
 }
@@ -11,7 +12,9 @@ interface PermissionListRes {
     rows: PermissionListItem[];
 }
 
-interface PermissionListParams extends ListParams {}
+interface PermissionListParams extends ListParams {
+    systems?: string[];
+}
 
 interface PermissionCreateParams {
     name: string;

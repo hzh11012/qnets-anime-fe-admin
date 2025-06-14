@@ -6,7 +6,7 @@ import type {
     RecommendListItem,
     Option
 } from '@/types';
-import { ColumnFiltersState, OnChangeFn } from '@tanstack/react-table';
+import type { ColumnFiltersState, OnChangeFn } from '@tanstack/react-table';
 
 interface TableSlice extends BaseTableSlice<RecommendListItem> {
     types: Option[];

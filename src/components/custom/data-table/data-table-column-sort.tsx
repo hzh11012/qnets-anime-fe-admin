@@ -6,7 +6,7 @@ import {
     DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
-import { Column } from '@tanstack/react-table';
+import type { Column } from '@tanstack/react-table';
 import { ChevronDown, ChevronUp, ChevronsUpDown } from 'lucide-react';
 
 interface DataTableColumnSortProps<TData, TValue>

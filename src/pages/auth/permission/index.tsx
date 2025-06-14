@@ -9,6 +9,7 @@ import CustomTools from '@/pages/auth/permission/custom-tools';
 const Index: React.FC = () => {
     // 将状态和函数分开订阅，避免触发不必要的渲染
     const types = usePermissionTableStore(state => state.types);
+    const systems = usePermissionTableStore(state => state.systems);
     const sizes = usePermissionTableStore(state => state.sizes);
     const data = usePermissionTableStore(state => state.data);
     const setData = usePermissionTableStore(state => state.setData);
@@ -29,6 +30,10 @@ const Index: React.FC = () => {
     );
     const pagination = usePermissionTableStore(state => state.pagination);
     const setPagination = usePermissionTableStore(state => state.setPagination);
+    const columnFilters = usePermissionTableStore(state => state.columnFilters);
+    const setColumnFilters = usePermissionTableStore(
+        state => state.setColumnFilters
+    );
 
     const { run, loading, refresh, cancel } = useRequest(getPermissionList, {
         loadingDelay: 250,
@@ -39,9 +44,9 @@ const Index: React.FC = () => {
             setTotal(total);
             setData(rows);
         },
-        refreshDeps: [page, pageSize, sorting],
+        refreshDeps: [page, pageSize, sorting, columnFilters],
         refreshDepsAction: () => {
-            run({ page, type, keyword, pageSize, orderBy, order });
+            run({ page, type, keyword, pageSize, orderBy, order, systems });
         }
     });
 
@@ -62,7 +67,7 @@ const Index: React.FC = () => {
     const handleSearch = (keyword: string) => {
         resetPagination();
         setKeyword(keyword);
-        run({ page, type, keyword, pageSize, orderBy, order });
+        run({ page, type, keyword, pageSize, orderBy, order, systems });
     };
 
     return (
@@ -81,6 +86,8 @@ const Index: React.FC = () => {
             onTypeSelect={setType}
             typeOptions={types}
             onSortingChange={setSorting}
+            columnFilters={columnFilters}
+            onColumnFiltersChange={setColumnFilters}
             customTools={<CustomTools onRefresh={refresh} />}
         />
     );

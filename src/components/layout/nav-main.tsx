@@ -119,7 +119,7 @@ export function NavMain({
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent
                                         className={cn(
-                                            'w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg'
+                                            'w-(--radix-dropdown-menu-trigger-width) rounded-lg'
                                         )}
                                         side="right"
                                         align="start"

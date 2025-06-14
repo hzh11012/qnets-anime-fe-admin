@@ -9,30 +9,25 @@ import {
 } from '@/components/ui/table';
 import { cn } from '@/lib/utils';
 import {
-    Column,
-    ColumnDef,
-    ColumnFiltersState,
     flexRender,
     getCoreRowModel,
     getPaginationRowModel,
     getSortedRowModel,
+    useReactTable
+} from '@tanstack/react-table';
+import type {
+    Column,
+    ColumnDef,
+    ColumnFiltersState,
     OnChangeFn,
     PaginationState,
     Row,
     RowSelectionState,
-    SortingState,
-    useReactTable
+    SortingState
 } from '@tanstack/react-table';
 import Loading from '@/components/custom/loading';
-import {
-    CSSProperties,
-    ReactNode,
-    useCallback,
-    useEffect,
-    useMemo,
-    useRef,
-    useState
-} from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { DataTableToolbar } from '@/components/custom/data-table/data-table-toolbar';
 import DataTablePagination from '@/components/custom/data-table/data-table-pagination';
 import { throttle } from 'throttle-debounce';

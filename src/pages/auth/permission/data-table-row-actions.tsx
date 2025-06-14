@@ -22,7 +22,11 @@ import { Button } from '@/components/ui/button';
 import { CircleAlertIcon } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 
-const DeleteDialog: React.FC<DeleteDialogProps> = ({ id, onRefresh }) => {
+const DeleteDialog: React.FC<DeleteDialogProps> = ({
+    id,
+    disabled,
+    onRefresh
+}) => {
     const tip = '确认删除';
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState('');
@@ -42,7 +46,11 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({ id, onRefresh }) => {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant="link" className={cn('h-8 p-0 text-red-500')}>
+                <Button
+                    variant="link"
+                    className={cn('h-8 p-0 text-red-500')}
+                    disabled={disabled}
+                >
                     删除
                 </Button>
             </DialogTrigger>
@@ -111,11 +119,11 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({ id, onRefresh }) => {
 const DataTableRowActions: React.FC<
     DataTableRowActionsProps<PermissionListItem>
 > = ({ row, onRefresh }) => {
-    const { id } = row;
+    const { id, system } = row;
 
     return (
         <div className={cn('space-x-4')}>
-            <DeleteDialog id={id} onRefresh={onRefresh} />
+            <DeleteDialog id={id} disabled={!!system} onRefresh={onRefresh} />
         </div>
     );
 };

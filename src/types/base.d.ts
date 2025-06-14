@@ -11,6 +11,7 @@ interface DataTableRowActionsProps<T> extends CustomToolsProps {
 
 interface DeleteDialogProps extends CustomToolsProps {
     id: string;
+    disabled?: boolean;
 }
 
 interface AddDialogProps extends CustomToolsProps {}
