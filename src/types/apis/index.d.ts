@@ -14,3 +14,4 @@ export * from '@/types/apis/rating';
 export * from '@/types/apis/collection';
 export * from '@/types/apis/notice';
 export * from '@/types/apis/comment';
+export * from '@/types/apis/danmaku';

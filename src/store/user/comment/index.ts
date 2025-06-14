@@ -14,18 +14,16 @@ interface TableSlice extends BaseTableSlice<CommentListItem> {
 
 interface PaginationSlice extends BasePaginationSlice {}
 
-const useCommentTableStore = create<TableSlice & PaginationSlice>()(
-    (set, ...a) => ({
-        ...createTableSlice(set, ...a),
-        ...createPaginationSlice(set, ...a),
-        type: 'nickname',
-        types: [
-            { label: '用户昵称', value: 'nickname' },
-            { label: '评论内容', value: 'content' },
-            { label: '动漫名称', value: 'animeName' }
-        ],
-        sizes: [10, 20, 50, 100]
-    })
-);
+const useCommentTableStore = create<TableSlice & PaginationSlice>()((...a) => ({
+    ...createTableSlice(...a),
+    ...createPaginationSlice(...a),
+    type: 'nickname',
+    types: [
+        { label: '用户昵称', value: 'nickname' },
+        { label: '评论内容', value: 'content' },
+        { label: '动漫名称', value: 'animeName' }
+    ],
+    sizes: [10, 20, 50, 100]
+}));
 
 export { useCommentTableStore };

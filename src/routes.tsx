@@ -191,6 +191,23 @@ const staticRoutes: RouteObject[] = [
                                 )
                             };
                         }
+                    },
+                    {
+                        path: 'danmaku',
+                        lazy: async () => {
+                            const Component = (
+                                await import('@/pages/anime/danmaku/index')
+                            ).default;
+                            return {
+                                Component: () => (
+                                    <WithPermission
+                                        perm={`${SERVER_PREFIX}:danmaku`}
+                                    >
+                                        <Component />
+                                    </WithPermission>
+                                )
+                            };
+                        }
                     }
                 ]
             },
