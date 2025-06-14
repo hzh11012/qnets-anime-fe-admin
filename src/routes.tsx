@@ -256,6 +256,23 @@ const staticRoutes: RouteObject[] = [
                         }
                     },
                     {
+                        path: 'comment',
+                        lazy: async () => {
+                            const Component = (
+                                await import('@/pages/user/comment/index')
+                            ).default;
+                            return {
+                                Component: () => (
+                                    <WithPermission
+                                        perm={`${SERVER_PREFIX}:comment`}
+                                    >
+                                        <Component />
+                                    </WithPermission>
+                                )
+                            };
+                        }
+                    },
+                    {
                         path: 'message',
                         lazy: async () => {
                             const Component = (

@@ -7,12 +7,12 @@ const optionSchema = Zod.object({
 
 const formSchema = {
     nickname: Zod.string({
-        required_error: '用户名称不能为空',
-        invalid_type_error: '用户名称类型错误'
+        required_error: '用户昵称不能为空',
+        invalid_type_error: '用户昵称类型错误'
     })
         .trim()
         .max(25, '长度不能超过25')
-        .min(1, '用户名称不能为空'),
+        .min(1, '用户昵称不能为空'),
     status: Zod.enum(['0', '1'], {
         message: '用户状态参数错误'
     }),

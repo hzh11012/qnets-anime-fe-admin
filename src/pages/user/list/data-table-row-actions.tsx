@@ -45,7 +45,7 @@ const EditForm: React.FC<EditFormProps> = ({ form, roles, onSubmit }) => {
                 <FormInput
                     control={form.control}
                     name="nickname"
-                    label="用户名称"
+                    label="用户昵称"
                     required
                 />
                 <FormSelect

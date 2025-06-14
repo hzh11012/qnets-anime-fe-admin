@@ -3,29 +3,29 @@ import { createPaginationSlice, createTableSlice } from '@/store/base';
 import type {
     BaseTableSlice,
     BasePaginationSlice,
-    RatingListItem,
+    CommentListItem,
     Option
 } from '@/types';
 
-interface TableSlice extends BaseTableSlice<RatingListItem> {
+interface TableSlice extends BaseTableSlice<CommentListItem> {
     types: Option[];
     sizes: number[];
 }
 
 interface PaginationSlice extends BasePaginationSlice {}
 
-const useRatingTableStore = create<TableSlice & PaginationSlice>()(
+const useCommentTableStore = create<TableSlice & PaginationSlice>()(
     (set, ...a) => ({
         ...createTableSlice(set, ...a),
         ...createPaginationSlice(set, ...a),
         type: 'nickname',
         types: [
             { label: '用户昵称', value: 'nickname' },
-            { label: '动漫评分内容', value: 'content' },
+            { label: '评论内容', value: 'content' },
             { label: '动漫名称', value: 'animeName' }
         ],
         sizes: [10, 20, 50, 100]
     })
 );
 
-export { useRatingTableStore };
+export { useCommentTableStore };
