@@ -49,7 +49,9 @@ const FormMultiSelect = <TFieldValues extends FieldValues>({
                             placeholder={placeholder}
                             hidePlaceholderWhenSelected
                             emptyIndicator={
-                                <p className="text-center text-sm">暂无数据</p>
+                                <p className={cn('text-center text-sm')}>
+                                    暂无数据
+                                </p>
                             }
                         />
                     </FormControl>

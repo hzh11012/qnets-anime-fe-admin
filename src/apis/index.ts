@@ -15,3 +15,4 @@ export * from '@/apis/collection';
 export * from '@/apis/notice';
 export * from '@/apis/comment';
 export * from '@/apis/danmaku';
+export * from '@/apis/dashboard';

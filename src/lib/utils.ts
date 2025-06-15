@@ -58,6 +58,13 @@ const formatDate = (date: string) => {
     return DateTime.fromISO(date).toFormat('DD tt');
 };
 
+const formatChartDate = (date: string) => {
+    return new Date(date).toLocaleDateString('zh-CN', {
+        month: 'numeric',
+        day: 'numeric'
+    });
+};
+
 const createMap = (arr: { label: string; value: string }[]) => {
     return arr.reduce(
         (map, item) => {
@@ -80,6 +87,7 @@ export {
     getTitleByPath,
     filterLinksByPermissions,
     formatDate,
+    formatChartDate,
     createMap,
     formateNumber
 };

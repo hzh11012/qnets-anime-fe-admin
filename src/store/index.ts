@@ -15,3 +15,4 @@ export * from '@/store/anime/video';
 export * from '@/store/anime/danmaku';
 export * from '@/store/notice';
 export * from '@/store/user-info';
+export * from '@/store/dashboard';

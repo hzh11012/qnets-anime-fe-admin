@@ -33,11 +33,7 @@ const Layout = () => {
                     )}
                 >
                     <div className={cn('flex items-center gap-2 px-4')}>
-                        <SidebarTrigger className={cn('-ml-1')} />
-                        <Separator
-                            orientation="vertical"
-                            className={cn('mr-2 h-4!')}
-                        />
+                        <SidebarTrigger className={cn('-ml-1 md:hidden')} />
                         <Breadcrumb>
                             <BreadcrumbList>
                                 <BreadcrumbItem
@@ -66,7 +62,11 @@ const Layout = () => {
                         <ThemeSwitch />
                     </div>
                 </header>
-                <div className={cn('flex flex-1 flex-col gap-4 p-4 pr-6')}>
+                <div
+                    className={cn(
+                        'flex flex-1 flex-col gap-4 p-4 md:pr-6 pb-4 md:pb-2'
+                    )}
+                >
                     <Outlet />
                 </div>
             </SidebarInset>
