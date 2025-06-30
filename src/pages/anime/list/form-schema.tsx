@@ -5,7 +5,7 @@ const optionSchema = Zod.object({
     value: Zod.string().trim()
 });
 
-const IMAGE_REG = /^(https?:)?\/\/.*\.(jpe?g|png|webp)$/;
+const IMAGE_REG = /^(https?:)?\/\/.*\.(jpe?g|png|webp|avif)$/;
 
 const formSchema = {
     series: Zod.string({
@@ -20,8 +20,15 @@ const formSchema = {
         invalid_type_error: '动漫名称类型错误'
     })
         .trim()
+        .max(50, '长度不能超过50')
+        .min(1, '动漫名称不能为空'),
+    remark: Zod.string({
+        required_error: '动漫简评不能为空',
+        invalid_type_error: '动漫简评类型错误'
+    })
+        .trim()
         .max(25, '长度不能超过25')
-        .min(1, '角色名称不能为空'),
+        .min(1, '动漫简评不能为空'),
     description: Zod.string({
         required_error: '动漫简介不能为空',
         invalid_type_error: '动漫简介类型错误'

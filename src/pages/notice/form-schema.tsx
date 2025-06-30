@@ -3,14 +3,14 @@ import Zod from 'zod';
 const formSchema = {
     title: Zod.string({
         required_error: '公告标题不能为空',
-        invalid_type_error: '类型错误'
+        invalid_type_error: '公告标题类型错误'
     })
         .trim()
         .max(50, '长度不能超过50')
         .min(1, '公告标题不能为空'),
     content: Zod.string({
         required_error: '公告内容不能为空',
-        invalid_type_error: '类型错误'
+        invalid_type_error: '公告内容类型错误'
     })
         .trim()
         .max(2500, '长度不能超过2500')

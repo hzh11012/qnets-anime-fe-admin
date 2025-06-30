@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
 import type {
-    RecommendListItem,
+    TopicListItem,
     DataTableRowActionsProps,
     DeleteDialogProps,
     EditDialogProps,
@@ -20,24 +20,25 @@ import type {
 } from '@/types';
 import { useRequest } from 'ahooks';
 import { toast } from 'sonner';
-import { recommendEdit, recommendDelete } from '@/apis';
+import { topicEdit, topicDelete } from '@/apis';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { useForm, UseFormReturn } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { recommendEditSchema } from '@/pages/anime/recommend/form-schema';
+import { topicEditSchema } from '@/pages/anime/topic/form-schema';
 import FormSelect from '@/components/custom/form/form-select';
 import { CircleAlertIcon } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { useGuideTableStore } from '@/store';
 import FormInput from '@/components/custom/form/form-input';
 import FormMultiSelect from '@/components/custom/form/form-multiple-select';
-import { status } from '@/pages/anime/recommend/columns';
+import { status } from '@/pages/anime/topic/columns';
+import FormTextarea from '@/components/custom/form/fomr-textarea';
 
-type RecommendFormValues = ZodFormValues<typeof recommendEditSchema>;
+type TopicFormValues = ZodFormValues<typeof topicEditSchema>;
 
 interface EditFormProps {
-    form: UseFormReturn<RecommendFormValues>;
+    form: UseFormReturn<TopicFormValues>;
     onSubmit: () => void;
     animes: Option[];
 }
@@ -51,7 +52,7 @@ const EditForm: React.FC<EditFormProps> = ({ form, animes, onSubmit }) => {
                         <FormInput
                             control={form.control}
                             name="name"
-                            label="推荐名称"
+                            label="专题名称"
                             required
                         />
                     </div>
@@ -59,16 +60,28 @@ const EditForm: React.FC<EditFormProps> = ({ form, animes, onSubmit }) => {
                         <FormSelect
                             control={form.control}
                             name="status"
-                            label="推荐状态"
+                            label="专题状态"
                             required
                             options={status}
                         />
                     </div>
                 </div>
+                <FormTextarea
+                    control={form.control}
+                    name="description"
+                    label="专题简介"
+                    required
+                />
+                <FormTextarea
+                    control={form.control}
+                    name="coverUrl"
+                    label="专题封面"
+                    required
+                />
                 <FormMultiSelect
                     control={form.control}
                     name="animes"
-                    label="动漫"
+                    label="关联动漫"
                     required
                     options={animes}
                 />
@@ -77,18 +90,20 @@ const EditForm: React.FC<EditFormProps> = ({ form, animes, onSubmit }) => {
     );
 };
 
-const EditDialog: React.FC<EditDialogProps<RecommendListItem>> = ({
+const EditDialog: React.FC<EditDialogProps<TopicListItem>> = ({
     row,
     onRefresh
 }) => {
-    const { id, name, status, animes } = row;
+    const { id, name, description, coverUrl, status, animes } = row;
     const [open, setOpen] = useState(false);
     const animesList = useGuideTableStore(state => state.allAnimes);
 
-    const form = useForm<RecommendFormValues>({
-        resolver: zodResolver(recommendEditSchema),
+    const form = useForm<TopicFormValues>({
+        resolver: zodResolver(topicEditSchema),
         defaultValues: {
             name,
+            description,
+            coverUrl,
             status: `${status}`,
             animes: animes.map(item => {
                 return {
@@ -99,7 +114,7 @@ const EditDialog: React.FC<EditDialogProps<RecommendListItem>> = ({
         }
     });
 
-    const { run } = useRequest(recommendEdit, {
+    const { run } = useRequest(topicEdit, {
         manual: true,
         debounceWait: 300,
         onSuccess({ code, msg }) {
@@ -111,7 +126,7 @@ const EditDialog: React.FC<EditDialogProps<RecommendListItem>> = ({
         }
     });
 
-    const handleEdit = (values: RecommendFormValues) => {
+    const handleEdit = (values: TopicFormValues) => {
         const { animes, ...args } = values;
         const _animes = animes?.map(item => item.value);
         run({ ...args, id, animes: _animes });
@@ -164,7 +179,7 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({ id, onRefresh }) => {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState('');
 
-    const { run } = useRequest(recommendDelete, {
+    const { run } = useRequest(topicDelete, {
         manual: true,
         debounceWait: 300,
         onSuccess({ code, msg }) {
@@ -246,7 +261,7 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({ id, onRefresh }) => {
 };
 
 const DataTableRowActions: React.FC<
-    DataTableRowActionsProps<RecommendListItem>
+    DataTableRowActionsProps<TopicListItem>
 > = ({ row, onRefresh }) => {
     const { id } = row;
 

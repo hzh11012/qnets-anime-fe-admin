@@ -10,7 +10,7 @@ export * from '@/store/anime/tag';
 export * from '@/store/anime/list';
 export * from '@/store/anime/banner';
 export * from '@/store/anime/guide';
-export * from '@/store/anime/recommend';
+export * from '@/store/anime/topic';
 export * from '@/store/anime/video';
 export * from '@/store/anime/danmaku';
 export * from '@/store/notice';

@@ -82,6 +82,12 @@ const AddForm: React.FC<AddFormProps> = ({ form, tags, series, onSubmit }) => {
                         />
                     </div>
                 </div>
+                <FormInput
+                    control={form.control}
+                    name="remark"
+                    label="动漫简评"
+                    required
+                />
                 <FormTextarea
                     control={form.control}
                     name="description"
@@ -172,6 +178,7 @@ const AddDialog: React.FC<AddDialogProps> = ({ onRefresh }) => {
         defaultValues: {
             series: '',
             name: '',
+            remark: '',
             description: '',
             coverUrl: '',
             bannerUrl: '',

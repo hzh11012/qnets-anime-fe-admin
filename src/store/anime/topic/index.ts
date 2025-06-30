@@ -3,12 +3,12 @@ import { createPaginationSlice, createTableSlice } from '@/store/base';
 import type {
     BaseTableSlice,
     BasePaginationSlice,
-    RecommendListItem,
+    TopicListItem,
     Option
 } from '@/types';
 import type { ColumnFiltersState, OnChangeFn } from '@tanstack/react-table';
 
-interface TableSlice extends BaseTableSlice<RecommendListItem> {
+interface TableSlice extends BaseTableSlice<TopicListItem> {
     types: Option[];
     sizes: number[];
     status: string[];
@@ -20,11 +20,17 @@ interface TableSlice extends BaseTableSlice<RecommendListItem> {
 
 interface PaginationSlice extends BasePaginationSlice {}
 
-const useRecommendTableStore = create<TableSlice & PaginationSlice>()(
+const useTopicTableStore = create<TableSlice & PaginationSlice>()(
     (set, ...a) => ({
         ...createTableSlice(set, ...a),
         ...createPaginationSlice(set, ...a),
-        types: [{ label: '推荐名称', value: 'name' }],
+        types: [
+            { label: '专题名称', value: 'name' },
+            {
+                label: '专题简介',
+                value: 'description'
+            }
+        ],
         sizes: [10, 20, 50, 100],
         status: [],
         columnFilters: [],
@@ -46,4 +52,4 @@ const useRecommendTableStore = create<TableSlice & PaginationSlice>()(
     })
 );
 
-export { useRecommendTableStore };
+export { useTopicTableStore };

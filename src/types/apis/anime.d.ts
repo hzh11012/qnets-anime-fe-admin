@@ -2,6 +2,7 @@ interface AnimeListItem {
     id: string;
     animeSeriesId: string;
     name: string;
+    remark: string;
     description: string;
     coverUrl: string;
     bannerUrl: string;
@@ -36,6 +37,7 @@ interface AnimeListParams extends ListParams {
 interface AnimeCreateParams {
     series: string;
     name: string;
+    remark: string;
     description: string;
     coverUrl: string;
     bannerUrl: string;

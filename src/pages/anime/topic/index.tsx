@@ -1,42 +1,42 @@
 import React, { useEffect } from 'react';
 import { useRequest } from 'ahooks';
-import { getAnimeOptions, getRecommendList } from '@/apis';
-import { useRecommendTableStore } from '@/store';
+import { getAnimeOptions, getTopicList } from '@/apis';
+import { useTopicTableStore } from '@/store';
 import DataTable from '@/components/custom/data-table/data-table';
-import getColumns from '@/pages/anime/recommend/columns';
-import CustomTools from '@/pages/anime/recommend/custom-tools';
+import getColumns from '@/pages/anime/topic/columns';
+import CustomTools from '@/pages/anime/topic/custom-tools';
 
 const Index: React.FC = () => {
     // 将状态和函数分开订阅，避免触发不必要的渲染
-    const types = useRecommendTableStore(state => state.types);
-    const status = useRecommendTableStore(state => state.status);
-    const sizes = useRecommendTableStore(state => state.sizes);
-    const data = useRecommendTableStore(state => state.data);
-    const setData = useRecommendTableStore(state => state.setData);
-    const total = useRecommendTableStore(state => state.total);
-    const setTotal = useRecommendTableStore(state => state.setTotal);
-    const sorting = useRecommendTableStore(state => state.sorting);
-    const setSorting = useRecommendTableStore(state => state.setSorting);
-    const type = useRecommendTableStore(state => state.type);
-    const setType = useRecommendTableStore(state => state.setType);
-    const keyword = useRecommendTableStore(state => state.keyword);
-    const setKeyword = useRecommendTableStore(state => state.setKeyword);
-    const order = useRecommendTableStore(state => state.order);
-    const orderBy = useRecommendTableStore(state => state.orderBy);
-    const page = useRecommendTableStore(state => state.page);
-    const pageSize = useRecommendTableStore(state => state.pageSize);
-    const resetPagination = useRecommendTableStore(
+    const types = useTopicTableStore(state => state.types);
+    const status = useTopicTableStore(state => state.status);
+    const sizes = useTopicTableStore(state => state.sizes);
+    const data = useTopicTableStore(state => state.data);
+    const setData = useTopicTableStore(state => state.setData);
+    const total = useTopicTableStore(state => state.total);
+    const setTotal = useTopicTableStore(state => state.setTotal);
+    const sorting = useTopicTableStore(state => state.sorting);
+    const setSorting = useTopicTableStore(state => state.setSorting);
+    const type = useTopicTableStore(state => state.type);
+    const setType = useTopicTableStore(state => state.setType);
+    const keyword = useTopicTableStore(state => state.keyword);
+    const setKeyword = useTopicTableStore(state => state.setKeyword);
+    const order = useTopicTableStore(state => state.order);
+    const orderBy = useTopicTableStore(state => state.orderBy);
+    const page = useTopicTableStore(state => state.page);
+    const pageSize = useTopicTableStore(state => state.pageSize);
+    const resetPagination = useTopicTableStore(
         state => state.resetPagination
     );
-    const pagination = useRecommendTableStore(state => state.pagination);
-    const setPagination = useRecommendTableStore(state => state.setPagination);
-    const columnFilters = useRecommendTableStore(state => state.columnFilters);
-    const setColumnFilters = useRecommendTableStore(
+    const pagination = useTopicTableStore(state => state.pagination);
+    const setPagination = useTopicTableStore(state => state.setPagination);
+    const columnFilters = useTopicTableStore(state => state.columnFilters);
+    const setColumnFilters = useTopicTableStore(
         state => state.setColumnFilters
     );
-    const setAllAnimes = useRecommendTableStore(state => state.setAllAnimes);
+    const setAllAnimes = useTopicTableStore(state => state.setAllAnimes);
 
-    const { run, loading, refresh, cancel } = useRequest(getRecommendList, {
+    const { run, loading, refresh, cancel } = useRequest(getTopicList, {
         loadingDelay: 250,
         debounceWait: 250,
         defaultParams: [{ page, pageSize }],

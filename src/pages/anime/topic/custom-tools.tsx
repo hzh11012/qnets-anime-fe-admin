@@ -17,22 +17,23 @@ import {
 } from '@/types';
 import { useRequest } from 'ahooks';
 import { toast } from 'sonner';
-import { useRecommendTableStore } from '@/store';
+import { useTopicTableStore } from '@/store';
 import { useForm, UseFormReturn } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { recommendCreateSchema } from '@/pages/anime/recommend/form-schema';
-import { recommendCreate } from '@/apis';
+import { topicCreateSchema } from '@/pages/anime/topic/form-schema';
+import { topicCreate } from '@/apis';
 import { Form } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import FormSelect from '@/components/custom/form/form-select';
 import FormMultiSelect from '@/components/custom/form/form-multiple-select';
 import FormInput from '@/components/custom/form/form-input';
-import { status } from '@/pages/anime/recommend/columns';
+import { status } from '@/pages/anime/topic/columns';
+import FormTextarea from '@/components/custom/form/fomr-textarea';
 
-type RecommendFormValues = ZodFormValues<typeof recommendCreateSchema>;
+type TopicFormValues = ZodFormValues<typeof topicCreateSchema>;
 
 interface AddFormProps {
-    form: UseFormReturn<RecommendFormValues>;
+    form: UseFormReturn<TopicFormValues>;
     onSubmit: () => void;
     animes: Option[];
 }
@@ -46,7 +47,7 @@ const AddForm: React.FC<AddFormProps> = ({ form, animes, onSubmit }) => {
                         <FormInput
                             control={form.control}
                             name="name"
-                            label="推荐名称"
+                            label="专题名称"
                             required
                         />
                     </div>
@@ -54,16 +55,28 @@ const AddForm: React.FC<AddFormProps> = ({ form, animes, onSubmit }) => {
                         <FormSelect
                             control={form.control}
                             name="status"
-                            label="推荐状态"
+                            label="专题状态"
                             required
                             options={status}
                         />
                     </div>
                 </div>
+                <FormTextarea
+                    control={form.control}
+                    name="description"
+                    label="专题简介"
+                    required
+                />
+                <FormTextarea
+                    control={form.control}
+                    name="coverUrl"
+                    label="专题封面"
+                    required
+                />
                 <FormMultiSelect
                     control={form.control}
                     name="animes"
-                    label="动漫"
+                    label="关联动漫"
                     required
                     options={animes}
                 />
@@ -74,18 +87,20 @@ const AddForm: React.FC<AddFormProps> = ({ form, animes, onSubmit }) => {
 
 const AddDialog: React.FC<AddDialogProps> = ({ onRefresh }) => {
     const [open, setOpen] = useState(false);
-    const animesList = useRecommendTableStore(state => state.allAnimes);
+    const animesList = useTopicTableStore(state => state.allAnimes);
 
-    const form = useForm<RecommendFormValues>({
-        resolver: zodResolver(recommendCreateSchema),
+    const form = useForm<TopicFormValues>({
+        resolver: zodResolver(topicCreateSchema),
         defaultValues: {
             name: '',
+            description: '',
+            coverUrl: '',
             status: '1',
             animes: []
         }
     });
 
-    const { run } = useRequest(recommendCreate, {
+    const { run } = useRequest(topicCreate, {
         manual: true,
         debounceWait: 300,
         onSuccess({ code, msg }) {
@@ -98,7 +113,7 @@ const AddDialog: React.FC<AddDialogProps> = ({ onRefresh }) => {
         }
     });
 
-    const handleCreate = (values: RecommendFormValues) => {
+    const handleCreate = (values: TopicFormValues) => {
         const { animes, ...args } = values;
         const _animes = animes?.map(item => item.value);
         run({ ...args, animes: _animes });

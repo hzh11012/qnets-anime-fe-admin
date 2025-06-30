@@ -49,10 +49,10 @@ const links = [
                 perm: `${SERVER_PREFIX}:guide`
             },
             {
-                title: '每周推荐',
+                title: '推荐专题',
                 icon: Command,
-                url: '/recommend',
-                perm: `${SERVER_PREFIX}:recommend`
+                url: '/topic',
+                perm: `${SERVER_PREFIX}:topic`
             },
             {
                 title: '系列',

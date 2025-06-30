@@ -1,11 +1,15 @@
 import { DataTableColumnSort } from '@/components/custom/data-table/data-table-column-sort';
 import { cn, createMap, formatDate } from '@/lib/utils';
-import type { RecommendListItem } from '@/types';
+import type { TopicListItem } from '@/types';
 import type { ColumnDef } from '@tanstack/react-table';
 import { Search } from 'lucide-react';
-import { DataTableRowActions } from '@/pages/anime/recommend/data-table-row-actions';
+import { DataTableRowActions } from '@/pages/anime/topic/data-table-row-actions';
 import { DataTableColumnFilter } from '@/components/custom/data-table/data-table-column-filter';
 import { DataTableArrayTooltip } from '@/components/custom/data-table/data-table-array-tooltip';
+import { DataTableTextTooltip } from '@/components/custom/data-table/data-table-text-tooltip';
+import { PhotoProvider, PhotoView } from 'react-photo-view';
+import Loading from '@/components/custom/loading';
+import Error from '@/components/custom/error';
 
 export const status = [
     { label: '禁用', value: '0' },
@@ -13,36 +17,70 @@ export const status = [
 ];
 
 const getColumns = (onRefresh: () => void) => {
-    const columns: ColumnDef<RecommendListItem>[] = [
+    const columns: ColumnDef<TopicListItem>[] = [
         {
             accessorKey: 'id',
-            header: '推荐ID',
+            header: '专题ID',
             enableSorting: false,
             enableHiding: false
         },
         {
             accessorKey: 'name',
             meta: {
-                title: '推荐名称'
+                title: '专题名称'
             },
             header: () => {
                 return (
                     <div className={cn('flex items-center space-x-1')}>
-                        <span>推荐名称</span>
+                        <span>专题名称</span>
                         <Search className={cn('size-3.5')} />
                     </div>
                 );
+            },
+            cell: ({ row }) => {
+                return (
+                    <PhotoProvider
+                        loadingElement={<Loading />}
+                        brokenElement={
+                            <Error className={cn('relative text-white')} />
+                        }
+                    >
+                        <PhotoView src={row.original.coverUrl}>
+                            <span className={cn('cursor-pointer')}>
+                                {row.original.name}
+                            </span>
+                        </PhotoView>
+                    </PhotoProvider>
+                );
+            }
+        },
+        {
+            accessorKey: 'description',
+            meta: {
+                title: '专题简介'
+            },
+            header: () => {
+                return (
+                    <div className={cn('flex items-center space-x-1')}>
+                        <span>专题简介</span>
+                        <Search className={cn('size-3.5')} />
+                    </div>
+                );
+            },
+            cell: ({ row }) => {
+                const text = row.original.description;
+                return <DataTableTextTooltip text={text} />;
             }
         },
         {
             accessorKey: 'status',
             meta: {
-                title: '动漫状态'
+                title: '专题状态'
             },
             header: ({ column }) => {
                 return (
                     <div className={cn('flex items-center space-x-1')}>
-                        <span>动漫状态</span>
+                        <span>专题状态</span>
                         <DataTableColumnFilter
                             column={column}
                             options={status}

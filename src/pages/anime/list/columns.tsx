@@ -12,7 +12,7 @@ import Loading from '@/components/custom/loading';
 import Error from '@/components/custom/error';
 
 export const status = [
-    { label: '即将上线', value: '0' },
+    { label: '即将开播', value: '0' },
     { label: '连载中', value: '1' },
     { label: '已完结', value: '2' }
 ];
@@ -83,6 +83,13 @@ const getColumns = (onRefresh: () => void, tags: Option[] = []) => {
                     </PhotoProvider>
                 );
             }
+        },
+        {
+            accessorKey: 'remark',
+            meta: {
+                title: '动漫简评'
+            },
+            header: '动漫简评'
         },
         {
             accessorKey: 'description',

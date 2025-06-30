@@ -108,15 +108,15 @@ const staticRoutes: RouteObject[] = [
                         }
                     },
                     {
-                        path: 'recommend',
+                        path: 'topic',
                         lazy: async () => {
                             const Component = (
-                                await import('@/pages/anime/recommend/index')
+                                await import('@/pages/anime/topic/index')
                             ).default;
                             return {
                                 Component: () => (
                                     <WithPermission
-                                        perm={`${SERVER_PREFIX}:recommend`}
+                                        perm={`${SERVER_PREFIX}:topic`}
                                     >
                                         <Component />
                                     </WithPermission>

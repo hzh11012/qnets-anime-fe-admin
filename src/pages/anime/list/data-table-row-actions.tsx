@@ -92,6 +92,12 @@ const EditForm: React.FC<EditFormProps> = ({
                         />
                     </div>
                 </div>
+                <FormInput
+                    control={form.control}
+                    name="remark"
+                    label="动漫简评"
+                    required
+                />
                 <FormTextarea
                     control={form.control}
                     name="description"

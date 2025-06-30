@@ -8,7 +8,7 @@ export * from '@/types/apis/tag';
 export * from '@/types/apis/anime';
 export * from '@/types/apis/banner';
 export * from '@/types/apis/guide';
-export * from '@/types/apis/recommend';
+export * from '@/types/apis/topic';
 export * from '@/types/apis/video';
 export * from '@/types/apis/rating';
 export * from '@/types/apis/collection';
