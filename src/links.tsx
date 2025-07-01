@@ -18,7 +18,8 @@ import {
     Tv,
     Tv2,
     Users2,
-    MonitorPlay
+    MonitorPlay,
+    History
 } from 'lucide-react';
 import Logo from '@/components/custom/logo';
 
@@ -121,6 +122,12 @@ const links = [
                 icon: MessageCircleQuestion,
                 url: '/message',
                 perm: `${SERVER_PREFIX}:message`
+            },
+            {
+                title: '历史播放',
+                icon: History,
+                url: '/history',
+                perm: `${SERVER_PREFIX}:history`
             }
         ]
     },

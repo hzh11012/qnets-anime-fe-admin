@@ -5,6 +5,7 @@ export * from '@/store/user/message';
 export * from '@/store/user/rating';
 export * from '@/store/user/collection';
 export * from '@/store/user/comment';
+export * from '@/store/user/history';
 export * from '@/store/anime/series';
 export * from '@/store/anime/tag';
 export * from '@/store/anime/list';

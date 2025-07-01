@@ -305,6 +305,23 @@ const staticRoutes: RouteObject[] = [
                                 )
                             };
                         }
+                    },
+                    {
+                        path: 'history',
+                        lazy: async () => {
+                            const Component = (
+                                await import('@/pages/user/history/index')
+                            ).default;
+                            return {
+                                Component: () => (
+                                    <WithPermission
+                                        perm={`${SERVER_PREFIX}:history`}
+                                    >
+                                        <Component />
+                                    </WithPermission>
+                                )
+                            };
+                        }
                     }
                 ]
             },

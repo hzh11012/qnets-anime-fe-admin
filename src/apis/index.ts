@@ -16,3 +16,4 @@ export * from '@/apis/notice';
 export * from '@/apis/comment';
 export * from '@/apis/danmaku';
 export * from '@/apis/dashboard';
+export * from '@/apis/history';
