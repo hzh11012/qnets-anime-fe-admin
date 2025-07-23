@@ -30,7 +30,7 @@ import { CircleAlertIcon } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import FormInput from '@/components/custom/form/form-input';
 import { status } from '@/pages/notice/columns';
-import FormTextarea from '@/components/custom/form/fomr-textarea';
+import FormTextarea from '@/components/custom/form/form-textarea';
 
 type NoticeFormValues = ZodFormValues<typeof noticeEditSchema>;
 

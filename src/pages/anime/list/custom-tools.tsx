@@ -35,7 +35,7 @@ import {
     years
 } from '@/pages/anime/list/columns';
 import FormVirtualized from '@/components/custom/form/form-virtualized';
-import FormTextarea from '@/components/custom/form/fomr-textarea';
+import FormTextarea from '@/components/custom/form/form-textarea';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
 type RoleFormValues = ZodFormValues<typeof animeCreateSchema>;

@@ -5,7 +5,6 @@ import {
     FormLabel,
     FormMessage
 } from '@/components/ui/form';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { cn } from '@/lib/utils';
 import type { Control, FieldValues, Path } from 'react-hook-form';
 import type { Option } from '@/types';

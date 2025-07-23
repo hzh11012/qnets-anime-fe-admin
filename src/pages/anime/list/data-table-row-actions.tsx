@@ -23,7 +23,7 @@ import { toast } from 'sonner';
 import { animeEdit, animeDelete } from '@/apis';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
-import FormTextarea from '@/components/custom/form/fomr-textarea';
+import FormTextarea from '@/components/custom/form/form-textarea';
 import { useForm, UseFormReturn } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { animeEditSchema } from '@/pages/anime/list/form-schema';

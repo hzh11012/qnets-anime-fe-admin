@@ -33,7 +33,7 @@ import { useGuideTableStore } from '@/store';
 import FormInput from '@/components/custom/form/form-input';
 import FormMultiSelect from '@/components/custom/form/form-multiple-select';
 import { status } from '@/pages/anime/topic/columns';
-import FormTextarea from '@/components/custom/form/fomr-textarea';
+import FormTextarea from '@/components/custom/form/form-textarea';
 
 type TopicFormValues = ZodFormValues<typeof topicEditSchema>;
 

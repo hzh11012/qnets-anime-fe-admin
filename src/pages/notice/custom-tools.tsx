@@ -21,7 +21,7 @@ import { Button } from '@/components/ui/button';
 import FormSelect from '@/components/custom/form/form-select';
 import FormInput from '@/components/custom/form/form-input';
 import { status } from '@/pages/notice/columns';
-import FormTextarea from '@/components/custom/form/fomr-textarea';
+import FormTextarea from '@/components/custom/form/form-textarea';
 
 type NoticeFormValues = ZodFormValues<typeof noticeCreateSchema>;
 

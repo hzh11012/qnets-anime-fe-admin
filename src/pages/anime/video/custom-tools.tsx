@@ -25,7 +25,7 @@ import { videoCreate } from '@/apis';
 import { Form } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import FormVirtualized from '@/components/custom/form/form-virtualized';
-import FormTextarea from '@/components/custom/form/fomr-textarea';
+import FormTextarea from '@/components/custom/form/form-textarea';
 import FormInput from '@/components/custom/form/form-input';
 import FormNumber from '@/components/custom/form/form-number';
 
