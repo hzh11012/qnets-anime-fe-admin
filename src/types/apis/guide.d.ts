@@ -5,6 +5,7 @@ interface GuideListItem {
     updateTime: string;
     anime: {
         name: string;
+        seasonName: string;
         status: 0 | 1 | 2;
         coverUrl: string;
         animeTags: { id: string; name: string }[];

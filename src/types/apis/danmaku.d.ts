@@ -5,7 +5,7 @@ interface DanmakuListItem {
     color: string;
     time: number;
     user: { nickname: string; avatar: string | null };
-    video: { episode: number; anime: { name: string } };
+    video: { episode: number; anime: { name: string; seasonName: string } };
     createdAt: string;
 }
 
@@ -15,7 +15,7 @@ interface DanmakuListRes {
 }
 
 interface DanmakuListParams extends ListParams {
-    modes?: string[]
+    modes?: string[];
 }
 
 interface DanmakuDeleteParams {

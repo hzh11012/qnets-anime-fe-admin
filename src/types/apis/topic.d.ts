@@ -4,7 +4,7 @@ interface TopicListItem {
     description: string;
     coverUrl: string;
     status: 0 | 1;
-    animes: { id: string; name: string }[];
+    animes: { id: string; name: string; seasonName: string }[];
     createdAt: string;
 }
 

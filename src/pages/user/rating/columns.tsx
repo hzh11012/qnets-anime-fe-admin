@@ -47,6 +47,11 @@ const getColumns = (onRefresh: () => void) => {
                 );
             },
             cell: ({ row }) => {
+                const title = (
+                    row.original.anime.name +
+                    ' ' +
+                    row.original.anime.seasonName
+                ).trim();
                 return (
                     <PhotoProvider
                         loadingElement={<Loading />}
@@ -56,7 +61,7 @@ const getColumns = (onRefresh: () => void) => {
                     >
                         <PhotoView src={row.original.anime.coverUrl}>
                             <span className={cn('cursor-pointer')}>
-                                {row.original.anime.name}
+                                {title}
                             </span>
                         </PhotoView>
                     </PhotoProvider>

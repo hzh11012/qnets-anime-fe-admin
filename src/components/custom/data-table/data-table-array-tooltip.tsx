@@ -20,20 +20,20 @@ const DataTableArrayTooltip: React.FC<DataTableArrayTooltipProps> = ({
 
     const remaining = items.length - maxCount;
 
-    if (remaining <= 0) return items.join(' ');
+    if (remaining <= 0) return items.join(' / ');
 
     return (
         <TooltipProvider>
             <Tooltip>
                 <TooltipTrigger asChild>
-                    <span>{items.slice(0, maxCount).join(' ')} ...</span>
+                    <span>{items.slice(0, maxCount).join(' / ')} ...</span>
                 </TooltipTrigger>
                 <TooltipContent
                     className={cn(
                         'max-w-64 max-h-64 overflow-auto scroll-hidden'
                     )}
                 >
-                    {items.join(' ')}
+                    {items.join(' / ')}
                 </TooltipContent>
             </Tooltip>
         </TooltipProvider>

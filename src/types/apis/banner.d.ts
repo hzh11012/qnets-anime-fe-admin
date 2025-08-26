@@ -1,7 +1,12 @@
 interface BannerListItem {
     id: string;
     animeId: string;
-    anime: { name: string; description: string; bannerUrl: string };
+    anime: {
+        name: string;
+        seasonName: StringOrTemplateHeader;
+        description: string;
+        bannerUrl: string;
+    };
     createdAt: string;
 }
 

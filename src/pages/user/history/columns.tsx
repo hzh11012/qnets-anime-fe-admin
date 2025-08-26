@@ -70,7 +70,11 @@ const getColumns = (onRefresh: () => void) => {
                 );
             },
             cell: ({ row }) => {
-                const name = row.original.anime.name;
+                const name = (
+                    row.original.anime.name +
+                    ' ' +
+                    row.original.anime.seasonName
+                ).trim();
                 const episode = row.original.video.episode;
                 return `${name}（第${episode}集）`;
             }

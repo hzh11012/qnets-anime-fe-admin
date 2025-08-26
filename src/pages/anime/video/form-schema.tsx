@@ -11,12 +11,11 @@ const formSchema = {
         .max(255, '长度不能超过255')
         .min(1, '动漫不能为空'),
     title: Zod.string({
-        required_error: '视频标题不能为空',
         invalid_type_error: '视频标题类型错误'
     })
         .trim()
         .max(50, '长度不能超过50')
-        .min(1, '视频标题不能为空'),
+        .optional(),
     url: Zod.string({
         required_error: '视频链接不能为空',
         invalid_type_error: '视频链接类型错误'

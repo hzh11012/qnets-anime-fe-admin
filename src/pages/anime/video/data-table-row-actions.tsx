@@ -59,7 +59,6 @@ const EditForm: React.FC<EditFormProps> = ({ form, animes, onSubmit }) => {
                             control={form.control}
                             name="title"
                             label="视频标题"
-                            required
                         />
                     </div>
                     <div className={cn('flex-1')}>

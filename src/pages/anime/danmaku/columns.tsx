@@ -130,7 +130,11 @@ const getColumns = (onRefresh: () => void) => {
                 );
             },
             cell: ({ row }) => {
-                const name = row.original.video.anime.name;
+                const name = (
+                    row.original.video.anime.name +
+                    ' ' +
+                    row.original.video.anime.seasonName
+                ).trim();
                 const episode = row.original.video.episode;
                 return `${name}（第${episode}集）`;
             }

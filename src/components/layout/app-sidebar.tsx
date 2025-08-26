@@ -6,8 +6,7 @@ import {
     Sidebar,
     SidebarContent,
     SidebarFooter,
-    SidebarHeader,
-    SidebarRail
+    SidebarHeader
 } from '@/components/ui/sidebar';
 import { links, platform } from '@/links';
 import { useUserStore } from '@/store';
@@ -44,7 +43,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarFooter>
                 <NavUser user={user} onLogout={runLogout} />
             </SidebarFooter>
-            {/* <SidebarRail /> */}
         </Sidebar>
     );
 }

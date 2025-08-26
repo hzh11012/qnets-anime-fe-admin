@@ -7,6 +7,7 @@ interface CollectionListItem {
     };
     anime: {
         name: string;
+        seasonName: string;
         coverUrl: string;
     };
     createdAt: string;

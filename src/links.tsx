@@ -12,7 +12,6 @@ import {
     ListVideo,
     Mails,
     MessageCircleQuestion,
-    MessagesSquare,
     Star,
     Tags,
     Tv,
@@ -110,12 +109,6 @@ const links = [
                 icon: Star,
                 url: '/rating',
                 perm: `${SERVER_PREFIX}:rating`
-            },
-            {
-                title: '评论',
-                icon: MessagesSquare,
-                url: '/comment',
-                perm: `${SERVER_PREFIX}:comment`
             },
             {
                 title: '平台留言',

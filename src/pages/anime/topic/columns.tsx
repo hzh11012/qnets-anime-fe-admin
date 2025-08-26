@@ -100,7 +100,9 @@ const getColumns = (onRefresh: () => void) => {
             },
             header: '关联动漫',
             cell: ({ row }) => {
-                const animes = row.original.animes.map(item => item.name);
+                const animes = row.original.animes.map(item =>
+                    (item.name + ' ' + item.seasonName).trim()
+                );
                 return <DataTableArrayTooltip items={animes} />;
             }
         },

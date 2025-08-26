@@ -3,9 +3,10 @@ interface VideoListItem {
     animeId: string;
     anime: {
         name: string;
+        seasonName: string;
         coverUrl: string;
     };
-    title: string;
+    title?: string;
     episode: number;
     playCount: number;
     url: string;
@@ -21,7 +22,7 @@ interface VideoListParams extends ListParams {}
 
 interface VideoCreateParams {
     animeId: string;
-    title: string;
+    title?: string;
     episode: number;
     url: string;
 }

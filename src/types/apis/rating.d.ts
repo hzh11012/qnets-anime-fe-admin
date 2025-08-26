@@ -9,6 +9,7 @@ interface RatingListItem {
     };
     anime: {
         name: string;
+        seasonName: string;
         coverUrl: string;
     };
     createdAt: string;

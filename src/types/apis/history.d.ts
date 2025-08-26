@@ -3,7 +3,7 @@ interface HistoryListItem {
     time: number;
     user: { nickname: string; avatar: string | null };
     video: { episode: number };
-    anime: { name: string };
+    anime: { name: string; seasonName: string };
     createdAt: string;
 }
 

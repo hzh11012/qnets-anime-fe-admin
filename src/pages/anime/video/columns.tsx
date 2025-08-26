@@ -30,6 +30,11 @@ const getColumns = (onRefresh: () => void) => {
                 );
             },
             cell: ({ row }) => {
+                const title = (
+                    row.original.anime.name +
+                    ' ' +
+                    row.original.anime.seasonName
+                ).trim();
                 return (
                     <PhotoProvider
                         loadingElement={<Loading />}
@@ -39,7 +44,7 @@ const getColumns = (onRefresh: () => void) => {
                     >
                         <PhotoView src={row.original.anime.coverUrl}>
                             <span className={cn('cursor-pointer')}>
-                                {row.original.anime.name}
+                                {title}
                             </span>
                         </PhotoView>
                     </PhotoProvider>
@@ -58,6 +63,11 @@ const getColumns = (onRefresh: () => void) => {
                         <Search className={cn('size-3.5')} />
                     </div>
                 );
+            },
+            cell: ({ row }) => {
+                const title =
+                    row.original.title || `第 ${row.original.episode} 集`;
+                return title;
             }
         },
         {

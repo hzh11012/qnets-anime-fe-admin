@@ -1,7 +1,7 @@
 interface SeriesListItem {
     id: string;
     name: string;
-    animes: { name: string }[];
+    animes: { name: string; seasonName: string }[];
     createdAt: string;
 }
 
